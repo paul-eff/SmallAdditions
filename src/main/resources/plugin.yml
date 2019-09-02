@@ -1,0 +1,10 @@
+name: SmallAdditions
+version: ${project.version}
+main: me.gigawartrex.pcm.main.SmallAdditions
+api-version: 1.13
+#prefix: SmallAdditions
+author: Paul Ferlitz
+authors:
+description: Small additions to Minecraft making it just slightly better.
+
+commands:
