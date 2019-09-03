@@ -1,6 +1,6 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.pcm.main.Constants;
+import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.Leveling;

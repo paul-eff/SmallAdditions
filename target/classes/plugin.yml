@@ -1,5 +1,5 @@
 name: SmallAdditions
-version: ${project.version}
+version: 1.0-SNAPSHOT
 main: me.gigawartrex.smalladditions.main.SmallAdditions
 api-version: 1.13
 #prefix: SmallAdditions

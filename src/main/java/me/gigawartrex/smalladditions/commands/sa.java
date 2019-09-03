@@ -90,7 +90,7 @@ public class sa implements CommandExecutor
                         {
                             if (stack == null)
                             {
-                                player.getInventory().addItem(new Book("PracticeCreatesMasters Guide", "GigaWarTr3x", "Rules"));
+                                player.getInventory().addItem(new Book("SmallAdditions Guide", "GigaWarTr3x", "Rules"));
                                 //player.getWorld().dropItemNaturally(player.getLocation(), new Book("PracticeCreatesMasters Guide", "GigaWarTr3x", "Rules"));
 
                                 if (!Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Book received?")))
@@ -100,59 +100,6 @@ public class sa implements CommandExecutor
                                 break;
                             }
                         }
-                        return true;
-                    case "status":
-
-                        boolean isActive = Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Mastering on?"));
-
-                        if (isActive)
-                        {
-                            msghelp.sendPlayer(player, "Mastering Mode: " + ChatColor.GREEN + "On", ChatColor.GOLD);
-                        } else
-                        {
-                            msghelp.sendPlayer(player, "Mastering Mode: " + ChatColor.RED + "Off", ChatColor.GOLD);
-                        }
-
-                        msghelp.sendPlayer(player, "Your mods are set as the following:", ChatColor.GOLD);
-
-                        for (String mod : Constants.modsList)
-                        {
-                            boolean status = Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Mods." + mod));
-                            boolean statusServer = Boolean.parseBoolean(config.read("Config.Settings.Mods." + mod));
-                            String statusServerString = "";
-
-                            if (!statusServer)
-                            {
-                                statusServerString = ChatColor.RED + " (Off by Server)";
-                            }
-
-                            if (status)
-                            {
-                                msghelp.sendPlayer(player, mod + ": " + ChatColor.GREEN + "On" + statusServerString, ChatColor.GOLD);
-                            } else
-                            {
-                                msghelp.sendPlayer(player, mod + ": " + ChatColor.RED + "Off", ChatColor.GOLD);
-                            }
-                        }
-
-                        int level = leveling.getLevel();
-                        int nextBlocks;
-                        try
-                        {
-                            nextBlocks = Integer.parseInt(config.read(config.getFileName() + ".Leveling." + (level + 1)));
-                        } catch (NumberFormatException e)
-                        {
-                            nextBlocks = -1;
-                        }
-                        msghelp.sendPlayer(player, "Level: " + level + " | Blocks: " + leveling.getBlocks(), ChatColor.GREEN);
-                        if (nextBlocks == -1)
-                        {
-                            msghelp.sendPlayer(player, "Max level reached!", ChatColor.GREEN);
-                        } else
-                        {
-                            msghelp.sendPlayer(player, "Blocks needed for next level: " + nextBlocks, ChatColor.GREEN);
-                        }
-
                         return true;
                     case "resetall":
 
@@ -164,80 +111,11 @@ public class sa implements CommandExecutor
                             msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
                         }
                         return true;
-                    case "on":
-                        config.writePlayerStatus(player, true);
-                        msghelp.sendPlayer(player, "Mastering Mode turned on!", ChatColor.GOLD);
-                        return true;
-                    case "off":
-                        config.writePlayerStatus(player, false);
-                        msghelp.sendPlayer(player, "Mastering Mode turned off!", ChatColor.GOLD);
-                        return true;
                     default:
                         msghelp.sendPlayer(player, "Not intended command usage.", ChatColor.RED);
-                        msghelp.sendPlayer(player, "Type \"/pcm\" + Spacebar and check the options.", ChatColor.WHITE);
+                        msghelp.sendPlayer(player, "Type \"/sa\" + Spacebar and check the options.", ChatColor.WHITE);
                         return true;
                 }
-            } else if (args.length == 2)
-            {
-
-                switch (args[1])
-                {
-                    case "list":
-
-                        StringBuilder modsString = new StringBuilder();
-
-                        for (String mod : Constants.modsList)
-                        {
-                            if (modsString.toString().equals(""))
-                            {
-                                modsString = new StringBuilder("Mods: " + mod);
-                            } else
-                            {
-                                modsString.append(", ").append(mod);
-                            }
-                        }
-
-                        msghelp.sendPlayer(player, modsString.toString(), ChatColor.GOLD);
-
-                        return true;
-                    //more cases here
-                    default:
-                        msghelp.sendPlayer(player, "Not intended command usage.", ChatColor.RED);
-                        msghelp.sendPlayer(player, "Type \"/pcm mod\" + Spacebar and check the options.", ChatColor.WHITE);
-                        return true;
-                }
-
-            } else if (args.length == 3)
-            {
-
-                if (args[0].equals("mod") && Constants.modsList.contains(args[1]))
-                {
-
-                    if (args[2].equals("on"))
-                    {
-
-                        int levelNeeded = Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + args[1]));
-                        int currentLevel = leveling.getLevel();
-
-                        if (currentLevel >= levelNeeded)
-                        {
-                            config.writeModStatus(player, args[1], true);
-                            msghelp.sendPlayer(player, args[1] + " Mod was activated", ChatColor.GOLD);
-                        } else
-                        {
-                            msghelp.sendPlayer(player, "Your level is to low. (Level " + levelNeeded + " needed)", ChatColor.RED);
-                        }
-                        return true;
-                    } else if (args[2].equals("off"))
-                    {
-                        config.writeModStatus(player, args[1], false);
-                        msghelp.sendPlayer(player, args[1] + " Mod was deactivated", ChatColor.GOLD);
-                        return true;
-                    }
-                }
-                msghelp.sendPlayer(player, "Not intended command usage.", ChatColor.RED);
-                msghelp.sendPlayer(player, "Type \"/pcm mod\" + Spacebar and check the options.", ChatColor.WHITE);
-                return true;
             }
         } else
         {

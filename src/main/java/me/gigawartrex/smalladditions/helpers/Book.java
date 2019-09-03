@@ -1,6 +1,6 @@
 package me.gigawartrex.smalladditions.helpers;
 
-import me.gigawartrex.pcm.main.Constants;
+import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;

@@ -1,6 +1,6 @@
 package me.gigawartrex.smalladditions.files;
 
-import me.gigawartrex.pcm.main.Constants;
+import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 

@@ -1,6 +1,6 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.pcm.main.Constants;
+import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.files.Config;
 import org.bukkit.Material;
@@ -21,19 +21,12 @@ public class PlayerJoinHandler implements Listener {
 
         if (config.read("Config.Players." + event.getPlayer().getUniqueId()).equals("")) {
 
-            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Level", "0");
-            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Blocks", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + false);
-
-            config.writePlayerStatus(event.getPlayer(), true);
-            for (String mod : Constants.modsList) {
-                config.writeModStatus(event.getPlayer(), mod, false);
-            }
         }
 
         boolean add = true;
         boolean freeSlot = false;
-        Book refBook = new Book("PracticeCreatesMasters Guide", "GigaWarTr3x", "Rules");
+        Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "Rules");
 
         for(ItemStack stack : event.getPlayer().getInventory().getStorageContents()) {
             if(stack != null) {

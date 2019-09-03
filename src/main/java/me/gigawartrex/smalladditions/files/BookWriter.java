@@ -1,6 +1,6 @@
 package me.gigawartrex.smalladditions.files;
 
-import me.gigawartrex.pcm.main.Constants;
+import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import org.bukkit.ChatColor;
 
