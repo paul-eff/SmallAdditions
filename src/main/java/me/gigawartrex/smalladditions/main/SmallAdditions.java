@@ -16,6 +16,11 @@ public final class SmallAdditions extends JavaPlugin {
 
     private MessageHelper msghelp;
 
+    //TODO: Rotten Flesh to Meat
+    //TODO: Ore multiplication (macerator)
+    //TODO: Not all in bed (50% -> Daytime)
+    //TODO: Right click Wheat to harvest and replant
+
     @Override
     public void onEnable() {
 
