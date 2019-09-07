@@ -16,7 +16,6 @@ public final class SmallAdditions extends JavaPlugin {
 
     private MessageHelper msghelp;
 
-    //TODO: Rotten Flesh to Meat
     //TODO: Ore multiplication (macerator)
     //TODO: Not all in bed (50% -> Daytime)
     //TODO: Right click Wheat to harvest and replant
@@ -37,8 +36,6 @@ public final class SmallAdditions extends JavaPlugin {
         bookWriter.defaultBook("SmallAdditions Guide", false);
 
         //Event registration
-        //getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
-        //getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
         getServer().getPluginManager().registerEvents(new ItemDroppedHandler(), this);
 
