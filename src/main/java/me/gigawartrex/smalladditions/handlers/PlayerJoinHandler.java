@@ -12,10 +12,12 @@ import org.bukkit.inventory.meta.BookMeta;
 
 public class PlayerJoinHandler implements Listener {
 
-    Config config;
+    private Config config;
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+
+        event.getPlayer().setSleepingIgnored(false);
 
         config = new Config();
 
@@ -47,7 +49,7 @@ public class PlayerJoinHandler implements Listener {
             }
         }
 
-        Boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?"));
+        boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?"));
 
         if(add && freeSlot && !receivedBook) {
             event.getPlayer().getInventory().addItem(refBook);

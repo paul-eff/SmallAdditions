@@ -4,10 +4,7 @@ import me.gigawartrex.smalladditions.commands.sa;
 import me.gigawartrex.smalladditions.commands.saTabComplete;
 import me.gigawartrex.smalladditions.files.BookWriter;
 import me.gigawartrex.smalladditions.files.Config;
-import me.gigawartrex.smalladditions.handlers.BlockChoppedHandler;
-import me.gigawartrex.smalladditions.handlers.BlockMinedHandler;
-import me.gigawartrex.smalladditions.handlers.ItemDroppedHandler;
-import me.gigawartrex.smalladditions.handlers.PlayerJoinHandler;
+import me.gigawartrex.smalladditions.handlers.*;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +14,6 @@ public final class SmallAdditions extends JavaPlugin {
     private MessageHelper msghelp;
 
     //TODO: Ore multiplication (macerator)
-    //TODO: Not all in bed (50% -> Daytime)
     //TODO: Right click Wheat to harvest and replant
 
     @Override
@@ -38,6 +34,7 @@ public final class SmallAdditions extends JavaPlugin {
         //Event registration
         getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
         getServer().getPluginManager().registerEvents(new ItemDroppedHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
