@@ -1,4 +1,5 @@
 me/gigawartrex/smalladditions/files/Config.class
+me/gigawartrex/smalladditions/handlers/PlayerRightClickHandler.class
 me/gigawartrex/smalladditions/main/SmallAdditions.class
 me/gigawartrex/smalladditions/files/FileHelper.class
 me/gigawartrex/smalladditions/commands/saTabComplete.class

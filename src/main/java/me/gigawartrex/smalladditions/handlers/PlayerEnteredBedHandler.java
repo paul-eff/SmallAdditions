@@ -6,12 +6,10 @@ import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -36,8 +34,6 @@ public class PlayerEnteredBedHandler implements Listener
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
-
-        System.out.println("Init");
         //Load needed classes
         config = new Config();
         msghelp = new MessageHelper();

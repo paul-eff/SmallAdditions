@@ -4,10 +4,8 @@ import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -25,11 +23,6 @@ public class ItemDroppedHandler implements Listener
 
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.ROTTEN_FLESH, Material.STONE));
 
-    private int maxMinerSize = 0;
-
-    private Player eventPlayer;
-    private Block eventBlockLocation;
-
     /*
      * Method to handle dropped items
      */
@@ -40,7 +33,6 @@ public class ItemDroppedHandler implements Listener
         //Load needed classes
         config = new Config();
         msghelp = new MessageHelper();
-        eventPlayer = event.getPlayer();
 
         if (allowedItems.contains(event.getItemDrop().getItemStack().getType()))
         {
@@ -54,7 +46,8 @@ public class ItemDroppedHandler implements Listener
                     if (drop.isOnGround())
                     {
                         boolean somethingFound = false;
-                        while (drop.getItemStack().getAmount() > 0)
+                        int stackSize = drop.getItemStack().getAmount();
+                        while (stackSize > 0)
                         {
                             if (drop.getItemStack().getType() == Material.STONE)
                             {
@@ -69,6 +62,9 @@ public class ItemDroppedHandler implements Listener
                                             {
                                                 int newAmount = item.getItemStack().getAmount() - 1;
                                                 item.setItemStack(new ItemStack(Material.ROTTEN_FLESH, newAmount));
+                                            } else if (item.getItemStack().getAmount() == 1)
+                                            {
+                                                item.getItemStack().setAmount(0);
                                             } else
                                             {
                                                 item.remove();
@@ -91,6 +87,9 @@ public class ItemDroppedHandler implements Listener
                                             {
                                                 int newAmount = item.getItemStack().getAmount() - 1;
                                                 item.setItemStack(new ItemStack(Material.STONE, newAmount));
+                                            } else if (item.getItemStack().getAmount() == 1)
+                                            {
+                                                item.getItemStack().setAmount(0);
                                             } else
                                             {
                                                 item.remove();
@@ -101,9 +100,9 @@ public class ItemDroppedHandler implements Listener
                                     }
                                 }
                             }
-                            if (somethingFound == true)
+                            if (somethingFound)
                             {
-                                drop.getItemStack().setAmount(drop.getItemStack().getAmount() - 1);
+                                stackSize--;
                                 drop.getWorld().dropItemNaturally(drop.getLocation(), new ItemStack(Material.COOKED_BEEF));
                                 somethingFound = false;
                             } else
@@ -111,12 +110,12 @@ public class ItemDroppedHandler implements Listener
                                 break;
                             }
                         }
-                        if (drop.getItemStack().getAmount() == 0)
+                        if (stackSize == 0)
                         {
                             drop.remove();
                         } else
                         {
-                            drop.setItemStack(new ItemStack(drop.getItemStack().getType(), drop.getItemStack().getAmount()));
+                            drop.setItemStack(new ItemStack(drop.getItemStack().getType(), stackSize));
                         }
                         this.cancel();
                     }
