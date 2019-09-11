@@ -9,8 +9,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class sa implements CommandExecutor
 {
@@ -101,6 +104,9 @@ public class sa implements CommandExecutor
                             }
                         }
                         return true;
+                    case "magnet":
+                        msghelp.sendPlayer(player, "Type \\as magnet on/off", ChatColor.RED);
+                        return true;
                     case "resetall":
 
                         if (isOP)
@@ -115,6 +121,44 @@ public class sa implements CommandExecutor
                         msghelp.sendPlayer(player, "Not intended command usage.", ChatColor.RED);
                         msghelp.sendPlayer(player, "Type \"/sa\" + Spacebar and check the options.", ChatColor.WHITE);
                         return true;
+                }
+            }else if(args.length == 2 && args[0].equals("magnet")){
+                switch (args[1]) {
+                    case "on":
+                        config.write("Config.Players." + player.getUniqueId() + ".Magnet", "" + true);
+                        new BukkitRunnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                for (Player player : Constants.plugin.getServer().getOnlinePlayers())
+                                {
+                                    if(Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Magnet")))
+                                    {
+                                        System.out.println("Iterating Players");
+                                        for (Entity ent : player.getNearbyEntities(8,4,8))
+                                        {
+                                            System.out.println("Ent found");
+                                            if (ent instanceof Item)
+                                            {
+                                                System.out.println("Item found and ported");
+                                                player.getWorld().dropItemNaturally(player.getLocation(), ((Item) ent).getItemStack());
+                                                ent.remove();
+                                            }
+                                        }
+                                    }else
+                                    {
+                                        System.out.println("Not on");
+                                    }
+                                }
+                            }
+                        }.runTaskTimer(Constants.plugin, 20L*5, 20L*2);
+                        break;
+                    case "off":
+                        config.write("Config.Players." + player.getUniqueId() + ".Magnet", "" + false);
+                        break;
+                    default:
+                        break;
                 }
             }
         } else

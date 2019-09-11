@@ -12,9 +12,8 @@ import java.util.List;
 
 public class saTabComplete implements TabCompleter {
 
-    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "resetall", "book", "status", "mod", "on", "off"));
-    private ArrayList<String> arg1List = new ArrayList<>(Arrays.asList("list"));
-    private ArrayList<String> arg2List = new ArrayList<>(Arrays.asList("on", "off"));
+    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "resetall", "book", "magnet"));
+    private ArrayList<String> arg1List = new ArrayList<>(Arrays.asList("on", "off"));
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
@@ -26,10 +25,8 @@ public class saTabComplete implements TabCompleter {
                 return arg0List.subList(2,arg0List.size());
             }
             return arg0List;
-        }else if(args.length == 2 && args[0].equals("mod")){
+        }else if(args.length == 2 && args[0].equals("magnet")){
             return arg1List;
-        }else if(args.length == 3 && args[0].equals("mod") && Constants.modsList.contains(args[1])){
-            return arg2List;
         }
         return null;
     }

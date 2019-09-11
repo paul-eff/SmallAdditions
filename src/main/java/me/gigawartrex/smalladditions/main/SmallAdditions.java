@@ -22,8 +22,8 @@ public final class SmallAdditions extends JavaPlugin {
         msghelp = new MessageHelper();
 
         //Command registration
-        //getCommand("sa").setExecutor(new sa());
-        //getCommand("sa").setTabCompleter(new saTabComplete());
+        getCommand("sa").setExecutor(new sa());
+        getCommand("sa").setTabCompleter(new saTabComplete());
 
         //File registration
         Config config = new Config();
@@ -35,7 +35,7 @@ public final class SmallAdditions extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
         getServer().getPluginManager().registerEvents(new ItemDroppedHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
-        getServer().getPluginManager().registerEvents(new PlayerRightClickHandler(), this);
+        //getServer().getPluginManager().registerEvents(new PlayerRightClickHandler(), this);
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
