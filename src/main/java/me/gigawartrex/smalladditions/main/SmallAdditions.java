@@ -7,6 +7,8 @@ import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.handlers.*;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SmallAdditions extends JavaPlugin {
