@@ -11,15 +11,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class SmallAdditions extends JavaPlugin {
+public final class SmallAdditions extends JavaPlugin
+{
 
     private MessageHelper msghelp;
 
     //TODO: Ore multiplication (macerator)
     //TODO: Right click Wheat to harvest and replant
+    //TODO: Add PCM to this plugin and greatly shorten commands (or make them in game interactive)
+    //TODO: Create first book file
 
     @Override
-    public void onEnable() {
+    public void onEnable()
+    {
 
         msghelp = new MessageHelper();
 
