@@ -9,5 +9,8 @@ description: Small additions to Minecraft making it just slightly better.
 
 commands:
   sa:
-    description: Base Command
+    description: Base SA Command
+    usage: /<command>
+  pcm:
+    description: Base PCM Command
     usage: /<command>

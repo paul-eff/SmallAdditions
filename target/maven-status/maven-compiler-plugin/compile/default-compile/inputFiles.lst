@@ -8,9 +8,14 @@
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/commands/saTabComplete.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/commands/sa.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/files/NoFileNameException.java
+/Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/handlers/BlockMinedHandler.java
+/Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/commands/pcm.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/helpers/MessageHelper.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/handlers/PlayerRightClickHandler.java
+/Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/handlers/BlockChoppedHandler.java
+/Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/commands/pcmTabComplete.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/main/SmallAdditions.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/handlers/PlayerEnteredBedHandler.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/helpers/Book.java
 /Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/helpers/Helper.java
+/Users/Paul/Documents/IDEs/IdeaProjects/SmallAdditions/src/main/java/me/gigawartrex/smalladditions/handlers/BlockDugHandler.java

@@ -1,7 +1,7 @@
 package me.gigawartrex.smalladditions.files;
 
-import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -25,9 +25,11 @@ public class Config extends FileHelper {
             msghelp.sendConsole(getFileName() + " found and (re)loaded!", ChatColor.GREEN);
         } else {
 
-            if (reset) {
+            if (reset)
+            {
                 msghelp.sendConsole("Deleting " + getFileName() + " and creating default...", ChatColor.RED);
-            } else {
+            } else
+            {
                 msghelp.sendConsole(getFileName() + " not found. Creating default...", ChatColor.RED);
             }
 
@@ -35,18 +37,21 @@ public class Config extends FileHelper {
 
             //File defaults
             YamlConfiguration ymlFile = loadFile();
-            ymlFile.set(getFileName() + ".Settings.maxLumberjackSize", "50");
-            ymlFile.set(getFileName() + ".Settings.maxMinerSize", "50");
-            for (String mod : Constants.modsList) {
+            ymlFile.set(getFileName() + ".Settings.maxLumberjackSize", "25");
+            ymlFile.set(getFileName() + ".Settings.maxMinerSize", "25");
+            for (String mod : Constants.modsList)
+            {
                 ymlFile.set(getFileName() + ".Settings.Mods." + mod, "true");
             }
 
-            for(int level = 1; level <= (Constants.modsList.size()*5); level++){
-                ymlFile.set(getFileName() + ".Leveling."+level, ""+(level*100));
+            for (int level = 1; level <= (Constants.modsList.size() * 5); level++)
+            {
+                ymlFile.set(getFileName() + ".Leveling." + level, "" + (level * 100));
             }
 
-            for(int level = 5; level <= (Constants.modsList.size()*5); level+=5){
-                ymlFile.set(getFileName() + ".Leveling.Modlevel."+Constants.modsList.get((level/5)-1), ""+level);
+            for (int level = 5; level <= (Constants.modsList.size() * 5); level += 5)
+            {
+                ymlFile.set(getFileName() + ".Leveling.Modlevel." + Constants.modsList.get((level / 5) - 1), "" + level);
             }
 
             saveFile(ymlFile);

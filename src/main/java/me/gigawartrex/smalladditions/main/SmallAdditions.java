@@ -1,5 +1,7 @@
 package me.gigawartrex.smalladditions.main;
 
+import me.gigawartrex.smalladditions.commands.pcm;
+import me.gigawartrex.smalladditions.commands.pcmTabComplete;
 import me.gigawartrex.smalladditions.commands.sa;
 import me.gigawartrex.smalladditions.commands.saTabComplete;
 import me.gigawartrex.smalladditions.files.BookWriter;
@@ -30,6 +32,9 @@ public final class SmallAdditions extends JavaPlugin
         //Command registration
         getCommand("sa").setExecutor(new sa());
         getCommand("sa").setTabCompleter(new saTabComplete());
+        //Old PCM Code
+        getCommand("pcm").setExecutor(new pcm());
+        getCommand("pcm").setTabCompleter(new pcmTabComplete());
 
         //File registration
         Config config = new Config();
@@ -42,6 +47,11 @@ public final class SmallAdditions extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ItemDroppedHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
         //getServer().getPluginManager().registerEvents(new PlayerRightClickHandler(), this);
+        //Old PCM Code
+        getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
+        getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
+        getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
