@@ -1,11 +1,13 @@
 package me.gigawartrex.smalladditions.commands;
 
+import me.gigawartrex.smalladditions.itemmenu.IconMenu;
 import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,9 +64,9 @@ public class sa implements CommandExecutor
                             */
 
                             //Get some data
-                            player.sendMessage("Main Hand: " + player.getInventory().getItemInMainHand().getType());
-                            player.sendMessage("Looking at: " + player.getTargetBlock(null, 200).getType().toString());
-                            player.sendMessage("Possible Drops: " + player.getTargetBlock(null, 200).getDrops());
+                            //player.sendMessage("Main Hand: " + player.getInventory().getItemInMainHand().getType());
+                            //player.sendMessage("Looking at: " + player.getTargetBlock(null, 200).getType().toString());
+                            //player.sendMessage("Possible Drops: " + player.getTargetBlock(null, 200).getDrops());
 
                             /*
                             //Generate a YxY ore vein
@@ -83,6 +85,22 @@ public class sa implements CommandExecutor
                                 }
                             }
                              */
+
+                            IconMenu menu = new IconMenu("My Fancy Menu", 9, new IconMenu.OptionClickEventHandler()
+                            {
+                                @Override
+                                public void onOptionClick(IconMenu.OptionClickEvent event)
+                                {
+                                    event.getPlayer().sendMessage("You have chosen " + event.getName());
+                                    event.setWillClose(true);
+                                }
+                            }, Constants.plugin)
+                                    .setOption(3, new ItemStack(Material.APPLE, 1), "Food", "The food is delicious")
+                                    .setOption(4, new ItemStack(Material.IRON_SWORD, 1), "Weapon", "Weapons are for awesome people")
+                                    .setOption(5, new ItemStack(Material.EMERALD, 1), "Money", "Money brings happiness");
+
+                            menu.open(player);
+
                         } else
                         {
                             msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
@@ -106,6 +124,59 @@ public class sa implements CommandExecutor
                         return true;
                     case "magnet":
                         msghelp.sendPlayer(player, "Type \\as magnet on/off", ChatColor.RED);
+                        return true;
+                    case "status":
+
+                        boolean isActive = Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Mastering on?"));
+
+                        if (isActive)
+                        {
+                            msghelp.sendPlayer(player, "Mastering Mode: " + ChatColor.GREEN + "On", ChatColor.GOLD);
+                        } else
+                        {
+                            msghelp.sendPlayer(player, "Mastering Mode: " + ChatColor.RED + "Off", ChatColor.GOLD);
+                        }
+
+                        msghelp.sendPlayer(player, "Your mods are set as the following:", ChatColor.GOLD);
+
+                        for (String mod : Constants.modsList)
+                        {
+                            boolean status = Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Mods." + mod));
+                            boolean statusServer = Boolean.parseBoolean(config.read("Config.Settings.Mods." + mod));
+                            String statusServerString = "";
+
+                            if (!statusServer)
+                            {
+                                statusServerString = ChatColor.RED + " (Off by Server)";
+                            }
+
+                            if (status)
+                            {
+                                msghelp.sendPlayer(player, mod + ": " + ChatColor.GREEN + "On" + statusServerString, ChatColor.GOLD);
+                            } else
+                            {
+                                msghelp.sendPlayer(player, mod + ": " + ChatColor.RED + "Off", ChatColor.GOLD);
+                            }
+                        }
+
+                        int level = leveling.getLevel();
+                        int nextBlocks;
+                        try
+                        {
+                            nextBlocks = Integer.parseInt(config.read(config.getFileName() + ".Leveling." + (level + 1)));
+                        } catch (NumberFormatException e)
+                        {
+                            nextBlocks = -1;
+                        }
+                        msghelp.sendPlayer(player, "Level: " + level + " | Blocks: " + leveling.getBlocks(), ChatColor.GREEN);
+                        if (nextBlocks == -1)
+                        {
+                            msghelp.sendPlayer(player, "Max level reached!", ChatColor.GREEN);
+                        } else
+                        {
+                            msghelp.sendPlayer(player, "Blocks needed for next level: " + nextBlocks, ChatColor.GREEN);
+                        }
+
                         return true;
                     case "resetall":
 
