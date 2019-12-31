@@ -8,9 +8,11 @@ me/gigawartrex/smalladditions/handlers/PlayerEnteredBedHandler$1$1.class
 me/gigawartrex/smalladditions/handlers/ItemDroppedHandler$1.class
 me/gigawartrex/smalladditions/handlers/BlockDugHandler.class
 me/gigawartrex/smalladditions/handlers/BlockMinedHandler.class
+me/gigawartrex/smalladditions/itemmenu/IconMenu$OptionClickEventHandler.class
 me/gigawartrex/smalladditions/commands/pcm.class
 me/gigawartrex/smalladditions/handlers/PlayerEnteredBedHandler$1.class
 me/gigawartrex/smalladditions/main/Constants.class
+me/gigawartrex/smalladditions/itemmenu/IconMenu.class
 me/gigawartrex/smalladditions/handlers/PlayerJoinHandler.class
 me/gigawartrex/smalladditions/handlers/BlockChoppedHandler.class
 me/gigawartrex/smalladditions/main/SmallAdditions.class
@@ -22,4 +24,7 @@ me/gigawartrex/smalladditions/helpers/MessageHelper.class
 me/gigawartrex/smalladditions/files/NoFileNameException.class
 me/gigawartrex/smalladditions/commands/pcmTabComplete.class
 me/gigawartrex/smalladditions/helpers/Helper.class
+me/gigawartrex/smalladditions/itemmenu/IconMenu$OptionClickEvent.class
+me/gigawartrex/smalladditions/commands/sa$2.class
+me/gigawartrex/smalladditions/itemmenu/IconMenu$1.class
 me/gigawartrex/smalladditions/files/BookWriter.class

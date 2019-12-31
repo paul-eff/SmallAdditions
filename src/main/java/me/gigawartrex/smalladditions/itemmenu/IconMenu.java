@@ -1,7 +1,5 @@
 package me.gigawartrex.smalladditions.itemmenu;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Arrays;
+
 public class IconMenu implements Listener
 {
 
@@ -21,7 +21,6 @@ public class IconMenu implements Listener
     private int size;
     private OptionClickEventHandler handler;
     private Plugin plugin;
-
     private String[] optionNames;
     private ItemStack[] optionIcons;
 
@@ -68,7 +67,7 @@ public class IconMenu implements Listener
     @EventHandler(priority = EventPriority.MONITOR)
     void onInventoryClick(InventoryClickEvent event)
     {
-        if (event.getInventory().getType().getDefaultTitle().equals(name))
+        if (event.getView().getTitle().equals(name))
         {
             event.setCancelled(true);
             int slot = event.getRawSlot();
