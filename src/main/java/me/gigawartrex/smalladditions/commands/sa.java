@@ -86,119 +86,6 @@ public class sa implements CommandExecutor
                             }
                              */
 
-                            IconMenu menu = new IconMenu("My Fancy Menu", 9, new IconMenu.OptionClickEventHandler()
-                            {
-                                @Override
-                                public void onOptionClick(IconMenu.OptionClickEvent event)
-                                {
-                                    switch (event.getName())
-                                    {
-                                        case "Exit":
-                                            msghelp.sendPlayer(event.getPlayer(), "Exiting...", ChatColor.RED);
-                                            break;
-                                        case "Toggle":
-                                            if (config.readPlayerStatus(event.getPlayer()))
-                                            {
-                                                config.writePlayerStatus(player, false);
-                                                msghelp.sendPlayer(player, "Mastering Mode turned off!", ChatColor.GOLD);
-                                            } else
-                                            {
-                                                config.writePlayerStatus(player, true);
-                                                msghelp.sendPlayer(player, "Mastering Mode turned on!", ChatColor.GOLD);
-                                            }
-                                            break;
-                                        case "Status":
-                                            boolean isActive = Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Mastering on?"));
-
-                                            if (isActive)
-                                            {
-                                                msghelp.sendPlayer(player, "Mastering Mode: " + ChatColor.GREEN + "On", ChatColor.GOLD);
-                                            } else
-                                            {
-                                                msghelp.sendPlayer(player, "Mastering Mode: " + ChatColor.RED + "Off", ChatColor.GOLD);
-                                            }
-
-                                            msghelp.sendPlayer(player, "Your mods are set as the following:", ChatColor.GOLD);
-
-                                            for (String mod : Constants.modsList)
-                                            {
-                                                boolean status = Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Mods." + mod));
-                                                boolean statusServer = Boolean.parseBoolean(config.read("Config.Settings.Mods." + mod));
-                                                String statusServerString = "";
-
-                                                if (!statusServer)
-                                                {
-                                                    statusServerString = ChatColor.RED + " (Off by Server)";
-                                                }
-
-                                                if (status)
-                                                {
-                                                    msghelp.sendPlayer(player, mod + ": " + ChatColor.GREEN + "On" + statusServerString, ChatColor.GOLD);
-                                                } else
-                                                {
-                                                    msghelp.sendPlayer(player, mod + ": " + ChatColor.RED + "Off", ChatColor.GOLD);
-                                                }
-                                            }
-
-                                            int level = leveling.getLevel();
-                                            int nextBlocks;
-                                            try
-                                            {
-                                                nextBlocks = Integer.parseInt(config.read(config.getFileName() + ".Leveling." + (level + 1)));
-                                            } catch (NumberFormatException e)
-                                            {
-                                                nextBlocks = -1;
-                                            }
-                                            msghelp.sendPlayer(player, "Level: " + level + " | Blocks: " + leveling.getBlocks(), ChatColor.GREEN);
-                                            if (nextBlocks == -1)
-                                            {
-                                                msghelp.sendPlayer(player, "Max level reached!", ChatColor.GREEN);
-                                            } else
-                                            {
-                                                msghelp.sendPlayer(player, "Blocks needed for next level: " + nextBlocks, ChatColor.GREEN);
-                                            }
-                                            break;
-                                        default:
-                                            String modName = event.getName();
-                                            if (Constants.modsList.contains(modName))
-                                            {
-
-                                                if (!config.readModStatus(event.getPlayer(), modName))
-                                                {
-                                                    int levelNeeded = Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + modName));
-                                                    int currentLevel = leveling.getLevel();
-
-                                                    if (currentLevel >= levelNeeded)
-                                                    {
-                                                        config.writeModStatus(player, modName, true);
-                                                        msghelp.sendPlayer(player, modName + " Mod was activated", ChatColor.GOLD);
-                                                    } else
-                                                    {
-                                                        msghelp.sendPlayer(player, "Your level is to low. (Level " + levelNeeded + " needed)", ChatColor.RED);
-                                                    }
-                                                } else
-                                                {
-                                                    config.writeModStatus(player, modName, false);
-                                                    msghelp.sendPlayer(player, modName + " Mod was deactivated", ChatColor.GOLD);
-                                                }
-                                            } else
-                                            {
-                                                msghelp.sendPlayer(player, "Error occurred! (" + modName + ")", ChatColor.RED);
-                                            }
-                                    }
-                                    event.setWillClose(true);
-                                    event.setWillDestroy(true);
-                                }
-                            }, Constants.plugin)
-                                    .setOption(0, new ItemStack(Material.DIRT, 1), "Exit", "Click to exit options.")
-                                    .setOption(1, new ItemStack(Material.REDSTONE_BLOCK, 1), "Toggle", "Turn mastering on/off.")
-                                    .setOption(3, new ItemStack(Material.OAK_SAPLING, 1), "Replant", "Replant cut down trees.")
-                                    .setOption(4, new ItemStack(Material.FURNACE, 1), "Autosmelt", "Directly smelt items that were harvested/mined.")
-                                    .setOption(5, new ItemStack(Material.DIAMOND, 1), "Fortune", "Get a luck multiplier on all actions.")
-                                    .setOption(8, new ItemStack(Material.BOOK, 1), "Status", "Show current status.");
-
-                            menu.open(player);
-
                         } else
                         {
                             msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
@@ -221,7 +108,7 @@ public class sa implements CommandExecutor
                         }
                         return true;
                     case "magnet":
-                        msghelp.sendPlayer(player, "Type \\as magnet on/off", ChatColor.RED);
+                        msghelp.sendPlayer(player, "Type \\sa magnet on/off", ChatColor.RED);
                         return true;
                     case "status":
 
@@ -293,6 +180,8 @@ public class sa implements CommandExecutor
                 }
             } else if (args.length == 2 && args[0].equals("magnet"))
             {
+                // Turn off for now
+
                 switch (args[1])
                 {
                     case "on":
