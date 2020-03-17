@@ -26,7 +26,7 @@ public class PlayerJoinHandler implements Listener {
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Blocks", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + false);
 
-            config.writePlayerStatus(event.getPlayer(), true);
+            config.writePlayerStatus(event.getPlayer(), false);
             for (String mod : Constants.modsList)
             {
                 config.writeModStatus(event.getPlayer(), mod, false);
@@ -35,7 +35,7 @@ public class PlayerJoinHandler implements Listener {
 
         boolean add = true;
         boolean freeSlot = false;
-        Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "HowTo");
+        Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "README");
 
         for(ItemStack stack : event.getPlayer().getInventory().getStorageContents()) {
             if(stack != null) {
