@@ -52,9 +52,9 @@ public class BookWriter {
 				writer.write("-- ERROR -- \n");
 				writer.write("File for this Book not found in Plugin Folder. \n");
 				writer.write("Please let a System Admin check in \n");
-				writer.write("<Server Home Folder>/plugins/PracticeCreatesMasters/BookTextFiles/ \n");
+				writer.write("<Server Home Folder>/plugins/SmallAdditions/BookTextFiles/ \n");
 				writer.write("-- ERROR -- \n");
-				
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
