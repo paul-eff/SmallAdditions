@@ -71,10 +71,10 @@ public class PlayerRightClickHandler implements Listener
                         switch (event.getName())
                         {
                             case "Exit":
-                                msghelp.sendPlayer(event.getPlayer(), "Exiting...", ChatColor.RED);
+                                msghelp.sendPlayer(eventPlayer, "Exiting...", ChatColor.RED);
                                 break;
                             case "Toggle":
-                                if (config.readPlayerStatus(event.getPlayer()))
+                                if (config.readPlayerStatus(eventPlayer))
                                 {
                                     config.writePlayerStatus(eventPlayer, false);
                                     msghelp.sendPlayer(eventPlayer, "Mastering Mode turned off!", ChatColor.GOLD);
@@ -140,7 +140,7 @@ public class PlayerRightClickHandler implements Listener
                                 if (Constants.modsList.contains(modName))
                                 {
 
-                                    if (!config.readModStatus(event.getPlayer(), modName))
+                                    if (!config.readModStatus(eventPlayer, modName))
                                     {
                                         int levelNeeded = Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + modName));
                                         int currentLevel = leveling.getLevel();

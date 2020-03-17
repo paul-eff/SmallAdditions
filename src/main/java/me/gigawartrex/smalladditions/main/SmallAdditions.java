@@ -49,9 +49,9 @@ public final class SmallAdditions extends JavaPlugin
         getServer().getPluginManager().registerEvents(new ItemBreakHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerRightClickHandler(), this);
         //Old PCM Code
-        getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
-        getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
-        getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
+        //getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
+        //getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
+        //getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
