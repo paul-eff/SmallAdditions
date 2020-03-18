@@ -18,6 +18,10 @@ import java.util.Arrays;
 public class PlayerEnteredBedHandler implements Listener
 {
 
+    /*
+    TODO: USELESS ON BUKKIT???
+     */
+
     private Config config;
     private MessageHelper msghelp;
 
@@ -68,7 +72,7 @@ public class PlayerEnteredBedHandler implements Listener
                         msghelp.sendPlayer(player, playersSleeping + "/" + playersInSameWorld.size() + " (" + (((int) (percentageSleeping * 10000)) * 1.0) / 100 + "%) Players in this World are sleeping.", ChatColor.GOLD);
                     }
 
-                    if (percentageSleeping >= 0.5)
+                    if (percentageSleeping >= 1.25)
                     {
                         new BukkitRunnable()
                         {

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class saTabComplete implements TabCompleter {
 
-    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "resetall", "book", "magnet"));
+    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "resetall", "book", "menu"));
     private ArrayList<String> arg1List = new ArrayList<>(Arrays.asList("on", "off"));
 
     @Override
@@ -25,9 +25,9 @@ public class saTabComplete implements TabCompleter {
                 return arg0List.subList(2,arg0List.size());
             }
             return arg0List;
-        }else if(args.length == 2 && args[0].equals("magnet")){
+        }/*else if(args.length == 2 && args[0].equals("magnet")){
             return arg1List;
-        }
+        }*/
         return null;
     }
 }

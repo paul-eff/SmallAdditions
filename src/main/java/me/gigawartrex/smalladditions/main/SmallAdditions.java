@@ -18,6 +18,7 @@ public final class SmallAdditions extends JavaPlugin
 
     private MessageHelper msghelp;
 
+    //TODO: Can take items out of menu
     //TODO: Ore multiplication (macerator)
     //TODO: Right click Wheat to harvest and replant
     //TODO: Add PCM to this plugin and greatly shorten commands (or make them in game interactive)
@@ -30,11 +31,8 @@ public final class SmallAdditions extends JavaPlugin
         msghelp = new MessageHelper();
 
         //Command registration
-        //getCommand("sa").setExecutor(new sa());
-        //getCommand("sa").setTabCompleter(new saTabComplete());
-        //Old PCM Code
-        //getCommand("pcm").setExecutor(new pcm());
-        //getCommand("pcm").setTabCompleter(new pcmTabComplete());
+        getCommand("sa").setExecutor(new sa());
+        getCommand("sa").setTabCompleter(new saTabComplete());
 
         //File registration
         Config config = new Config();
@@ -44,14 +42,10 @@ public final class SmallAdditions extends JavaPlugin
 
         //Event registration
         getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
-        //getServer().getPluginManager().registerEvents(new ItemDroppedHandler(), this);
-        getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
         getServer().getPluginManager().registerEvents(new ItemBreakHandler(), this);
-        getServer().getPluginManager().registerEvents(new PlayerRightClickHandler(), this);
-        //Old PCM Code
-        //getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
-        //getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
-        //getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
+        getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
+        getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
+        getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }

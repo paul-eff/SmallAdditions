@@ -18,19 +18,13 @@ import java.util.Arrays;
 
 public class BlockDugHandler implements Listener
 {
-
     private Config config;
-    private MessageHelper msghelp;
     private Leveling leveling;
-
     private ArrayList<Block> validMinerBlocks;
     private ArrayList<Block> current_search;
     private ArrayList<Block> to_search;
-
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL)); // Allowed Tools
-
     private int maxMinerSize = 0;
-
     private Player eventPlayer;
     private Block eventBlock;
     private Material eventMaterial;
@@ -41,31 +35,21 @@ public class BlockDugHandler implements Listener
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
-
         //Check if player is using a valid tool
         if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
         {
-
-            //Load needed classes
-            config = new Config();
-            msghelp = new MessageHelper();
-
             //Check if a allowed block was chopped
-            //if (allowedBlockMats.contains(event.getBlock().getType())) {
             if (event.getBlock().getType() == Material.GRAVEL)
             {
-
+                config = new Config();
                 eventPlayer = event.getPlayer();
                 leveling = new Leveling(eventPlayer);
-
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
                 if (active)
                 {
-
                     if (event.getPlayer().isSneaking())
                     {
-
                         //All needed information to proceed
                         eventBlock = event.getBlock();
                         eventMaterial = event.getBlock().getType();
@@ -73,11 +57,9 @@ public class BlockDugHandler implements Listener
                         //Structural detection of ore vein
                         int cnt = 0;
                         maxMinerSize = Integer.parseInt(config.read("Config.Settings.maxMinerSize"));
-
                         validMinerBlocks = new ArrayList<>();
                         current_search = new ArrayList<>();
                         to_search = new ArrayList<>();
-
                         current_search.add(eventBlock);
 
                         while (cnt < maxMinerSize)

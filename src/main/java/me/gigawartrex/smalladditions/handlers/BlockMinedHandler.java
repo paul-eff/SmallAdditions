@@ -61,7 +61,6 @@ public class BlockMinedHandler implements Listener
                 leveling = new Leveling(eventPlayer);
 
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
-                System.out.println(eventPlayer.toString()+" Can mine this vein "+active);
                 if (active)
                 {
 
@@ -114,18 +113,12 @@ public class BlockMinedHandler implements Listener
                         boolean autosmelt = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt"));
                         boolean fortune = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune"));
                         int actualMinedBlocks = 0;
-                        System.out.println("1");
                         for (Block block : validMinerBlocks)
                         {
-                            System.out.println("2");
                             if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                             {
-                                System.out.println("3");
-                                System.out.println("drops: "+block.getDrops());
-                                System.out.println("-----");
-                                for (ItemStack item : block.getDrops())
+                                for (ItemStack item : block.getDrops(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType())))
                                 {
-                                    System.out.println("4");
                                     if (fortune)
                                     {
                                         item.setAmount(Helper.randNumFromRange(1, 4));
@@ -136,7 +129,6 @@ public class BlockMinedHandler implements Listener
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), evaluateDrop(item));
                                     } else
                                     {
-                                        System.out.println("I dropped "+item.toString());
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
                                     }
                                     ExperienceOrb orb = block.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class);

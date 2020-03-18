@@ -1,6 +1,7 @@
 me\gigawartrex\smalladditions\files\BookWriter.class
 me\gigawartrex\smalladditions\handlers\ItemDroppedHandler.class
 me\gigawartrex\smalladditions\handlers\BlockDugHandler.class
+me\gigawartrex\smalladditions\commands\sa$2.class
 me\gigawartrex\smalladditions\handlers\BlockMinedHandler.class
 me\gigawartrex\smalladditions\commands\pcmTabComplete.class
 me\gigawartrex\smalladditions\handlers\PlayerEnteredBedHandler$1$1.class
@@ -28,5 +29,4 @@ me\gigawartrex\smalladditions\files\FileHelper.class
 me\gigawartrex\smalladditions\files\Config.class
 me\gigawartrex\smalladditions\handlers\PlayerEnteredBedHandler.class
 me\gigawartrex\smalladditions\itemmenu\IconMenu$OptionClickEvent.class
-me\gigawartrex\smalladditions\handlers\PlayerRightClickHandler$1.class
 me\gigawartrex\smalladditions\itemmenu\IconMenu$OptionClickEventHandler.class
