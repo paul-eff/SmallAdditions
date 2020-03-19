@@ -4,6 +4,7 @@ import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -20,10 +21,12 @@ public class BlockDugHandler implements Listener
 {
     private Config config;
     private Leveling leveling;
+    private MessageHelper msghelp;
     private ArrayList<Block> validMinerBlocks;
     private ArrayList<Block> current_search;
     private ArrayList<Block> to_search;
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL)); // Allowed Tools
+    private ArrayList<Material> allowedMaterials = new ArrayList<>(Arrays.asList(Material.GRAVEL, Material.CLAY)); // Allowed Materials
     private int maxMinerSize = 0;
     private Player eventPlayer;
     private Block eventBlock;
@@ -39,20 +42,27 @@ public class BlockDugHandler implements Listener
         if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
         {
             //Check if a allowed block was chopped
-            if (event.getBlock().getType() == Material.GRAVEL)
+            if (allowedMaterials.contains(event.getBlock().getType()))
             {
+                System.out.println("Clay detected1");
+
                 config = new Config();
+                msghelp = new MessageHelper();
                 eventPlayer = event.getPlayer();
                 leveling = new Leveling(eventPlayer);
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
                 if (active)
                 {
+                    System.out.println("Clay detected2");
                     if (event.getPlayer().isSneaking())
                     {
                         //All needed information to proceed
                         eventBlock = event.getBlock();
                         eventMaterial = event.getBlock().getType();
+
+                        System.out.println(eventBlock.toString());
+                        System.out.println(eventMaterial.toString());
 
                         //Structural detection of ore vein
                         int cnt = 0;
@@ -96,29 +106,47 @@ public class BlockDugHandler implements Listener
 
                         for (Block block : validMinerBlocks)
                         {
-                            ItemStack flintDrop = new ItemStack(Material.FLINT);
-                            if (fortune)
+                            if(block.getType() == Material.GRAVEL)
                             {
-                                flintDrop.setAmount(Helper.randNumFromRange(1, 4));
-                            }
+                                ItemStack flintDrop = new ItemStack(Material.FLINT);
+                                if (fortune)
+                                {
+                                    flintDrop.setAmount(Helper.randNumFromRange(1, 4));
+                                }
 
-                            block.setType(Material.AIR);
-                            if (Math.random() >= 0.9)
-                            {
-                                block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
-                            } else
-                            {
-                                block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(Material.GRAVEL));
-                                if (fortune && Math.random() >= 0.9)
+                                block.setType(Material.AIR);
+                                if (Math.random() >= 0.9)
                                 {
                                     block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
+                                } else
+                                {
+                                    block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(Material.GRAVEL));
+                                    if (fortune && Math.random() >= 0.9)
+                                    {
+                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
+                                    }
                                 }
+                            }else if(block.getType() == Material.CLAY)
+                            {
+                                System.out.println("Clay detected");
+                                ItemStack clayDrop = new ItemStack(Material.CLAY_BALL);
+                                clayDrop.setAmount(Helper.randNumFromRange(1, 4));
+
+                                if (fortune)
+                                {
+                                    clayDrop.setAmount(Helper.randNumFromRange(3, 6));
+                                }
+                                block.setType(Material.AIR);
+                                block.getWorld().dropItemNaturally(eventPlayer.getLocation(), clayDrop);
                             }
                             actualMinedBlocks++;
                             damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                         }
 
                         leveling.calcNextLevel(actualMinedBlocks);
+
+                        msghelp.sendConsole(eventPlayer.getName() + " just dug up a " + eventMaterial + " vein (Size: " + validMinerBlocks.size()
+                                + ") at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
 
                         validMinerBlocks.clear();
                         current_search.clear();
