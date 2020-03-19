@@ -120,7 +120,7 @@ public class BlockMinedHandler implements Listener
                             {
                                 for (ItemStack item : block.getDrops(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType())))
                                 {
-                                    if (fortune)
+                                    if (fortune && autosmelt)
                                     {
                                         item.setAmount(Helper.randNumFromRange(1, 4));
                                     }
@@ -163,8 +163,8 @@ public class BlockMinedHandler implements Listener
 
                                 block.setType(Material.AIR);
                                 actualMinedBlocks++;
-                                ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
 
+                                ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
                                 if(mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                                 {
                                     int enchLevel = 0;
