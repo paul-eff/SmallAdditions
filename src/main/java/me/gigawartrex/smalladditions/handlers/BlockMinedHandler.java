@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -162,7 +163,21 @@ public class BlockMinedHandler implements Listener
 
                                 block.setType(Material.AIR);
                                 actualMinedBlocks++;
-                                damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
+                                ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
+
+                                if(mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
+                                {
+                                    int enchLevel = 0;
+                                    enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
+                                    double chance = (100 / (enchLevel+1)*1.0) / 100.0;
+
+                                    if(Math.random() > (1-chance))
+                                    {
+                                        damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
+                                    }
+                                }else{
+                                    damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
+                                }
                             }
                         }
 

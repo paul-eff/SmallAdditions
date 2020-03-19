@@ -44,8 +44,6 @@ public class BlockDugHandler implements Listener
             //Check if a allowed block was chopped
             if (allowedMaterials.contains(event.getBlock().getType()))
             {
-                System.out.println("Clay detected1");
-
                 config = new Config();
                 msghelp = new MessageHelper();
                 eventPlayer = event.getPlayer();
@@ -54,15 +52,11 @@ public class BlockDugHandler implements Listener
 
                 if (active)
                 {
-                    System.out.println("Clay detected2");
                     if (event.getPlayer().isSneaking())
                     {
                         //All needed information to proceed
                         eventBlock = event.getBlock();
                         eventMaterial = event.getBlock().getType();
-
-                        System.out.println(eventBlock.toString());
-                        System.out.println(eventMaterial.toString());
 
                         //Structural detection of ore vein
                         int cnt = 0;
@@ -128,7 +122,6 @@ public class BlockDugHandler implements Listener
                                 }
                             }else if(block.getType() == Material.CLAY)
                             {
-                                System.out.println("Clay detected");
                                 ItemStack clayDrop = new ItemStack(Material.CLAY_BALL);
                                 clayDrop.setAmount(Helper.randNumFromRange(1, 4));
 
