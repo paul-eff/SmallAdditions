@@ -7,13 +7,20 @@ import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.itemmenu.IconMenu;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -45,10 +52,10 @@ public class sa implements CommandExecutor
                     case "test":
                         if (isOP)
                         {
+                            Block origBlock = player.getTargetBlock(null, 200);
 
                             /*
                             //Get all block drops
-                            Block origBlock = player.getTargetBlock(null, 200);
                             String dropsString = "";
                             String dropsMeta = "";
                             String dropsElse = "";
@@ -62,29 +69,6 @@ public class sa implements CommandExecutor
                             player.sendMessage("Block's Meta: " + dropsMeta);
                             player.sendMessage("Block's Else: " + dropsElse);
                             */
-
-                            //Get some data
-                            //player.sendMessage("Main Hand: " + player.getInventory().getItemInMainHand().getType());
-                            //player.sendMessage("Looking at: " + player.getTargetBlock(null, 200).getType().toString());
-                            //player.sendMessage("Possible Drops: " + player.getTargetBlock(null, 200).getDrops());
-
-                            /*
-                            //Generate a YxY ore vein
-                            Block origBlock = player.getTargetBlock(null, 200);
-
-                            for(int xOffset = 0; xOffset < 5; xOffset++){
-                                for(int yOffset = 0; yOffset < 4; yOffset++){
-                                    for(int zOffset = 0; zOffset < 7; zOffset++){
-                                        double rand = Math.random();
-                                        if(rand <= 0.3){
-                                            origBlock.getLocation().add(xOffset, yOffset, zOffset).getBlock().setType(Material.IRON_ORE);
-                                        }else{
-                                            origBlock.getLocation().add(xOffset, yOffset, zOffset).getBlock().setType(Material.STONE);
-                                        }
-                                    }
-                                }
-                            }
-                             */
 
                         } else
                         {
