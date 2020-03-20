@@ -43,8 +43,8 @@ public class Config extends FileHelper
 
             //File defaults
             YamlConfiguration ymlFile = loadFile();
-            ymlFile.set(getFileName() + ".Settings.maxLumberjackSize", "25");
-            ymlFile.set(getFileName() + ".Settings.maxMinerSize", "25");
+            ymlFile.set(getFileName() + ".Settings.maxLumberjackSize", "250");
+            ymlFile.set(getFileName() + ".Settings.maxMinerSize", "250");
             for (String mod : Constants.modsList)
             {
                 ymlFile.set(getFileName() + ".Settings.Mods." + mod, "true");

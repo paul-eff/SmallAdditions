@@ -67,13 +67,21 @@ public class BlockDugHandler implements Listener
                         to_search = new ArrayList<>();
                         current_search.add(eventBlock);
 
-                        while (cnt < maxMinerSize)
+                        boolean sizeReached = false;
+                        while (true)
                         {
 
                             for (Block currSearchBlock : current_search)
                             {
 
                                 validMinerBlocks.add(currSearchBlock);
+                                cnt++;
+
+                                if(cnt >= maxMinerSize)
+                                {
+                                    sizeReached = true;
+                                    break;
+                                }
 
                                 for (Block newBlock : findNeighbours(currSearchBlock))
                                 {
@@ -87,13 +95,12 @@ public class BlockDugHandler implements Listener
                             if (to_search.isEmpty())
                             {
                                 break;
-                            } else
-                            {
+                            } else {
                                 current_search.clear();
                                 current_search.addAll(to_search);
                                 to_search.clear();
                             }
-                            cnt++;
+                            if(sizeReached) break;
                         }
 
                         boolean fortune = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune"));

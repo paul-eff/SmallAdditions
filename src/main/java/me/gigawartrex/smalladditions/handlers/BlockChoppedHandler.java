@@ -104,13 +104,21 @@ public class BlockChoppedHandler implements Listener
 
                         current_search.add(eventBlock);
 
-                        while (cnt < maxLumberjackSize)
+                        boolean sizeReached = false;
+                        while (true)
                         {
 
                             for (Block currSearchBlock : current_search)
                             {
 
                                 validLumberjackBlocks.add(currSearchBlock);
+                                cnt++;
+
+                                if(cnt >= maxLumberjackSize)
+                                {
+                                    sizeReached = true;
+                                    break;
+                                }
 
                                 for (Block newBlock : findNeighbours(currSearchBlock))
                                 {
@@ -130,7 +138,7 @@ public class BlockChoppedHandler implements Listener
                                 current_search.addAll(to_search);
                                 to_search.clear();
                             }
-                            cnt++;
+                            if(sizeReached) break;
                         }
 
                         saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));

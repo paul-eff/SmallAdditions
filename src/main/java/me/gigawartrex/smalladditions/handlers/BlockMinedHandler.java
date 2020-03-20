@@ -82,13 +82,21 @@ public class BlockMinedHandler implements Listener
 
                         current_search.add(eventBlock);
 
-                        while (cnt < maxMinerSize)
+                        boolean sizeReached = false;
+                        while (true)
                         {
 
                             for (Block currSearchBlock : current_search)
                             {
 
                                 validMinerBlocks.add(currSearchBlock);
+                                cnt++;
+
+                                if(cnt >= maxMinerSize)
+                                {
+                                    sizeReached = true;
+                                    break;
+                                }
 
                                 for (Block newBlock : findNeighbours(currSearchBlock))
                                 {
@@ -108,7 +116,7 @@ public class BlockMinedHandler implements Listener
                                 current_search.addAll(to_search);
                                 to_search.clear();
                             }
-                            cnt++;
+                            if(sizeReached) break;
                         }
 
                         boolean autosmelt = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt"));
