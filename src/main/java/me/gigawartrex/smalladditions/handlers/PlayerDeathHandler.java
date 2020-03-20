@@ -72,11 +72,8 @@ public class PlayerDeathHandler implements Listener
         }
         s.update();
 
-        for(int i = 0; i < 6; i++)
-        {
-            ExperienceOrb orb = block.getWorld().spawn(origBlock.getRelative(BlockFace.UP).getLocation(), ExperienceOrb.class);
-            orb.setExperience((int)eventPlayer.getTotalExperience()/6);
-        }
+        ExperienceOrb orb = block.getWorld().spawn(origBlock.getRelative(BlockFace.UP).getLocation(), ExperienceOrb.class);
+        orb.setExperience(eventPlayer.getTotalExperience());
 
         event.getDrops().clear();
         event.setDroppedExp(0);
