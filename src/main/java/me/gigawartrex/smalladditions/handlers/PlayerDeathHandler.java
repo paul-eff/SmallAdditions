@@ -72,17 +72,25 @@ public class PlayerDeathHandler implements Listener
         }
         s.update();
 
-        ExperienceOrb orb = block.getWorld().spawn(origBlock.getRelative(BlockFace.UP).getLocation(), ExperienceOrb.class);
-        orb.setExperience(eventPlayer.getTotalExperience());
+        //ExperienceOrb orb = block.getWorld().spawn(origBlock.getRelative(BlockFace.UP).getLocation(), ExperienceOrb.class);
+        //orb.setExperience(eventPlayer.getTotalExperience());
 
         event.getDrops().clear();
-        event.setDroppedExp(0);
 
+        //System.out.println(eventPlayer.getExp());
+        //System.out.println(eventPlayer.getTotalExperience());
+        //System.out.println(eventPlayer.getExpToLevel());
+        //System.out.println(event.getNewExp());
+        //System.out.println(event.getNewTotalExp());
+        //System.out.println(event.getDroppedExp());
+        event.setDroppedExp(eventPlayer.getTotalExperience());
+
+        Location deathLoc = eventPlayer.getLocation();
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
             msghelp.sendPlayer(eventPlayer, "A Deathbox was left behind were you died.", ChatColor.RED);
-            msghelp.sendPlayer(eventPlayer, "Location: X: "+eventPlayer.getLocation().getBlockX()+
-                    " Y: "+eventPlayer.getLocation().getBlockY()+" Z: "+eventPlayer.getLocation().getBlockZ()+")", ChatColor.RED);
+            msghelp.sendPlayer(eventPlayer, "Location: X: "+deathLoc.getBlockX()+
+                    " Y: "+deathLoc.getBlockY()+" Z: "+deathLoc.getBlockZ()+")", ChatColor.RED);
             msghelp.sendPlayer(eventPlayer, "Please remove the chest when found...", ChatColor.RED);
         }, 20 * 3);
     }
