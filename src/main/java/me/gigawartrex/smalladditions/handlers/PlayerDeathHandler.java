@@ -83,7 +83,7 @@ public class PlayerDeathHandler implements Listener
         //System.out.println(event.getNewExp());
         //System.out.println(event.getNewTotalExp());
         //System.out.println(event.getDroppedExp());
-        event.setDroppedExp(eventPlayer.getTotalExperience());
+        //event.setDroppedExp(eventPlayer.getTotalExperience());
 
         Location deathLoc = eventPlayer.getLocation();
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
