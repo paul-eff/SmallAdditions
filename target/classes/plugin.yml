@@ -1,7 +1,7 @@
 name: SmallAdditions
 version: 1.0-SNAPSHOT
 main: me.gigawartrex.smalladditions.main.SmallAdditions
-api-version: 1.13
+api-version: 1.15
 #prefix: SmallAdditions
 author: Paul Ferlitz
 authors:

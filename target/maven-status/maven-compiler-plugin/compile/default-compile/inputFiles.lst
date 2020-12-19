@@ -11,12 +11,11 @@ C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladdi
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\commands\saTabComplete.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\files\BookWriter.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\handlers\PlayerJoinHandler.java
-C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\commands\pcm.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\main\SmallAdditions.java
-C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\commands\pcmTabComplete.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\helpers\MessageHelper.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\files\NoFileNameException.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\files\FileHelper.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\handlers\BlockMinedHandler.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\handlers\PlayerEnteredBedHandler.java
 C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\files\Config.java
+C:\Users\Paul\IdeaProjects\SmallAdditions\src\main\java\me\gigawartrex\smalladditions\handlers\ItemMagnetHandler.java
