@@ -5,7 +5,6 @@ import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,24 +16,12 @@ import java.util.Arrays;
 
 public class PlayerEnteredBedHandler implements Listener
 {
-
-    /*
-    TODO: USELESS ON BUKKIT???
-     */
-
     private Config config;
     private MessageHelper msghelp;
-
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.ROTTEN_FLESH, Material.STONE));
-
     private int maxMinerSize = 0;
-
     private Player eventPlayer;
-    private Block eventBlockLocation;
 
-    /*
-     * Method to handle dropped items
-     */
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
@@ -69,10 +56,11 @@ public class PlayerEnteredBedHandler implements Listener
 
                     for (Player player : playersInSameWorld)
                     {
-                        msghelp.sendPlayer(player, playersSleeping + "/" + playersInSameWorld.size() + " (" + (((int) (percentageSleeping * 10000)) * 1.0) / 100 + "%) Players in this World are sleeping.", ChatColor.GOLD);
+                        msghelp.sendPlayer(player, playersSleeping + "/" + playersInSameWorld.size() + " (" + (((int) (percentageSleeping * 10000)) * 1.0) / 100 + "%) " +
+                                "Players in this World are sleeping. (Sent by " + eventPlayer.getName() + ")", ChatColor.GOLD);
                     }
 
-                    if (percentageSleeping >= 1.25)
+                    if (percentageSleeping >= 0.2)
                     {
                         new BukkitRunnable()
                         {

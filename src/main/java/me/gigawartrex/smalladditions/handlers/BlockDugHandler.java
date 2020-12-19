@@ -33,9 +33,6 @@ public class BlockDugHandler implements Listener
     private Block eventBlock;
     private Material eventMaterial;
 
-    /*
-     * Method to handle tree felling onBlockBreak event
-     */
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
@@ -58,7 +55,6 @@ public class BlockDugHandler implements Listener
                         //All needed information to proceed
                         eventBlock = event.getBlock();
                         eventMaterial = event.getBlock().getType();
-
                         //Structural detection of ore vein
                         int cnt = 0;
                         maxMinerSize = Integer.parseInt(config.read("Config.Settings.maxMinerSize"));
@@ -68,21 +64,19 @@ public class BlockDugHandler implements Listener
                         current_search.add(eventBlock);
 
                         boolean sizeReached = false;
+
                         while (true)
                         {
-
                             for (Block currSearchBlock : current_search)
                             {
-
                                 validMinerBlocks.add(currSearchBlock);
                                 cnt++;
 
-                                if(cnt >= maxMinerSize)
+                                if (cnt >= maxMinerSize)
                                 {
                                     sizeReached = true;
                                     break;
                                 }
-
                                 for (Block newBlock : findNeighbours(currSearchBlock))
                                 {
                                     if (!validMinerBlocks.contains(newBlock) && !to_search.contains(newBlock))
@@ -91,24 +85,24 @@ public class BlockDugHandler implements Listener
                                     }
                                 }
                             }
-
                             if (to_search.isEmpty())
                             {
                                 break;
-                            } else {
+                            } else
+                            {
                                 current_search.clear();
                                 current_search.addAll(to_search);
                                 to_search.clear();
                             }
-                            if(sizeReached) break;
+                            if (sizeReached) break;
                         }
 
-                        boolean fortune = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune"));
+                        boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
                         int actualMinedBlocks = 0;
 
                         for (Block block : validMinerBlocks)
                         {
-                            if(block.getType() == Material.GRAVEL)
+                            if (block.getType() == Material.GRAVEL)
                             {
                                 ItemStack flintDrop = new ItemStack(Material.FLINT);
                                 if (fortune)
@@ -117,6 +111,7 @@ public class BlockDugHandler implements Listener
                                 }
 
                                 block.setType(Material.AIR);
+
                                 if (Math.random() >= 0.9)
                                 {
                                     block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
@@ -128,7 +123,7 @@ public class BlockDugHandler implements Listener
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
                                     }
                                 }
-                            }else if(block.getType() == Material.CLAY)
+                            } else if (block.getType() == Material.CLAY)
                             {
                                 ItemStack clayDrop = new ItemStack(Material.CLAY_BALL);
                                 clayDrop.setAmount(Helper.randNumFromRange(1, 4));
@@ -140,20 +135,22 @@ public class BlockDugHandler implements Listener
                                 block.setType(Material.AIR);
                                 block.getWorld().dropItemNaturally(eventPlayer.getLocation(), clayDrop);
                             }
-                            actualMinedBlocks++;
 
+                            actualMinedBlocks++;
                             ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
-                            if(mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
+
+                            if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                             {
                                 int enchLevel = 0;
                                 enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
-                                double chance = (100 / (enchLevel+1)*1.0) / 100.0;
+                                double chance = (100 / (enchLevel + 1) * 1.0) / 100.0;
 
-                                if(Math.random() > (1-chance))
+                                if (Math.random() > (1 - chance))
                                 {
                                     damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                 }
-                            }else{
+                            } else
+                            {
                                 damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                             }
                         }
@@ -184,15 +181,12 @@ public class BlockDugHandler implements Listener
     @SuppressWarnings("deprecation")
     private void damageItem(Player player, ItemStack item)
     {
-
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {
-
             player.getInventory().removeItem(item);
         } else
         {
-
             player.getInventory().setItemInMainHand(item);
         }
     }
@@ -225,10 +219,8 @@ public class BlockDugHandler implements Listener
         // Iterate through all found blocks to
         for (Block b : allNeighbours)
         {
-
             if (b.getType() == eventMaterial)
             {
-
                 if (!current_search.contains(b) && !validMinerBlocks.contains(b))
                 {
                     continue;

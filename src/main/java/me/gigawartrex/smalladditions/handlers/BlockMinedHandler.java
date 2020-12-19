@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 public class BlockMinedHandler implements Listener
 {
-
     private Config config;
     private MessageHelper msghelp;
     private Leveling leveling;
@@ -38,36 +37,28 @@ public class BlockMinedHandler implements Listener
     private Block eventBlock;
     private Material eventMaterial;
 
-    /*
-     * Method to handle tree felling onBlockBreak event
-     */
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
-        
         //Check if player is using a valid tool
         if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
         {
-
             //Load needed classes
             config = new Config();
             msghelp = new MessageHelper();
-
             //Check if a allowed block was chopped
             //if (allowedBlockMats.contains(event.getBlock().getType())) {
             if (event.getBlock().getType().toString().contains("_ORE") || event.getBlock().getType() == Material.GLOWSTONE)
             {
-
                 eventPlayer = event.getPlayer();
                 leveling = new Leveling(eventPlayer);
 
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
+
                 if (active)
                 {
-
                     if (event.getPlayer().isSneaking())
                     {
-
                         //All needed information to proceed
                         eventBlock = event.getBlock();
                         eventMaterial = event.getBlock().getType();
@@ -83,12 +74,11 @@ public class BlockMinedHandler implements Listener
                         current_search.add(eventBlock);
 
                         boolean sizeReached = false;
+
                         while (true)
                         {
-
                             for (Block currSearchBlock : current_search)
                             {
-
                                 validMinerBlocks.add(currSearchBlock);
                                 cnt++;
 
@@ -97,7 +87,6 @@ public class BlockMinedHandler implements Listener
                                     sizeReached = true;
                                     break;
                                 }
-
                                 for (Block newBlock : findNeighbours(currSearchBlock))
                                 {
                                     if (!validMinerBlocks.contains(newBlock) && !to_search.contains(newBlock))
@@ -106,7 +95,6 @@ public class BlockMinedHandler implements Listener
                                     }
                                 }
                             }
-
                             if (to_search.isEmpty())
                             {
                                 break;
@@ -119,9 +107,10 @@ public class BlockMinedHandler implements Listener
                             if(sizeReached) break;
                         }
 
-                        boolean autosmelt = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt"));
-                        boolean fortune = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune"));
+                        boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
+                        boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
                         int actualMinedBlocks = 0;
+
                         for (Block block : validMinerBlocks)
                         {
                             if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
@@ -132,7 +121,6 @@ public class BlockMinedHandler implements Listener
                                     {
                                         item.setAmount(Helper.randNumFromRange(1, 4));
                                     }
-
                                     if (autosmelt)
                                     {
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), evaluateDrop(item));
@@ -173,11 +161,12 @@ public class BlockMinedHandler implements Listener
                                 actualMinedBlocks++;
 
                                 ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
+
                                 if(mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                                 {
                                     int enchLevel = 0;
                                     enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
-                                    double chance = (100 / (enchLevel+1)*1.0) / 100.0;
+                                    double chance = (100.0 / (enchLevel+1)*1.0) / 100.0;
 
                                     if(Math.random() > (1-chance))
                                     {
@@ -233,15 +222,12 @@ public class BlockMinedHandler implements Listener
     @SuppressWarnings("deprecation")
     private void damageItem(Player player, ItemStack item)
     {
-
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {
-
             player.getInventory().removeItem(item);
         } else
         {
-
             player.getInventory().setItemInMainHand(item);
         }
     }

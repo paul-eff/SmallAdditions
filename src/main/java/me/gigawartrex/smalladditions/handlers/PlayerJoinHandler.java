@@ -10,18 +10,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
-public class PlayerJoinHandler implements Listener {
-
+public class PlayerJoinHandler implements Listener
+{
     private Config config;
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-
+    public void onPlayerJoin(PlayerJoinEvent event)
+    {
         event.getPlayer().setSleepingIgnored(false);
         config = new Config();
 
-        if (config.read("Config.Players." + event.getPlayer().getUniqueId()).equals("")) {
-
+        if (config.read("Config.Players." + event.getPlayer().getUniqueId()).equals(""))
+        {
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Level", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Blocks", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + false);
@@ -37,28 +37,36 @@ public class PlayerJoinHandler implements Listener {
         boolean freeSlot = false;
         Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "README");
 
-        for(ItemStack stack : event.getPlayer().getInventory().getStorageContents()) {
-            if(stack != null) {
-                if(stack.getType().equals(Material.WRITTEN_BOOK)) {
+        for (ItemStack stack : event.getPlayer().getInventory().getStorageContents())
+        {
+            if (stack != null)
+            {
+                if (stack.getType().equals(Material.WRITTEN_BOOK))
+                {
 
-                    BookMeta meta = (BookMeta)stack.getItemMeta();
+                    BookMeta meta = (BookMeta) stack.getItemMeta();
 
-                    if(meta.getTitle().equals(refBook.getMeta().getTitle())) {
-                        if(meta.getAuthor().equals(refBook.getMeta().getAuthor())) {
-                            if(meta.getPages().equals(refBook.getMeta().getPages())) {
+                    if (meta.getTitle().equals(refBook.getMeta().getTitle()))
+                    {
+                        if (meta.getAuthor().equals(refBook.getMeta().getAuthor()))
+                        {
+                            if (meta.getPages().equals(refBook.getMeta().getPages()))
+                            {
                                 add = false;
                             }
                         }
                     }
                 }
-            }else if(!freeSlot){
+            } else if (!freeSlot)
+            {
                 freeSlot = true;
             }
         }
 
         boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?"));
 
-        if(add && freeSlot && !receivedBook) {
+        if (add && freeSlot && !receivedBook)
+        {
             event.getPlayer().getInventory().addItem(refBook);
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + true);
         }

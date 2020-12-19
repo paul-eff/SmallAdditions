@@ -30,68 +30,74 @@ public class PlayerDeathHandler implements Listener
         config = new Config();
         msghelp = new MessageHelper();
         eventPlayer = event.getEntity();
+        ItemStack[] playerInventoryContents = eventPlayer.getInventory().getContents().clone();
         Block origBlock = eventPlayer.getLocation().getBlock();
 
-        org.bukkit.block.data.type.Chest left = (org.bukkit.block.data.type.Chest)Material.CHEST.createBlockData();
-        org.bukkit.block.data.type.Chest right = (org.bukkit.block.data.type.Chest)Material.CHEST.createBlockData();
-        left.setType(org.bukkit.block.data.type.Chest.Type.RIGHT);
-        right.setType(org.bukkit.block.data.type.Chest.Type.LEFT);
-        origBlock.setBlockData(left, false);
-        origBlock.getRelative(BlockFace.WEST).setBlockData(right, false);
-
-        Location loc = origBlock.getLocation();
-        Block block = loc.getBlock();
-        org.bukkit.block.Chest chest = (org.bukkit.block.Chest)block.getState();
-        Inventory inv = chest.getInventory();
-
-        for(ItemStack item : eventPlayer.getInventory().getContents())
+        while (origBlock.getType() != Material.AIR || origBlock.getRelative(BlockFace.WEST).getType() != Material.AIR)
         {
-            if(item != null)
-            {
-                inv.addItem(item);
-            }
+            origBlock = origBlock.getRelative(BlockFace.UP);
         }
 
-        Block sign = origBlock.getRelative(BlockFace.NORTH);
-        sign.setType(Material.OAK_WALL_SIGN);
-        Sign s = (Sign) sign.getState();
-
-        String playerName = eventPlayer.getName();
-        if(playerName.length() > 15-2) {
-            s.setLine(0, playerName.substring(0,15));
-            if(playerName.substring(15).length() > 15-2)
-            {
-                s.setLine(1, playerName.substring(15, 30-2)+"..'s");
-            }else{
-                s.setLine(1, playerName.substring(15)+"'s");
-            }
-            s.setLine(2, "Deathbox");
-        }else{
-            s.setLine(0, playerName+"'s");
-            s.setLine(1, "Deathbox");
-        }
-        s.update();
-
-        //ExperienceOrb orb = block.getWorld().spawn(origBlock.getRelative(BlockFace.UP).getLocation(), ExperienceOrb.class);
-        //orb.setExperience(eventPlayer.getTotalExperience());
-
+        int newXP = event.getNewTotalExp();
         event.getDrops().clear();
+        Block finalOrigBlock = origBlock;
 
-        //System.out.println(eventPlayer.getExp());
-        //System.out.println(eventPlayer.getTotalExperience());
-        //System.out.println(eventPlayer.getExpToLevel());
-        //System.out.println(event.getNewExp());
-        //System.out.println(event.getNewTotalExp());
-        //System.out.println(event.getDroppedExp());
-        //event.setDroppedExp(eventPlayer.getTotalExperience());
+        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+        {
+            org.bukkit.block.data.type.Chest left = (org.bukkit.block.data.type.Chest) Material.CHEST.createBlockData();
+            org.bukkit.block.data.type.Chest right = (org.bukkit.block.data.type.Chest) Material.CHEST.createBlockData();
+            left.setType(org.bukkit.block.data.type.Chest.Type.RIGHT);
+            right.setType(org.bukkit.block.data.type.Chest.Type.LEFT);
+            finalOrigBlock.setBlockData(left, false);
+            finalOrigBlock.getRelative(BlockFace.WEST).setBlockData(right, false);
 
-        Location deathLoc = eventPlayer.getLocation();
+            Location loc = finalOrigBlock.getLocation();
+            Block block = loc.getBlock();
+            org.bukkit.block.Chest chest = (org.bukkit.block.Chest) block.getState();
+            Inventory inv = chest.getInventory();
+
+            for (ItemStack item : playerInventoryContents)
+            {
+                if (item != null)
+                {
+                    inv.addItem(item);
+                }
+            }
+
+            Block sign = finalOrigBlock.getRelative(BlockFace.NORTH);
+            sign.setType(Material.OAK_WALL_SIGN);
+            Sign s = (Sign) sign.getState();
+            String playerName = eventPlayer.getName();
+
+            if (playerName.length() > 15 - 2)
+            {
+                s.setLine(0, playerName.substring(0, 15));
+                if (playerName.substring(15).length() > 15 - 2)
+                {
+                    s.setLine(1, playerName.substring(15, 30 - 2) + "..'s");
+                } else
+                {
+                    s.setLine(1, playerName.substring(15) + "'s");
+                }
+                s.setLine(2, "Deathbox");
+            } else
+            {
+                s.setLine(0, playerName + "'s");
+                s.setLine(1, "Deathbox");
+            }
+            s.update();
+
+            ExperienceOrb orb = block.getWorld().spawn(finalOrigBlock.getRelative(BlockFace.UP).getLocation(), ExperienceOrb.class);
+            orb.setExperience(newXP);
+        }, 20 * 2);
+
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
             msghelp.sendPlayer(eventPlayer, "A Deathbox was left behind were you died.", ChatColor.RED);
-            msghelp.sendPlayer(eventPlayer, "Location: X: "+deathLoc.getBlockX()+
-                    " Y: "+deathLoc.getBlockY()+" Z: "+deathLoc.getBlockZ()+")", ChatColor.RED);
+            msghelp.sendPlayer(eventPlayer, "Location: X: " + finalOrigBlock.getX() +
+                    " Y: " + finalOrigBlock.getY() + " Z: " + finalOrigBlock.getZ() + ")", ChatColor.RED);
             msghelp.sendPlayer(eventPlayer, "Please remove the chest when found...", ChatColor.RED);
+            msghelp.sendConsole(eventPlayer.getName() + " died at X: \"" + finalOrigBlock.getX() + "\" Y: \"" + finalOrigBlock.getY() + "\" Z: \"" + finalOrigBlock.getZ() + "\" (Deathbox created)", ChatColor.WHITE);
         }, 20 * 3);
     }
 }
