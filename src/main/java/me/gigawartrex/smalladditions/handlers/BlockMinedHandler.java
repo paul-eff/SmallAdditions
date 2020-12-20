@@ -172,7 +172,6 @@ public class BlockMinedHandler implements Listener
                                             xpToDrop = Helper.randNumFromRange(0, 1);
                                             break;*/
                                     }
-                                    System.out.println(xpToDrop);
                                     if (xpToDrop > 0)
                                     {
                                         block.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class).setExperience(xpToDrop);

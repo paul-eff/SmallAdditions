@@ -44,8 +44,6 @@ public class BlockChoppedHandler implements Listener
                 Leveling leveling = new Leveling(eventPlayer);
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
-                System.out.println(active);
-
                 if (active)
                 {
                     if (event.getPlayer().isSneaking())
@@ -68,8 +66,6 @@ public class BlockChoppedHandler implements Listener
                         int cnt = 0;
                         boolean hasLeaves = false;
                         maxLumberjackSize = Integer.parseInt(config.read("Config.Settings.maxLumberjackSize"));
-
-                        System.out.println(maxLumberjackSize);
 
                         ArrayList<Block> validLumberjackBlocks = new ArrayList<>();
                         ArrayList<Block> current_search = new ArrayList<>();
@@ -112,8 +108,6 @@ public class BlockChoppedHandler implements Listener
                             }
                             if (sizeReached) break;
                         }
-
-                        System.out.println(validLumberjackBlocks.size());
 
                         ArrayList<Block> saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));
                         saplingNeighbours.clear();
