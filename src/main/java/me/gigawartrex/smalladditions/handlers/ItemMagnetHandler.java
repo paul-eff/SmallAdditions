@@ -6,7 +6,11 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ItemMagnetHandler
 {
@@ -35,12 +39,17 @@ public class ItemMagnetHandler
                                     double rolloffDistance = Math.max(16, 16 * volume);
                                     double distance = player.getLocation().distance(ent.getLocation());
                                     double volumeOfSoundAtPlayer = sourceVolume * (1 - distance / rolloffDistance) * 1.0;
+                                    boolean wasReduced = false;
 
-                                    player.getInventory().addItem(((Item) ent).getItemStack()).forEach((slotNum, itemStack) -> {
-                                        player.getLocation().getBlock().getWorld().dropItemNaturally(player.getLocation(), itemStack);
-                                    });
-                                    player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, (float) volumeOfSoundAtPlayer, 1.0F);
-                                    ent.remove();
+                                    for (Map.Entry<Integer, ItemStack> entry : player.getInventory().addItem(((Item) ent).getItemStack()).entrySet())
+                                    {
+                                        ItemStack itemStack = entry.getValue();
+                                        //player.getLocation().getBlock().getWorld().dropItemNaturally(ent.getLocation(), itemStack);
+                                        ((Item) ent).getItemStack().setAmount(itemStack.getAmount());
+                                        wasReduced = true;
+                                    }
+                                    if (!wasReduced)
+                                        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, (float) volumeOfSoundAtPlayer, 1.0F);
                                 }
                             }
                         }
