@@ -2,19 +2,18 @@ package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ItemMagnetHandler
 {
+    Config config = new Config();
+
     public ItemMagnetHandler()
     {
-        Config config = new Config();
         // Magnet Loop, picks up items for all players that have it activated.
         new BukkitRunnable()
         {

@@ -11,16 +11,12 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class ItemBreakHandler implements Listener
 {
-    private Player eventPlayer;
-    private ItemStack eventItem;
-    private Material eventMaterial;
-
     @EventHandler
     public void onItemBreak(PlayerItemBreakEvent event)
     {
-        eventPlayer = event.getPlayer();
-        eventItem = event.getBrokenItem();
-        eventMaterial = event.getBrokenItem().getType();
+        Player eventPlayer = event.getPlayer();
+        ItemStack eventItem = event.getBrokenItem();
+        Material eventMaterial = event.getBrokenItem().getType();
 
         PlayerInventory inv = eventPlayer.getInventory();
         boolean itemSwapped = false;

@@ -16,7 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -111,21 +110,21 @@ public class BlockMinedHandler implements Listener
                                     {
                                         int enchLevel = 0;
                                         enchLevel = mainHand.getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS);
-                                        double randChange = Math.random();
+                                        double randChance = Math.random();
 
                                         switch (enchLevel)
                                         {
                                             case 1:
-                                                if(randChange > 0.66) item.setAmount(item.getAmount() * 2);
+                                                if(randChance > 0.66) item.setAmount(item.getAmount() * 2);
                                                 break;
                                             case 2:
-                                                if(randChange > 0.5 && randChange <= 0.75) item.setAmount(item.getAmount() * 2);
-                                                else if(randChange > 0.75) item.setAmount(item.getAmount() * 3);
+                                                if(randChance > 0.5 && randChance <= 0.75) item.setAmount(item.getAmount() * 2);
+                                                else if(randChance > 0.75) item.setAmount(item.getAmount() * 3);
                                                 break;
                                             case 3:
-                                                if(randChange > 0.4 && randChange <= 0.6) item.setAmount(item.getAmount() * 2);
-                                                if(randChange > 0.6 && randChange <= 0.8) item.setAmount(item.getAmount() * 3);
-                                                else if(randChange > 0.8) item.setAmount(item.getAmount() * 4);
+                                                if(randChance > 0.4 && randChance <= 0.6) item.setAmount(item.getAmount() * 2);
+                                                if(randChance > 0.6 && randChance <= 0.8) item.setAmount(item.getAmount() * 3);
+                                                else if(randChance > 0.8) item.setAmount(item.getAmount() * 4);
                                                 break;
                                             default:
                                                 System.out.println("[SmallAdditions] BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level ("+enchLevel+")");

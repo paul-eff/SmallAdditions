@@ -1,6 +1,5 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Bukkit;

@@ -12,19 +12,19 @@ import org.bukkit.inventory.meta.BookMeta;
 
 public class PlayerJoinHandler implements Listener
 {
-    private Config config;
+    private Config config = new Config();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)
     {
         event.getPlayer().setSleepingIgnored(false);
-        config = new Config();
 
         if (config.read("Config.Players." + event.getPlayer().getUniqueId()).equals(""))
         {
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Level", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Blocks", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + false);
+            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Magnet", "" + false);
 
             config.writePlayerStatus(event.getPlayer(), false);
             for (String mod : Constants.modsList)

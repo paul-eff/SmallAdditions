@@ -20,18 +20,12 @@ import java.util.Arrays;
 
 public class BlockDugHandler implements Listener
 {
-    private Config config;
-    private Leveling leveling;
-    private MessageHelper msghelp;
-    private ArrayList<Block> validMinerBlocks;
-    private ArrayList<Block> current_search;
-    private ArrayList<Block> to_search;
+    private Config config = new Config();
+    private MessageHelper msghelp = new MessageHelper();
+
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL)); // Allowed Tools
     private ArrayList<Material> allowedMaterials = new ArrayList<>(Arrays.asList(Material.GRAVEL, Material.CLAY)); // Allowed Materials
     private int maxMinerSize = 0;
-    private Player eventPlayer;
-    private Block eventBlock;
-    private Material eventMaterial;
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
@@ -42,10 +36,9 @@ public class BlockDugHandler implements Listener
             //Check if a allowed block was chopped
             if (allowedMaterials.contains(event.getBlock().getType()))
             {
-                config = new Config();
-                msghelp = new MessageHelper();
-                eventPlayer = event.getPlayer();
-                leveling = new Leveling(eventPlayer);
+                Player eventPlayer = event.getPlayer();
+                Leveling leveling = new Leveling(eventPlayer);
+
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
                 if (active)
@@ -53,16 +46,16 @@ public class BlockDugHandler implements Listener
                     if (event.getPlayer().isSneaking())
                     {
                         //All needed information to proceed
-                        eventBlock = event.getBlock();
-                        eventMaterial = event.getBlock().getType();
+                        Block eventBlock = event.getBlock();
+                        Material eventMaterial = event.getBlock().getType();
                         //Structural detection of ore vein
                         int cnt = 0;
                         maxMinerSize = Integer.parseInt(config.read("Config.Settings.maxMinerSize"));
-                        validMinerBlocks = new ArrayList<>();
-                        current_search = new ArrayList<>();
-                        to_search = new ArrayList<>();
-                        current_search.add(eventBlock);
+                        ArrayList<Block> validMinerBlocks = new ArrayList<>();
+                        ArrayList<Block> current_search = new ArrayList<>();
+                        ArrayList<Block> to_search = new ArrayList<>();
 
+                        current_search.add(eventBlock);
                         boolean sizeReached = false;
 
                         while (true)
@@ -77,7 +70,7 @@ public class BlockDugHandler implements Listener
                                     sizeReached = true;
                                     break;
                                 }
-                                for (Block newBlock : findNeighbours(currSearchBlock))
+                                for (Block newBlock : findNeighbours(eventPlayer, eventMaterial, current_search, validMinerBlocks, currSearchBlock))
                                 {
                                     if (!validMinerBlocks.contains(newBlock) && !to_search.contains(newBlock))
                                     {
@@ -105,6 +98,7 @@ public class BlockDugHandler implements Listener
                             if (block.getType() == Material.GRAVEL)
                             {
                                 ItemStack flintDrop = new ItemStack(Material.FLINT);
+
                                 if (fortune)
                                 {
                                     flintDrop.setAmount(Helper.randNumFromRange(1, 4));
@@ -112,16 +106,12 @@ public class BlockDugHandler implements Listener
 
                                 block.setType(Material.AIR);
 
-                                if (Math.random() >= 0.9)
+                                if (Math.random() > 0.9)
                                 {
                                     block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
                                 } else
                                 {
                                     block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(Material.GRAVEL));
-                                    if (fortune && Math.random() >= 0.9)
-                                    {
-                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
-                                    }
                                 }
                             } else if (block.getType() == Material.CLAY)
                             {
@@ -197,7 +187,7 @@ public class BlockDugHandler implements Listener
      * @param block The block all neighbours are wanted for
      * @return An ArrayList of all neighbour blocks
      */
-    private ArrayList<Block> findNeighbours(Block block)
+    private ArrayList<Block> findNeighbours(Player eventPlayer, Material eventMaterial, ArrayList<Block> current_search, ArrayList<Block> validMinerBlocks, Block block)
     {
         ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();

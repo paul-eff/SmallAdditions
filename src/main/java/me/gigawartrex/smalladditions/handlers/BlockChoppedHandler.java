@@ -23,26 +23,12 @@ import java.util.Arrays;
 
 public class BlockChoppedHandler implements Listener
 {
-    private Config config;
-    private MessageHelper msghelp;
-    private Leveling leveling;
-
-    private ArrayList<Block> validLumberjackBlocks;
-    private ArrayList<Block> current_search;
-    private ArrayList<Block> to_search;
+    private Config config = new Config();
+    private MessageHelper msghelp = new MessageHelper();
 
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE)); // Allowed Tools
-
-    private boolean hasLeaves = false;
-    private boolean firstBlockIsGrounded = false;
     private int maxLumberjackSize = 0;
-    private ArrayList<Block> saplingNeighbours;
-
     private int timeToReplant = 2; //in Seconds
-
-    private Player eventPlayer;
-    private Block eventBlock;
-    private Material eventMaterial;
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
@@ -50,16 +36,12 @@ public class BlockChoppedHandler implements Listener
         //Check if player is using a valid tool
         if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
         {
-            //Load needed classes
-            config = new Config();
-            msghelp = new MessageHelper();
             //Check if a allowed block was chopped
             //if (allowedBlockMats.contains(event.getBlock().getType())) {
             if (event.getBlock().getType().toString().contains("_LOG"))
             {
-                eventPlayer = event.getPlayer();
-                leveling = new Leveling(eventPlayer);
-
+                Player eventPlayer = event.getPlayer();
+                Leveling leveling = new Leveling(eventPlayer);
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
                 if (active)
@@ -67,10 +49,10 @@ public class BlockChoppedHandler implements Listener
                     if (event.getPlayer().isSneaking())
                     {
                         //All needed information to proceed
-                        eventBlock = event.getBlock();
-                        eventMaterial = event.getBlock().getType();
+                        Block eventBlock = event.getBlock();
+                        Material eventMaterial = event.getBlock().getType();
                         //Reset variable(s)
-                        firstBlockIsGrounded = false;
+                        boolean firstBlockIsGrounded = false;
                         //Check if chopped block is grounded to later evaluate replant conditions
                         Location locUnderOrigBlock = Helper.getLocation(eventPlayer, event.getBlock().getLocation(), 0, -1, 0);
                         boolean isDirt = locUnderOrigBlock.getBlock().getType().equals(Material.DIRT);
@@ -82,12 +64,12 @@ public class BlockChoppedHandler implements Listener
                         }
                         //Structural detection of tree
                         int cnt = 0;
-                        hasLeaves = false;
+                        boolean hasLeaves = false;
                         maxLumberjackSize = Integer.parseInt(config.read("Config.Settings.maxLumberjackSize"));
 
-                        validLumberjackBlocks = new ArrayList<>();
-                        current_search = new ArrayList<>();
-                        to_search = new ArrayList<>();
+                        ArrayList<Block> validLumberjackBlocks = new ArrayList<>();
+                        ArrayList<Block> current_search = new ArrayList<>();
+                        ArrayList<Block> to_search = new ArrayList<>();
 
                         current_search.add(eventBlock);
 
@@ -105,7 +87,7 @@ public class BlockChoppedHandler implements Listener
                                     sizeReached = true;
                                     break;
                                 }
-                                for (Block newBlock : findNeighbours(currSearchBlock))
+                                for (Block newBlock : findNeighbours(eventPlayer, eventMaterial, hasLeaves, current_search, validLumberjackBlocks, currSearchBlock))
                                 {
                                     if (!validLumberjackBlocks.contains(newBlock) && !to_search.contains(newBlock))
                                     {
@@ -125,7 +107,7 @@ public class BlockChoppedHandler implements Listener
                             if (sizeReached) break;
                         }
 
-                        saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));
+                        ArrayList<Block> saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));
                         saplingNeighbours.clear();
 
                         if (eventBlock.getRelative(BlockFace.NORTH).getType() == eventMaterial)
@@ -197,7 +179,7 @@ public class BlockChoppedHandler implements Listener
 
                                 if (replant && replantConfig)
                                 {
-                                    plantSapling(eventBlock, (saplingNeighbours.size() > 1));
+                                    plantSapling(eventBlock, eventMaterial, saplingNeighbours, (saplingNeighbours.size() > 1));
                                 }
                             }
 
@@ -242,7 +224,7 @@ public class BlockChoppedHandler implements Listener
      * @param origBlock The firstly hit block of the tree
      * @param bigTree   Is it a "big tree" -> is the stem 2x2
      */
-    private void plantSapling(Block origBlock, Boolean bigTree)
+    private void plantSapling(Block origBlock, Material eventMaterial, ArrayList<Block> saplingNeighbours, Boolean bigTree)
     {
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
@@ -270,7 +252,7 @@ public class BlockChoppedHandler implements Listener
      * @param block The block all neighbours are wanted for
      * @return An ArrayList of all neighbour blocks
      */
-    private ArrayList<Block> findNeighbours(Block block)
+    private ArrayList<Block> findNeighbours(Player eventPlayer, Material eventMaterial, boolean hasLeaves, ArrayList<Block> current_search, ArrayList<Block> validLumberjackBlocks, Block block)
     {
         ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();
