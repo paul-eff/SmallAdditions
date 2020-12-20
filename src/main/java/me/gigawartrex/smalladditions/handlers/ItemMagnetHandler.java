@@ -30,12 +30,15 @@ public class ItemMagnetHandler
                             {
                                 if (player.getLocation().distance(ent.getLocation()) >= 1.5)
                                 {
-                                    player.getInventory().addItem(((Item) ent).getItemStack());
                                     double volume = 0.5;
                                     double sourceVolume = Math.max(0.0, Math.min(volume, 1.0));
                                     double rolloffDistance = Math.max(16, 16 * volume);
                                     double distance = player.getLocation().distance(ent.getLocation());
                                     double volumeOfSoundAtPlayer = sourceVolume * (1 - distance / rolloffDistance) * 1.0;
+
+                                    player.getInventory().addItem(((Item) ent).getItemStack()).forEach((slotNum, itemStack) -> {
+                                        player.getLocation().getBlock().getWorld().dropItemNaturally(player.getLocation(), itemStack);
+                                    });
                                     player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, (float) volumeOfSoundAtPlayer, 1.0F);
                                     ent.remove();
                                 }
