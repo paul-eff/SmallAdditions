@@ -44,6 +44,8 @@ public class BlockChoppedHandler implements Listener
                 Leveling leveling = new Leveling(eventPlayer);
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
+                System.out.println(active);
+
                 if (active)
                 {
                     if (event.getPlayer().isSneaking())
@@ -67,6 +69,8 @@ public class BlockChoppedHandler implements Listener
                         boolean hasLeaves = false;
                         maxLumberjackSize = Integer.parseInt(config.read("Config.Settings.maxLumberjackSize"));
 
+                        System.out.println(maxLumberjackSize);
+
                         ArrayList<Block> validLumberjackBlocks = new ArrayList<>();
                         ArrayList<Block> current_search = new ArrayList<>();
                         ArrayList<Block> to_search = new ArrayList<>();
@@ -87,7 +91,9 @@ public class BlockChoppedHandler implements Listener
                                     sizeReached = true;
                                     break;
                                 }
-                                for (Block newBlock : findNeighbours(eventPlayer, eventMaterial, hasLeaves, current_search, validLumberjackBlocks, currSearchBlock))
+                                Object[] tempFindNeighbours = findNeighbours(eventPlayer, eventMaterial, current_search, validLumberjackBlocks, currSearchBlock);
+                                hasLeaves = (boolean)tempFindNeighbours[0];
+                                for (Block newBlock : (ArrayList<Block>) tempFindNeighbours[1])
                                 {
                                     if (!validLumberjackBlocks.contains(newBlock) && !to_search.contains(newBlock))
                                     {
@@ -106,6 +112,8 @@ public class BlockChoppedHandler implements Listener
                             }
                             if (sizeReached) break;
                         }
+
+                        System.out.println(validLumberjackBlocks.size());
 
                         ArrayList<Block> saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));
                         saplingNeighbours.clear();
@@ -252,8 +260,9 @@ public class BlockChoppedHandler implements Listener
      * @param block The block all neighbours are wanted for
      * @return An ArrayList of all neighbour blocks
      */
-    private ArrayList<Block> findNeighbours(Player eventPlayer, Material eventMaterial, boolean hasLeaves, ArrayList<Block> current_search, ArrayList<Block> validLumberjackBlocks, Block block)
+    private Object[] findNeighbours(Player eventPlayer, Material eventMaterial, ArrayList<Block> current_search, ArrayList<Block> validLumberjackBlocks, Block block)
     {
+        boolean hasLeaves = false;
         ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();
         int[] blockCord = {block.getX(), block.getY(), block.getZ()};
@@ -288,6 +297,7 @@ public class BlockChoppedHandler implements Listener
             }
             validNeighbours.remove(b);
         }
-        return validNeighbours;
+
+        return new Object[]{hasLeaves, validNeighbours};
     }
 }
