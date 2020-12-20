@@ -20,21 +20,23 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerDeathHandler implements Listener
 {
-    private Config config;
-    private MessageHelper msghelp;
-    private Player eventPlayer;
+    private MessageHelper msghelp = new MessageHelper();
 
     @EventHandler
     public void onBlockBreak(PlayerDeathEvent event)
     {
-        config = new Config();
-        msghelp = new MessageHelper();
-        eventPlayer = event.getEntity();
+        Player eventPlayer = event.getEntity();
         ItemStack[] playerInventoryContents = eventPlayer.getInventory().getContents().clone();
         Block origBlock = eventPlayer.getLocation().getBlock();
 
         while (origBlock.getType() != Material.AIR || origBlock.getRelative(BlockFace.WEST).getType() != Material.AIR)
         {
+            if (origBlock.getRelative(BlockFace.UP).getType() == Material.BEDROCK ||
+                    (eventPlayer.getLocation().getY() + 50) <= origBlock.getLocation().getY())
+            {
+                origBlock = eventPlayer.getLocation().getBlock();
+                break;
+            }
             origBlock = origBlock.getRelative(BlockFace.UP);
         }
 
