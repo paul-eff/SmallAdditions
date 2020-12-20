@@ -16,26 +16,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BlockMinedHandler implements Listener
 {
-    private Config config;
-    private MessageHelper msghelp;
-    private Leveling leveling;
-
-    private ArrayList<Block> validMinerBlocks;
-    private ArrayList<Block> current_search;
-    private ArrayList<Block> to_search;
+    private Config config = new Config();
+    private MessageHelper msghelp = new MessageHelper();
 
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE)); // Allowed Tools
-
     private int maxMinerSize = 0;
-
-    private Player eventPlayer;
-    private Block eventBlock;
-    private Material eventMaterial;
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
@@ -43,15 +34,12 @@ public class BlockMinedHandler implements Listener
         //Check if player is using a valid tool
         if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
         {
-            //Load needed classes
-            config = new Config();
-            msghelp = new MessageHelper();
             //Check if a allowed block was chopped
             //if (allowedBlockMats.contains(event.getBlock().getType())) {
             if (event.getBlock().getType().toString().contains("_ORE") || event.getBlock().getType() == Material.GLOWSTONE)
             {
-                eventPlayer = event.getPlayer();
-                leveling = new Leveling(eventPlayer);
+                Player eventPlayer = event.getPlayer();
+                Leveling leveling = new Leveling(eventPlayer);
 
                 boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
 
@@ -60,16 +48,16 @@ public class BlockMinedHandler implements Listener
                     if (event.getPlayer().isSneaking())
                     {
                         //All needed information to proceed
-                        eventBlock = event.getBlock();
-                        eventMaterial = event.getBlock().getType();
+                        Block eventBlock = event.getBlock();
+                        Material eventMaterial = event.getBlock().getType();
 
                         //Structural detection of ore vein
                         int cnt = 0;
                         maxMinerSize = Integer.parseInt(config.read("Config.Settings.maxMinerSize"));
 
-                        validMinerBlocks = new ArrayList<>();
-                        current_search = new ArrayList<>();
-                        to_search = new ArrayList<>();
+                        ArrayList<Block> validMinerBlocks = new ArrayList<>();
+                        ArrayList<Block> current_search = new ArrayList<>();
+                        ArrayList<Block> to_search = new ArrayList<>();
 
                         current_search.add(eventBlock);
 
@@ -82,12 +70,12 @@ public class BlockMinedHandler implements Listener
                                 validMinerBlocks.add(currSearchBlock);
                                 cnt++;
 
-                                if(cnt >= maxMinerSize)
+                                if (cnt >= maxMinerSize)
                                 {
                                     sizeReached = true;
                                     break;
                                 }
-                                for (Block newBlock : findNeighbours(currSearchBlock))
+                                for (Block newBlock : findNeighbours(eventPlayer, eventMaterial, current_search, validMinerBlocks, currSearchBlock))
                                 {
                                     if (!validMinerBlocks.contains(newBlock) && !to_search.contains(newBlock))
                                     {
@@ -104,7 +92,7 @@ public class BlockMinedHandler implements Listener
                                 current_search.addAll(to_search);
                                 to_search.clear();
                             }
-                            if(sizeReached) break;
+                            if (sizeReached) break;
                         }
 
                         boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
@@ -117,9 +105,34 @@ public class BlockMinedHandler implements Listener
                             {
                                 for (ItemStack item : block.getDrops(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType())))
                                 {
-                                    if (fortune && autosmelt)
+                                    ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
+
+                                    if (mainHand.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS))
                                     {
-                                        item.setAmount(Helper.randNumFromRange(1, 4));
+                                        int enchLevel = 0;
+                                        enchLevel = mainHand.getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS);
+                                        double randChange = Math.random();
+
+                                        switch (enchLevel)
+                                        {
+                                            case 1:
+                                                if(randChange > 0.66) item.setAmount(item.getAmount() * 2);
+                                                break;
+                                            case 2:
+                                                if(randChange > 0.5 && randChange <= 0.75) item.setAmount(item.getAmount() * 2);
+                                                else if(randChange > 0.75) item.setAmount(item.getAmount() * 3);
+                                                break;
+                                            case 3:
+                                                if(randChange > 0.4 && randChange <= 0.6) item.setAmount(item.getAmount() * 2);
+                                                if(randChange > 0.6 && randChange <= 0.8) item.setAmount(item.getAmount() * 3);
+                                                else if(randChange > 0.8) item.setAmount(item.getAmount() * 4);
+                                                break;
+                                            default:
+                                                System.out.println("[SmallAdditions] BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level ("+enchLevel+")");
+                                        }
+                                    } else if (fortune && ((block.getType() != item.getType()) || autosmelt))
+                                    {
+                                        item.setAmount(Helper.randNumFromRange(1, 3));
                                     }
                                     if (autosmelt)
                                     {
@@ -128,32 +141,42 @@ public class BlockMinedHandler implements Listener
                                     {
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
                                     }
-                                    ExperienceOrb orb = block.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class);
+                                    int xpToDrop = 0;
                                     switch (block.getType().toString())
                                     {
                                         case "COAL_ORE":
-                                            orb.setExperience(Helper.randNumFromRange(0, 2));
+                                            xpToDrop = Helper.randNumFromRange(0, 2);
                                             break;
                                         case "DIAMOND_ORE":
                                         case "EMERALD_ORE":
-                                            orb.setExperience(Helper.randNumFromRange(3, 7));
+                                            xpToDrop = Helper.randNumFromRange(3, 7);
                                             break;
                                         case "LAPIS_ORE":
                                         case "NETHER_QUARTZ_ORE":
-                                            orb.setExperience(Helper.randNumFromRange(2, 5));
+                                            xpToDrop = Helper.randNumFromRange(2, 5);
                                             break;
                                         case "REDSTONE_ORE":
-                                            orb.setExperience(Helper.randNumFromRange(1, 5));
+                                            xpToDrop = Helper.randNumFromRange(1, 5);
                                             break;
                                         case "IRON_ORE":
                                         case "GOLD_ORE":
                                             if (autosmelt)
                                             {
-                                                orb.setExperience(1);
+                                                xpToDrop = 1;
                                             }
                                             break;
-                                        default:
-                                            orb.remove();
+                                        case "SPAWNER":
+                                            xpToDrop = Helper.randNumFromRange(15, 43);
+                                            break;
+                                        /* TODO: When plugin goes 1.16.X update to accept nether gold ore
+                                        case "NETHER_GOLD_ORE":
+                                            xpToDrop = Helper.randNumFromRange(0, 1);
+                                            break;*/
+                                    }
+                                    System.out.println(xpToDrop);
+                                    if (xpToDrop > 0)
+                                    {
+                                        block.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class).setExperience(xpToDrop);
                                     }
                                 }
 
@@ -162,17 +185,18 @@ public class BlockMinedHandler implements Listener
 
                                 ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
 
-                                if(mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
+                                if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                                 {
                                     int enchLevel = 0;
                                     enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
-                                    double chance = (100.0 / (enchLevel+1)*1.0) / 100.0;
+                                    double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
 
-                                    if(Math.random() > (1-chance))
+                                    if (Math.random() > (1 - chance))
                                     {
                                         damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                     }
-                                }else{
+                                } else
+                                {
                                     damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                 }
                             }
@@ -238,7 +262,7 @@ public class BlockMinedHandler implements Listener
      * @param block The block all neighbours are wanted for
      * @return An ArrayList of all neighbour blocks
      */
-    private ArrayList<Block> findNeighbours(Block block)
+    private ArrayList<Block> findNeighbours(Player eventPlayer, Material eventMaterial, ArrayList<Block> current_search, ArrayList<Block> validMinerBlocks, Block block)
     {
         ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();
