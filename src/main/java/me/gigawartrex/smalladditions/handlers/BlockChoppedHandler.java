@@ -26,7 +26,7 @@ public class BlockChoppedHandler implements Listener
     private Config config = new Config();
     private MessageHelper msghelp = new MessageHelper();
 
-    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE)); // Allowed Tools
+    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE)); // Allowed Tools
     private int maxLumberjackSize = 0;
     private int timeToReplant = 2; //in Seconds
 

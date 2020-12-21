@@ -53,7 +53,7 @@
         </resources>
     </build>
 
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -67,5 +67,19 @@
             <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+    </dependencies>-->
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/Paul/Desktop/craftbukkit-1.16.4.jar</systemPath>
+            <!--<systemPath>${project.basedir}/src/main/resources/craftbukkit-1.16.4.jar</systemPath>-->
+        </dependency>
     </dependencies>
+
+
+
 </project>
