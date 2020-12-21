@@ -75,7 +75,8 @@
             <artifactId>bukkit</artifactId>
             <version>1.16.4-R0.1-SNAPSHOT</version>
             <scope>system</scope>
-            <systemPath>C:/Users/Paul/Desktop/craftbukkit-1.16.4.jar</systemPath>
+            <systemPath>${project.basedir}/craftbukkit-1.16.4.jar</systemPath>
+            <!--<systemPath>C:/Users/Paul/Desktop/craftbukkit-1.16.4.jar</systemPath>-->
             <!--<systemPath>${project.basedir}/src/main/resources/craftbukkit-1.16.4.jar</systemPath>-->
         </dependency>
     </dependencies>
