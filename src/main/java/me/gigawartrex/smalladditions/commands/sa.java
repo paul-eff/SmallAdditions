@@ -4,7 +4,7 @@ import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
-import me.gigawartrex.smalladditions.itemmenu.IconMenu;
+import me.gigawartrex.smalladditions.helpers.IconMenu;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

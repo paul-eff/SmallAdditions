@@ -1,4 +1,4 @@
-package me.gigawartrex.smalladditions.itemmenu;
+package me.gigawartrex.smalladditions.helpers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
