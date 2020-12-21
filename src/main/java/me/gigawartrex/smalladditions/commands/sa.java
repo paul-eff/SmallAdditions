@@ -55,19 +55,6 @@ public class sa implements CommandExecutor
                             player.sendMessage("Block's Meta: " + dropsMeta);
                             player.sendMessage("Block's Else: " + dropsElse);
                             */
-
-                            /*ItemStack[] invArray = player.getInventory().getContents();
-                            int counter = 0;
-                            for (ItemStack item : invArray)
-                            {
-                                String itemName = "null";
-                                if(item != null)
-                                {
-                                    itemName = item.getType().toString();
-                                }
-                                System.out.println("Slot " + counter + ": " + itemName);
-                                counter++;
-                            }*/
                         } else
                         {
                             msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);

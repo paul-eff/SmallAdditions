@@ -16,6 +16,8 @@ public class PlayerEnteredBedHandler implements Listener
     private MessageHelper msghelp;
     private float percentageNeeded = 0.25f;
 
+    private boolean oneWillWakeUp = false;
+
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
@@ -49,30 +51,43 @@ public class PlayerEnteredBedHandler implements Listener
 
                     for (Player player : playersInSameWorld)
                     {
+                        int playersNeeded = (int) Math.ceil((percentageNeeded / (percentageSleeping / playersSleeping))) - playersSleeping;
+
                         if (player != eventPlayer)
                         {
                             if (percentageSleeping < percentageNeeded)
                             {
-                                int playersNeeded = (int) Math.ceil((percentageNeeded / (percentageSleeping / playersSleeping))) - playersSleeping;
                                 msghelp.sendPlayer(player, eventPlayer.getName() + " just went to bed! " + ChatColor.WHITE + "(" + ChatColor.RED + playersNeeded + ChatColor.WHITE + " more needed)", ChatColor.GOLD);
                             } else
                             {
                                 msghelp.sendPlayer(player, eventPlayer.getName() + " just went to bed! Good night...", ChatColor.GOLD);
                             }
+                        } else
+                        {
+                            if (percentageSleeping < percentageNeeded)
+                            {
+                                msghelp.sendPlayer(player, "Good night " + player.getName() + "! " + ChatColor.WHITE + "(" + ChatColor.RED + playersNeeded + ChatColor.WHITE + " more needed)", ChatColor.GOLD);
+                            } else
+                            {
+                                msghelp.sendPlayer(player, "Good night " + player.getName() + "!", ChatColor.GOLD);
+                            }
                         }
                     }
-                    if (percentageSleeping >= percentageNeeded)
+                    if (percentageSleeping >= percentageNeeded && !oneWillWakeUp)
                     {
+                        oneWillWakeUp = true;
                         new BukkitRunnable()
                         {
                             @Override
                             public void run()
                             {
+                                eventPlayer.getWorld().getFullTime();
                                 eventPlayer.getWorld().setTime(0);
                                 for (Player player : playersInSameWorld)
                                 {
                                     msghelp.sendPlayer(player, "Wakey-wakey, rise and shine!", ChatColor.GOLD);
                                 }
+                                oneWillWakeUp = false;
                             }
                         }.runTaskLater(Constants.plugin, 20L * 3);
                     }
