@@ -44,7 +44,7 @@ public class PlayerEnteredBedHandler implements Listener
             @Override
             public void run()
             {
-                if (eventPlayer.isSleeping())
+                if (eventPlayer.isSleeping() && !oneWillWakeUp)
                 {
                     int playersSleeping = finalPlayersSleeping + 1;
                     float percentageSleeping = (playersSleeping * 1.0f) / (playersInSameWorld.size() * 1.0f);
