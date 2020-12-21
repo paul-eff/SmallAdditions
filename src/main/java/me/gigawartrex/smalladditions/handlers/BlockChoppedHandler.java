@@ -27,6 +27,7 @@ public class BlockChoppedHandler implements Listener
     private MessageHelper msghelp = new MessageHelper();
 
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE)); // Allowed Tools
+    private ArrayList<Material> validLogs = new ArrayList<>(Arrays.asList(Material.CRIMSON_STEM, Material.WARPED_STEM)); // Allowed log types
     private int maxLumberjackSize = 0;
     private int timeToReplant = 2; //in Seconds
 
@@ -38,7 +39,7 @@ public class BlockChoppedHandler implements Listener
         {
             //Check if a allowed block was chopped
             //if (allowedBlockMats.contains(event.getBlock().getType())) {
-            if (event.getBlock().getType().toString().contains("_LOG"))
+            if (event.getBlock().getType().toString().contains("_LOG") || validLogs.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
                 Leveling leveling = new Leveling(eventPlayer);

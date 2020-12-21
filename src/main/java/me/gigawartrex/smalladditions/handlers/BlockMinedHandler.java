@@ -25,6 +25,7 @@ public class BlockMinedHandler implements Listener
     private MessageHelper msghelp = new MessageHelper();
 
     private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed Tools
+    private ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.ANCIENT_DEBRIS, Material.BONE_BLOCK)); // Allowed blocks
     private int maxMinerSize = 0;
 
     @EventHandler
@@ -35,7 +36,7 @@ public class BlockMinedHandler implements Listener
         {
             //Check if a allowed block was chopped
             //if (allowedBlockMats.contains(event.getBlock().getType())) {
-            if (event.getBlock().getType().toString().contains("_ORE") || event.getBlock().getType() == Material.GLOWSTONE)
+            if (event.getBlock().getType().toString().contains("_ORE") || validOres.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
                 Leveling leveling = new Leveling(eventPlayer);
