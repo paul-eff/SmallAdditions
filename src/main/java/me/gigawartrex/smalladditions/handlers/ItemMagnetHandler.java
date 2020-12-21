@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ItemMagnetHandler
@@ -28,28 +27,75 @@ public class ItemMagnetHandler
                 {
                     if (Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Magnet")) && !player.isSneaking())
                     {
+                        boolean playedSound = false;
+                        boolean changesInWorld = false;
+
                         for (Entity ent : player.getNearbyEntities(8, 4, 8))
                         {
                             if (ent instanceof Item)
                             {
+
                                 if (player.getLocation().distance(ent.getLocation()) >= 1.5)
+                                {
+                                    ItemStack item = ((Item) ent).getItemStack();
+                                    int amountBeforeAdd = item.getAmount();
+                                    boolean onlyWholeStacks = true;
+
+                                    for (Map.Entry<Integer, ItemStack> entry : player.getInventory().addItem(((Item) ent).getItemStack()).entrySet())
+                                    {
+                                        ItemStack reducedItem = new ItemStack(entry.getValue());
+                                        if (amountBeforeAdd != reducedItem.getAmount())
+                                        {
+                                            System.out.println(amountBeforeAdd + " to " + reducedItem.getAmount());
+                                            ((Item) ent).setItemStack(reducedItem);
+                                            changesInWorld = true;
+                                        } else
+                                        {
+                                            System.out.println(amountBeforeAdd + " stayed the same.");
+                                        }
+                                        onlyWholeStacks = false;
+
+                                        //player.getLocation().getBlock().getWorld().dropItemNaturally(player.getLocation(), item);
+                                    }
+                                    if (onlyWholeStacks)
+                                    {
+                                        ent.remove();
+                                        System.out.println("Ent was removed");
+                                        changesInWorld = true;
+                                    }
+
+                                    /*ItemStack item = ((Item) ent).getItemStack();
+
+                                    double volume = 0.5;
+                                    double sourceVolume = Math.max(0.0, Math.min(volume, 1.0));
+                                    double rolloffDistance = Math.max(16, 16 * volume);
+                                    double distance = player.getLocation().distance(ent.getLocation());
+                                    double volumeOfSoundAtPlayer = sourceVolume * (1 - distance / rolloffDistance) * 1.0;
+
+                                    for (Map.Entry<Integer, ItemStack> entry : player.getInventory().addItem(((Item) ent).getItemStack()).entrySet())
+                                    {
+                                        ItemStack itemStack = entry.getValue();
+                                        if (itemStack.getAmount() != item.getAmount())
+                                        {
+                                            wasReduced = true;
+                                            System.out.println(itemStack.getAmount() + " "+ item.getAmount());
+                                            item.setAmount(itemStack.getAmount());
+                                            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, (float) volumeOfSoundAtPlayer, 1.0F);
+                                        }else{
+                                            wasReduced = false;
+                                        }
+                                    }*/
+                                }
+                                //if (wasReduced) ent.remove();
+                                if (!playedSound && changesInWorld)
                                 {
                                     double volume = 0.5;
                                     double sourceVolume = Math.max(0.0, Math.min(volume, 1.0));
                                     double rolloffDistance = Math.max(16, 16 * volume);
                                     double distance = player.getLocation().distance(ent.getLocation());
                                     double volumeOfSoundAtPlayer = sourceVolume * (1 - distance / rolloffDistance) * 1.0;
-                                    boolean wasReduced = false;
-
-                                    for (Map.Entry<Integer, ItemStack> entry : player.getInventory().addItem(((Item) ent).getItemStack()).entrySet())
-                                    {
-                                        ItemStack itemStack = entry.getValue();
-                                        //player.getLocation().getBlock().getWorld().dropItemNaturally(ent.getLocation(), itemStack);
-                                        ((Item) ent).getItemStack().setAmount(itemStack.getAmount());
-                                        wasReduced = true;
-                                    }
-                                    if (!wasReduced)
-                                        player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, (float) volumeOfSoundAtPlayer, 1.0F);
+                                    player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, (float) volumeOfSoundAtPlayer, 1.0F);
+                                    playedSound = true;
                                 }
                             }
                         }
