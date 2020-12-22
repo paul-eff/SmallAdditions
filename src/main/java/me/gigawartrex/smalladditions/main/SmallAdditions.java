@@ -41,8 +41,12 @@ public final class SmallAdditions extends JavaPlugin
         getServer().getPluginManager().registerEvents(new PlayerDeathHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
 
+        //getServer().getPluginManager().registerEvents(new ChunkUnloadHandler(), this);
+        //getServer().getPluginManager().registerEvents(new ChunkLoadHandler(), this);
+
         //Other Handler registration
         new ItemMagnetHandler();
+        //new ChunkLoaderHandler();
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
