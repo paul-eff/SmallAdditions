@@ -24,8 +24,9 @@ public class BlockMinedHandler implements Listener
     private Config config = new Config();
     private MessageHelper msghelp = new MessageHelper();
 
-    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed Tools
-    private ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.ANCIENT_DEBRIS, Material.BONE_BLOCK)); // Allowed blocks
+    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed tools
+    private ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Allowed blocks
+    private ArrayList<Material> noFortuneBlocks = new ArrayList<>(Arrays.asList(Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Blocks where fortune effects should not be applied
     private int maxMinerSize = 0;
 
     @EventHandler
@@ -34,8 +35,7 @@ public class BlockMinedHandler implements Listener
         //Check if player is using a valid tool
         if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
         {
-            //Check if a allowed block was chopped
-            //if (allowedBlockMats.contains(event.getBlock().getType())) {
+            //Check if a allowed block was mined
             if (event.getBlock().getType().toString().contains("_ORE") || validOres.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
@@ -106,33 +106,35 @@ public class BlockMinedHandler implements Listener
                                 for (ItemStack item : block.getDrops(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType())))
                                 {
                                     ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
-
-                                    if (mainHand.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS))
+                                    if (!noFortuneBlocks.contains(block.getType()))
                                     {
-                                        int enchLevel = 0;
-                                        enchLevel = mainHand.getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS);
-                                        double randChance = Math.random();
-
-                                        switch (enchLevel)
+                                        if (mainHand.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS))
                                         {
-                                            case 1:
-                                                if(randChance > 0.66) item.setAmount(item.getAmount() * 2);
-                                                break;
-                                            case 2:
-                                                if(randChance > 0.5 && randChance <= 0.75) item.setAmount(item.getAmount() * 2);
-                                                else if(randChance > 0.75) item.setAmount(item.getAmount() * 3);
-                                                break;
-                                            case 3:
-                                                if(randChance > 0.4 && randChance <= 0.6) item.setAmount(item.getAmount() * 2);
-                                                if(randChance > 0.6 && randChance <= 0.8) item.setAmount(item.getAmount() * 3);
-                                                else if(randChance > 0.8) item.setAmount(item.getAmount() * 4);
-                                                break;
-                                            default:
-                                                System.out.println("[SmallAdditions] BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level ("+enchLevel+")");
+                                            int enchLevel = 0;
+                                            enchLevel = mainHand.getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS);
+                                            double randChance = Math.random();
+
+                                            switch (enchLevel)
+                                            {
+                                                case 1:
+                                                    if (randChance > 0.66) item.setAmount(item.getAmount() * 2);
+                                                    break;
+                                                case 2:
+                                                    if (randChance > 0.5 && randChance <= 0.75) item.setAmount(item.getAmount() * 2);
+                                                    else if (randChance > 0.75) item.setAmount(item.getAmount() * 3);
+                                                    break;
+                                                case 3:
+                                                    if (randChance > 0.4 && randChance <= 0.6) item.setAmount(item.getAmount() * 2);
+                                                    if (randChance > 0.6 && randChance <= 0.8) item.setAmount(item.getAmount() * 3);
+                                                    else if (randChance > 0.8) item.setAmount(item.getAmount() * 4);
+                                                    break;
+                                                default:
+                                                    System.out.println("[SmallAdditions] BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level (" + enchLevel + ")");
+                                            }
+                                        } else if (fortune && ((block.getType() != item.getType()) || autosmelt))
+                                        {
+                                            item.setAmount(Helper.randNumFromRange(1, 3));
                                         }
-                                    } else if (fortune && ((block.getType() != item.getType()) || autosmelt))
-                                    {
-                                        item.setAmount(Helper.randNumFromRange(1, 3));
                                     }
                                     if (autosmelt)
                                     {
@@ -168,10 +170,9 @@ public class BlockMinedHandler implements Listener
                                         case "SPAWNER":
                                             xpToDrop = Helper.randNumFromRange(15, 43);
                                             break;
-                                        /* TODO: When plugin goes 1.16.X update to accept nether gold ore
                                         case "NETHER_GOLD_ORE":
                                             xpToDrop = Helper.randNumFromRange(0, 1);
-                                            break;*/
+                                            break;
                                     }
                                     if (xpToDrop > 0)
                                     {

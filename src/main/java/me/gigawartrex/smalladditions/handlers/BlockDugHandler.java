@@ -95,35 +95,37 @@ public class BlockDugHandler implements Listener
 
                         for (Block block : validMinerBlocks)
                         {
+                            ItemStack item = null;
+
                             if (block.getType() == Material.GRAVEL)
                             {
-                                ItemStack flintDrop = new ItemStack(Material.FLINT);
+                                item = new ItemStack(Material.FLINT);
 
                                 if (fortune)
                                 {
-                                    flintDrop.setAmount(Helper.randNumFromRange(1, 4));
+                                    item.setAmount(Helper.randNumFromRange(1, 4));
                                 }
 
                                 block.setType(Material.AIR);
 
                                 if (Math.random() > 0.9)
                                 {
-                                    block.getWorld().dropItemNaturally(eventPlayer.getLocation(), flintDrop);
+                                    block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
                                 } else
                                 {
                                     block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(Material.GRAVEL));
                                 }
                             } else if (block.getType() == Material.CLAY)
                             {
-                                ItemStack clayDrop = new ItemStack(Material.CLAY_BALL);
-                                clayDrop.setAmount(Helper.randNumFromRange(1, 4));
+                                item = new ItemStack(Material.CLAY_BALL);
+                                item.setAmount(Helper.randNumFromRange(1, 4));
 
                                 if (fortune)
                                 {
-                                    clayDrop.setAmount(Helper.randNumFromRange(3, 6));
+                                    item.setAmount(Helper.randNumFromRange(3, 4));
                                 }
                                 block.setType(Material.AIR);
-                                block.getWorld().dropItemNaturally(eventPlayer.getLocation(), clayDrop);
+                                block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
                             }
 
                             actualMinedBlocks++;

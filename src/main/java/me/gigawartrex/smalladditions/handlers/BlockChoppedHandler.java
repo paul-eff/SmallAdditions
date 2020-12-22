@@ -132,7 +132,6 @@ public class BlockChoppedHandler implements Listener
                         if (hasLeaves)
                         {
                             boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
-                            boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
                             int actualChoppedBlocks = 0;
 
                             for (Block block : validLumberjackBlocks)
@@ -141,13 +140,7 @@ public class BlockChoppedHandler implements Listener
                                 {
                                     if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                                     {
-                                        int randNum = 1;
                                         Material dropMaterial = block.getType();
-
-                                        if (fortune)
-                                        {
-                                            randNum = Helper.randNumFromRange(1, 4);
-                                        }
                                         if (autosmelt)
                                         {
                                             dropMaterial = Material.CHARCOAL;
@@ -155,7 +148,7 @@ public class BlockChoppedHandler implements Listener
 
                                         block.setType(Material.AIR);
                                         actualChoppedBlocks++;
-                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(dropMaterial, randNum));
+                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(dropMaterial, 1));
                                         ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
 
                                         if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
