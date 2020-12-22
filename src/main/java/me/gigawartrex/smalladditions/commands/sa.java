@@ -6,8 +6,7 @@ import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.helpers.IconMenu;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,6 +37,36 @@ public class sa implements CommandExecutor
                     case "test":
                         if (isOP)
                         {
+                            Chunk chunk = player.getWorld().getChunkAt(player.getLocation());
+
+                            if (chunk.isForceLoaded())
+                            {
+                                System.out.println(chunk.toString() + " is force loaded.");
+                            } else
+                            {
+                                System.out.println(chunk.toString() + " is normally loaded.");
+                                Bukkit.getServer().getWorld(player.getWorld().getUID()).setChunkForceLoaded(chunk.getX(), chunk.getZ(), true);
+                            }
+
+
+                            /*if (world.getChunkAt(-14, 2).isLoaded())
+                            {
+                                System.out.println("Chunk is loaded");
+                                if (world.getChunkAt(-14, 2).isForceLoaded())
+                                {
+                                    System.out.println("Chunk is force loaded");
+                                    world.setChunkForceLoaded(-14, 2, false);
+                                    System.out.println("Chunk was un force loaded");
+                                } else
+                                {
+                                    System.out.println("Chunk is not force loaded");
+                                }
+                            } else
+                            {
+                                System.out.println("Chunk is unloaded");
+
+                            }*/
+
 
                             //Block origBlock = player.getTargetBlock(null, 200);
 

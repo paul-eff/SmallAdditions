@@ -11,14 +11,10 @@ public class ChunkLoadHandler implements Listener
     public void onChunkLoad(ChunkLoadEvent event)
     {
         Chunk chunk = event.getChunk();
-        System.out.println("[LOAD] " + chunk.toString() + " just loaded!");
 
-        if (chunk.unload())
+        if(chunk.getX() == 14 && chunk.getZ() == 11)
         {
-            System.out.println("[REUNLOAD] " + chunk.toString() + " loaded again");
-        } else
-        {
-            System.out.println("[REUNLOAD] " + chunk.toString() + " load failed");
+            System.out.println("My chunk was loaded");
         }
     }
 }
