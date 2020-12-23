@@ -1,5 +1,6 @@
 package me.gigawartrex.smalladditions.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class saTabComplete implements TabCompleter
 {
-    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "resetall", "book", "menu"));
+    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "invsee", "enderinvsee", "resetall", "book", "menu"));
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)
@@ -20,9 +21,20 @@ public class saTabComplete implements TabCompleter
         {
             if (sender instanceof Player && !sender.isOp())
             {
-                return arg0List.subList(2, arg0List.size());
+                return arg0List.subList(4, arg0List.size());
             }
             return arg0List;
+        }else if (args.length == 2)
+        {
+            if (sender instanceof Player && !sender.isOp())
+            {
+                ArrayList<String> players = new ArrayList<>();
+                for(Player player : Bukkit.getServer().getOnlinePlayers())
+                {
+                    players.add(player.getName());
+                }
+                return players;
+            }
         }
         return null;
     }
