@@ -6,7 +6,6 @@ import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.helpers.IconMenu;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -39,6 +38,7 @@ public class sa implements CommandExecutor
                     case "test":
                         if (isOP)
                         {
+
                             //Block origBlock = player.getTargetBlock(null, 200);
 
                             /*
@@ -213,32 +213,6 @@ public class sa implements CommandExecutor
                         msghelp.sendPlayer(player, "Type \"/sa\" + Spacebar and check the options.", ChatColor.WHITE);
                         return true;
                 }
-            } else if (args.length == 2)
-            {
-                switch (args[0])
-                {
-                    case "enderinvsee":
-                        if (isOP)
-                        {
-                            Player invseePlayer = Bukkit.getServer().getPlayer(args[1]);
-                            player.openInventory(invseePlayer.getEnderChest());
-                        } else
-                        {
-                            msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
-                        }
-                        break;
-                    case "invsee":
-                        if (isOP)
-                        {
-                            Player invseePlayer = Bukkit.getServer().getPlayer(args[1]);
-                            player.openInventory(invseePlayer.getInventory());
-                        } else
-                        {
-                            msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
-                        }
-                        break;
-                }
-                return true;
             }
         } else
         {

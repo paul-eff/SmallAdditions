@@ -43,6 +43,8 @@ public final class SmallAdditions extends JavaPlugin
 
         //getServer().getPluginManager().registerEvents(new ChunkUnloadHandler(), this);
         //getServer().getPluginManager().registerEvents(new ChunkLoadHandler(), this);
+        //getServer().getPluginManager().registerEvents(new WorldUnloadHandler(), this);
+        //getServer().getPluginManager().registerEvents(new WorldLoadHandler(), this);
 
         //Other Handler registration
         new ItemMagnetHandler();
