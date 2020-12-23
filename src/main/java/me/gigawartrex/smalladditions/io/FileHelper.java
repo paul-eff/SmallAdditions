@@ -1,5 +1,6 @@
-package me.gigawartrex.smalladditions.files;
+package me.gigawartrex.smalladditions.io;
 
+import me.gigawartrex.smalladditions.exceptions.NoFileNameException;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,8 +10,8 @@ import java.io.IOException;
 
 abstract class FileHelper {
 
-    private String fileName = ""; // Layout: "fileName"
-    private String basePath = "plugins/" + Constants.name + "/";
+    private String fileName; // Layout: "fileName"
+    private final String basePath = "plugins/" + Constants.name + "/";
     private String path = ""; // Layout: "folder1/folder2/"
 
     /**
@@ -85,9 +86,8 @@ abstract class FileHelper {
      * @return If the operation was successful or not
      */
     public boolean saveFile(YamlConfiguration file) {
-        YamlConfiguration ymlFile = file;
         try {
-            ymlFile.save(this.basePath + this.path + this.fileName + ".yml");
+            file.save(this.basePath + this.path + this.fileName + ".yml");
             return true;
         } catch (IOException e) {
             e.printStackTrace();

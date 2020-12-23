@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Book extends ItemStack {
  
     //private ArrayList<String> lore = new ArrayList<String>();
-    private BookMeta meta;
+    private final BookMeta meta;
  
     public Book(String fileName, String author, String title){
         super(Material.WRITTEN_BOOK);
@@ -28,27 +28,24 @@ public class Book extends ItemStack {
     	
     	ArrayList<String> list = new ArrayList<>();
 		ArrayList<String> testList = new ArrayList<>();
-    	String fullString = "";
+    	StringBuilder fullString = new StringBuilder();
     	
     	try(BufferedReader br = new BufferedReader(new FileReader(file))) {
 
 			//testList = new ArrayList<>();
-			StringBuilder stringB = new StringBuilder();
-			stringB.append("Test Zeile 1");
-			stringB.append("\n");
-			stringB.append("Test Zeile 2");
-			testList.add(stringB.toString());
+			String stringB = "Test Zeile 1\nTest Zeile 2";
+			testList.add(stringB);
     		
     		//list = new ArrayList<>();
     	    String line = br.readLine();
     	    
     	    while (line != null) {
-    	    	fullString = fullString + line;
+    	    	fullString.append(line);
     	        line = br.readLine();
     	    }
     	    
     	    int pointer = 0; //points at upper end char of substring
-    	    int newpointer = 0; //points at lower end char of substring
+    	    int newpointer; //points at lower end char of substring
     	    boolean noSpace; //for while loop
     	    
     	    while(true) {
@@ -69,9 +66,7 @@ public class Book extends ItemStack {
         	    }
     	    }
     	    
-    	} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+    	} catch (IOException e) {
 			e.printStackTrace();
 		}
     	return list;

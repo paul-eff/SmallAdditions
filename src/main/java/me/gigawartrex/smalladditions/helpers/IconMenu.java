@@ -17,8 +17,8 @@ import java.util.Arrays;
 public class IconMenu implements Listener
 {
 
-    private String name;
-    private int size;
+    private final String name;
+    private final int size;
     private OptionClickEventHandler handler;
     private Plugin plugin;
     private String[] optionNames;
@@ -79,13 +79,7 @@ public class IconMenu implements Listener
                 if (e.willClose())
                 {
                     final Player p = (Player) event.getWhoClicked();
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable()
-                    {
-                        public void run()
-                        {
-                            p.closeInventory();
-                        }
-                    }, 1);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> p.closeInventory(), 1);
                 }
                 if (e.willDestroy())
                 {
@@ -97,14 +91,14 @@ public class IconMenu implements Listener
 
     public interface OptionClickEventHandler
     {
-        public void onOptionClick(OptionClickEvent event);
+        void onOptionClick(OptionClickEvent event);
     }
 
     public class OptionClickEvent
     {
-        private Player player;
-        private int position;
-        private String name;
+        private final Player player;
+        private final int position;
+        private final String name;
         private boolean close;
         private boolean destroy;
 

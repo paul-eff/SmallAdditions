@@ -1,7 +1,7 @@
-package me.gigawartrex.smalladditions.files;
+package me.gigawartrex.smalladditions.io;
 
-import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 
 import java.io.BufferedWriter;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class BookWriter {
 
-	private MessageHelper msghelp = new MessageHelper();
+	private final MessageHelper msghelp = new MessageHelper();
 
 	public BookWriter() {
 

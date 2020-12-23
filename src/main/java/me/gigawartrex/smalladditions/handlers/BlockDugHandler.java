@@ -1,9 +1,9 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.io.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,11 +20,11 @@ import java.util.Arrays;
 
 public class BlockDugHandler implements Listener
 {
-    private Config config = new Config();
-    private MessageHelper msghelp = new MessageHelper();
+    private final Config config = new Config();
+    private final MessageHelper msghelp = new MessageHelper();
 
-    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL, Material.NETHERITE_SHOVEL)); // Allowed Tools
-    private ArrayList<Material> allowedMaterials = new ArrayList<>(Arrays.asList(Material.GRAVEL, Material.CLAY)); // Allowed Materials
+    private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL, Material.NETHERITE_SHOVEL)); // Allowed Tools
+    private final ArrayList<Material> allowedMaterials = new ArrayList<>(Arrays.asList(Material.GRAVEL, Material.CLAY)); // Allowed Materials
     private int maxMinerSize = 0;
 
     @EventHandler
@@ -95,7 +95,7 @@ public class BlockDugHandler implements Listener
 
                         for (Block block : validMinerBlocks)
                         {
-                            ItemStack item = null;
+                            ItemStack item;
 
                             if (block.getType() == Material.GRAVEL)
                             {
@@ -133,7 +133,7 @@ public class BlockDugHandler implements Listener
 
                             if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                             {
-                                int enchLevel = 0;
+                                int enchLevel;
                                 enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
                                 double chance = (100 / (enchLevel + 1) * 1.0) / 100.0;
 
@@ -191,7 +191,6 @@ public class BlockDugHandler implements Listener
      */
     private ArrayList<Block> findNeighbours(Player eventPlayer, Material eventMaterial, ArrayList<Block> current_search, ArrayList<Block> validMinerBlocks, Block block)
     {
-        ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();
         int[] blockCord = {block.getX(), block.getY(), block.getZ()};
 
@@ -206,7 +205,7 @@ public class BlockDugHandler implements Listener
             }
         }
 
-        validNeighbours.addAll(allNeighbours);
+        ArrayList<Block> validNeighbours = new ArrayList<>(allNeighbours);
 
         // Iterate through all found blocks to
         for (Block b : allNeighbours)

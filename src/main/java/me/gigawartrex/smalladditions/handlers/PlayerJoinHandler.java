@@ -1,8 +1,8 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.helpers.Book;
-import me.gigawartrex.smalladditions.files.Config;
+import me.gigawartrex.smalladditions.io.Config;
+import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.BookMeta;
 
 public class PlayerJoinHandler implements Listener
 {
-    private Config config = new Config();
+    private final Config config = new Config();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)

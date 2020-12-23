@@ -1,4 +1,4 @@
-package me.gigawartrex.smalladditions.files;
+package me.gigawartrex.smalladditions.io;
 
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.main.Constants;
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class Config extends FileHelper
 {
 
-    private static MessageHelper msghelp = new MessageHelper();
+    private static final MessageHelper msghelp = new MessageHelper();
 
     public Config()
     {

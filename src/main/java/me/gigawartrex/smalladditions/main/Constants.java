@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 public class Constants {
 
-  public static Plugin plugin = SmallAdditions.getPlugin(SmallAdditions.class);
-  public static CommandSender console = Bukkit.getConsoleSender();
-  public static String name = plugin.getName();
-  public static ChatColor color = ChatColor.BLUE;
-  public static String version = plugin.getDescription().getVersion();
+  public static final Plugin plugin = SmallAdditions.getPlugin(SmallAdditions.class);
+  public static final CommandSender console = Bukkit.getConsoleSender();
+  public static final String name = plugin.getName();
+  public static final ChatColor color = ChatColor.BLUE;
+  public static final String version = plugin.getDescription().getVersion();
 
-  public static ArrayList<String> modsList = new ArrayList<>(Arrays.asList("Replant", "Autosmelt", "Fortune"));
+  public static final ArrayList<String> modsList = new ArrayList<>(Arrays.asList("Replant", "Autosmelt", "Fortune"));
 }

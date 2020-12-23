@@ -17,19 +17,6 @@ public class Helper {
     }
 
     /**
-     * Gets a location in the overworld (hardcoded)
-     *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     *
-     * @return Returns a location, with given coordinates, in the overworld
-     */
-    public static Location getLocation(Player player, int x, int y, int z) {
-        return new Location(player.getWorld(), x, y, z);
-    }
-
-    /**
      * Offsets the given location by the entered values
      *
      * @param loc Location to be edited

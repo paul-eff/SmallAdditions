@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 
 public class MessageHelper {
 
-  private ChatColor pluginNameColor;
-  private String pluginName;
-  private String pluginNameString;
+  private final ChatColor pluginNameColor;
+  private final String pluginName;
+  private final String pluginNameString;
 
   public MessageHelper() {
     this.pluginNameColor = Constants.color;

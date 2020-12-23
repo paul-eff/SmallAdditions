@@ -1,4 +1,4 @@
-package me.gigawartrex.smalladditions.files;
+package me.gigawartrex.smalladditions.exceptions;
 
 public class NoFileNameException extends Exception {
 

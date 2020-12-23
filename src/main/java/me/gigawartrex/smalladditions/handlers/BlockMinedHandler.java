@@ -1,9 +1,9 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.io.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,12 +21,12 @@ import java.util.Arrays;
 
 public class BlockMinedHandler implements Listener
 {
-    private Config config = new Config();
-    private MessageHelper msghelp = new MessageHelper();
+    private final Config config = new Config();
+    private final MessageHelper msghelp = new MessageHelper();
 
-    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed tools
-    private ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Allowed blocks
-    private ArrayList<Material> noFortuneBlocks = new ArrayList<>(Arrays.asList(Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Blocks where fortune effects should not be applied
+    private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed tools
+    private final ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Allowed blocks
+    private final ArrayList<Material> noFortuneBlocks = new ArrayList<>(Arrays.asList(Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Blocks where fortune effects should not be applied
     private int maxMinerSize = 0;
 
     @EventHandler
@@ -50,17 +50,14 @@ public class BlockMinedHandler implements Listener
                         //All needed information to proceed
                         Block eventBlock = event.getBlock();
                         Material eventMaterial = event.getBlock().getType();
-
                         //Structural detection of ore vein
                         int cnt = 0;
                         maxMinerSize = Integer.parseInt(config.read("Config.Settings.maxMinerSize"));
-
                         ArrayList<Block> validMinerBlocks = new ArrayList<>();
                         ArrayList<Block> current_search = new ArrayList<>();
                         ArrayList<Block> to_search = new ArrayList<>();
 
                         current_search.add(eventBlock);
-
                         boolean sizeReached = false;
 
                         while (true)
@@ -110,7 +107,7 @@ public class BlockMinedHandler implements Listener
                                     {
                                         if (mainHand.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS))
                                         {
-                                            int enchLevel = 0;
+                                            int enchLevel;
                                             enchLevel = mainHand.getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS);
                                             double randChance = Math.random();
 
@@ -187,7 +184,7 @@ public class BlockMinedHandler implements Listener
 
                                 if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                                 {
-                                    int enchLevel = 0;
+                                    int enchLevel;
                                     enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
                                     double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
 
@@ -264,7 +261,6 @@ public class BlockMinedHandler implements Listener
      */
     private ArrayList<Block> findNeighbours(Player eventPlayer, Material eventMaterial, ArrayList<Block> current_search, ArrayList<Block> validMinerBlocks, Block block)
     {
-        ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();
         int[] blockCord = {block.getX(), block.getY(), block.getZ()};
 
@@ -279,7 +275,7 @@ public class BlockMinedHandler implements Listener
             }
         }
 
-        validNeighbours.addAll(allNeighbours);
+        ArrayList<Block> validNeighbours = new ArrayList<>(allNeighbours);
 
         // Iterate through all found blocks to
         for (Block b : allNeighbours)

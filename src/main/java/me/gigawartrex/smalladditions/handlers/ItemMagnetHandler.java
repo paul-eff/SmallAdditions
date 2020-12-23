@@ -1,6 +1,6 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.files.Config;
+import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;

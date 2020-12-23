@@ -2,10 +2,10 @@ package me.gigawartrex.smalladditions.main;
 
 import me.gigawartrex.smalladditions.commands.sa;
 import me.gigawartrex.smalladditions.commands.saTabComplete;
-import me.gigawartrex.smalladditions.files.BookWriter;
-import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.handlers.*;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.io.BookWriter;
+import me.gigawartrex.smalladditions.io.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 

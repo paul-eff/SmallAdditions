@@ -1,10 +1,10 @@
 package me.gigawartrex.smalladditions.commands;
 
-import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Book;
+import me.gigawartrex.smalladditions.helpers.IconMenu;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
-import me.gigawartrex.smalladditions.helpers.IconMenu;
+import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class sa implements CommandExecutor
 {
-    private MessageHelper msghelp = new MessageHelper();
+    private final MessageHelper msghelp = new MessageHelper();
     private Config config;
     private Leveling leveling;
 
@@ -38,24 +38,7 @@ public class sa implements CommandExecutor
                     case "test":
                         if (isOP)
                         {
-
-                            //Block origBlock = player.getTargetBlock(null, 200);
-
-                            /*
-                            //Get all block drops
-                            String dropsString = "";
-                            String dropsMeta = "";
-                            String dropsElse = "";
-                            for (ItemStack drop : origBlock.getDrops())
-                            {
-                                dropsString += ", " + drop.toString();
-                                dropsMeta += ", " + drop.getData().toString();
-                                dropsElse += ", " + drop.getItemMeta().toString();
-                            }
-                            player.sendMessage("Block's Drops: " + dropsString);
-                            player.sendMessage("Block's Meta: " + dropsMeta);
-                            player.sendMessage("Block's Else: " + dropsElse);
-                            */
+                            // Empty for now
                         } else
                         {
                             msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);

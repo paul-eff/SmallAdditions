@@ -1,15 +1,15 @@
 package me.gigawartrex.smalladditions.helpers;
 
+import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import me.gigawartrex.smalladditions.files.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Leveling
 {
 
-    private Player player;
-    private Config config;
+    private final Player player;
+    private final Config config;
 
     public Leveling(Player player)
     {

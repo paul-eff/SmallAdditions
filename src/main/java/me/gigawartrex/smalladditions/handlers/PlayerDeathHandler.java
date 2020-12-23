@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerDeathHandler implements Listener
 {
-    private MessageHelper msghelp = new MessageHelper();
+    private final MessageHelper msghelp = new MessageHelper();
 
     @EventHandler
     public void onBlockBreak(PlayerDeathEvent event)

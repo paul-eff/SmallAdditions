@@ -12,7 +12,7 @@ import java.util.List;
 
 public class saTabComplete implements TabCompleter
 {
-    private ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "invsee", "enderinvsee", "resetall", "book", "menu"));
+    private final ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "invsee", "enderinvsee", "resetall", "book", "menu"));
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)

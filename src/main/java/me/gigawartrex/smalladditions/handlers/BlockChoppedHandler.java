@@ -1,9 +1,9 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.files.Config;
 import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,13 +23,13 @@ import java.util.Arrays;
 
 public class BlockChoppedHandler implements Listener
 {
-    private Config config = new Config();
-    private MessageHelper msghelp = new MessageHelper();
+    private final Config config = new Config();
+    private final MessageHelper msghelp = new MessageHelper();
 
-    private ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE)); // Allowed Tools
-    private ArrayList<Material> validLogs = new ArrayList<>(Arrays.asList(Material.CRIMSON_STEM, Material.WARPED_STEM)); // Allowed log types
+    private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE)); // Allowed Tools
+    private final ArrayList<Material> validLogs = new ArrayList<>(Arrays.asList(Material.CRIMSON_STEM, Material.WARPED_STEM)); // Allowed log types
     private int maxLumberjackSize = 0;
-    private int timeToReplant = 2; //in Seconds
+    private final int timeToReplant = 2; //in Seconds
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
@@ -153,7 +153,7 @@ public class BlockChoppedHandler implements Listener
 
                                         if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                                         {
-                                            int enchLevel = 0;
+                                            int enchLevel;
                                             enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
                                             double chance = (100 / (enchLevel + 1) * 1.0) / 100.0;
 
@@ -251,7 +251,6 @@ public class BlockChoppedHandler implements Listener
     private Object[] findNeighbours(Player eventPlayer, Material eventMaterial, ArrayList<Block> current_search, ArrayList<Block> validLumberjackBlocks, Block block)
     {
         boolean hasLeaves = false;
-        ArrayList<Block> validNeighbours = new ArrayList<>();
         ArrayList<Block> allNeighbours = new ArrayList<>();
         int[] blockCord = {block.getX(), block.getY(), block.getZ()};
 
@@ -266,7 +265,7 @@ public class BlockChoppedHandler implements Listener
             }
         }
 
-        validNeighbours.addAll(allNeighbours);
+        ArrayList<Block> validNeighbours = new ArrayList<>(allNeighbours);
 
         // Iterate through all found blocks to
         for (Block b : allNeighbours)
