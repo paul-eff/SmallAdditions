@@ -6,6 +6,7 @@ import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -194,6 +195,45 @@ public class sa implements CommandExecutor
                     default:
                         msghelp.sendPlayer(player, "Not intended command usage.", ChatColor.RED);
                         msghelp.sendPlayer(player, "Type \"/sa\" + Spacebar and check the options.", ChatColor.WHITE);
+                        return true;
+                }
+            } else if (args.length == 2)
+            {
+                switch (args[0])
+                {
+                    case "invsee":
+                        if (isOP)
+                        {
+                            for (Player targetPlayer : Bukkit.getOnlinePlayers())
+                            {
+                                if (targetPlayer.getName().equals(args[1]))
+                                {
+                                    targetPlayer.openInventory(targetPlayer.getInventory());
+                                    return true;
+                                }
+                            }
+                            msghelp.sendPlayer(player, "Player not found, is he online?", ChatColor.RED);
+                        } else
+                        {
+                            msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
+                        }
+                        return true;
+                    case "enderinvsee":
+                        if (isOP)
+                        {
+                            for (Player targetPlayer : Bukkit.getOnlinePlayers())
+                            {
+                                if (targetPlayer.getName().equals(args[1]))
+                                {
+                                    targetPlayer.openInventory(targetPlayer.getEnderChest());
+                                    return true;
+                                }
+                            }
+                            msghelp.sendPlayer(player, "Player not found, is he online?", ChatColor.RED);
+                        } else
+                        {
+                            msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
+                        }
                         return true;
                 }
             }
