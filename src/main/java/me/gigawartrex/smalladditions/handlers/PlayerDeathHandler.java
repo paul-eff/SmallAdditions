@@ -27,13 +27,17 @@ public class PlayerDeathHandler implements Listener
         Player eventPlayer = event.getEntity();
         ItemStack[] playerInventoryContents = eventPlayer.getInventory().getContents().clone();
         Block origBlock = eventPlayer.getLocation().getBlock();
+        if (origBlock.getY() < 10) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), 10, origBlock.getZ());
 
         while (origBlock.getType() != Material.AIR || origBlock.getRelative(BlockFace.WEST).getType() != Material.AIR)
         {
             if (origBlock.getRelative(BlockFace.UP).getType() == Material.BEDROCK ||
-                    (eventPlayer.getLocation().getY() + 50) <= origBlock.getLocation().getY())
+                    Math.abs(eventPlayer.getLocation().getY() - origBlock.getLocation().getY()) >= 50 ||
+                    origBlock.getY() > 250)
             {
                 origBlock = eventPlayer.getLocation().getBlock();
+                if (origBlock.getY() < 10) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), 10, origBlock.getZ());
+                if (origBlock.getY() > 250) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), 250, origBlock.getZ());
                 break;
             }
             origBlock = origBlock.getRelative(BlockFace.UP);
