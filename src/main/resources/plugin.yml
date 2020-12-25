@@ -8,8 +8,20 @@ description: Small additions to Minecraft making it just slightly better.
 
 commands:
   sa:
-    description: Base SA Command
+    description: Base SimpleAdditions command.
+    usage: /<command> <book|menu|invsee|enderinvsee>
+  sa book:
+    description: Gives the player the README book.
     usage: /<command>
-  pcm:
-    description: Base PCM Command
+  sa menu:
+    description: Opens the SimpleAdditions menu.
+    usage: /<command>
+  sa invsee:
+    description: Look into a player's inventory.
+    usage: /<command> <playername>
+  sa enderinvsee:
+    description: Look into a player's enderchest.
+    usage: /<command> <playername>
+  sa resetall:
+    description: Resets all files and statistics.
     usage: /<command>
