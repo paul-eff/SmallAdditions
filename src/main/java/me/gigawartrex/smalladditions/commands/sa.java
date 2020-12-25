@@ -77,7 +77,7 @@ public class sa implements CommandExecutor
                             {
                                 if (targetPlayer.getName().equals(args[1]))
                                 {
-                                    targetPlayer.openInventory(targetPlayer.getInventory());
+                                    player.openInventory(targetPlayer.getInventory());
                                     return true;
                                 }
                             }
@@ -100,7 +100,7 @@ public class sa implements CommandExecutor
                             {
                                 if (targetPlayer.getName().equals(args[1]))
                                 {
-                                    targetPlayer.openInventory(targetPlayer.getEnderChest());
+                                    player.openInventory(targetPlayer.getEnderChest());
                                     return true;
                                 }
                             }
