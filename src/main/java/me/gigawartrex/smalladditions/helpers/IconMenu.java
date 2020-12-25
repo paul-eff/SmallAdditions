@@ -155,5 +155,4 @@ public class IconMenu implements Listener
         item.setItemMeta(im);
         return item;
     }
-
 }

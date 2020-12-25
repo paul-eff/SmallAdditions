@@ -27,6 +27,7 @@ me\gigawartrex\smalladditions\helpers\MessageHelper.class
 me\gigawartrex\smalladditions\io\Config.class
 me\gigawartrex\smalladditions\helpers\IconMenu.class
 me\gigawartrex\smalladditions\handlers\ItemMagnetHandler$1.class
+me\gigawartrex\smalladditions\commands\saMenu.class
 me\gigawartrex\smalladditions\handlers\PlayerEnteredBedHandler.class
 me\gigawartrex\smalladditions\exceptions\NoFileNameException.class
 me\gigawartrex\smalladditions\helpers\IconMenu$OptionClickEvent.class
