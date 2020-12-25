@@ -125,7 +125,6 @@ public class sa implements CommandExecutor
                     msghelp.sendPlayer(player, "Type \"/help SmallAdditions\" and check out available commands.", ChatColor.WHITE);
                     break;
             }
-            return true;
         } else
         {
             switch (args[0])
@@ -143,7 +142,7 @@ public class sa implements CommandExecutor
                     msghelp.sendConsole("This is not a console Command!", ChatColor.RED);
                     break;
             }
-            return true;
         }
+        return true;
     }
 }
