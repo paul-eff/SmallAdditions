@@ -44,6 +44,18 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
         <resources>
             <resource>
@@ -76,11 +88,8 @@
             <version>1.16.4-R0.1-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/craftbukkit-1.16.4.jar</systemPath>
-            <!--<systemPath>C:/Users/Paul/Desktop/craftbukkit-1.16.4.jar</systemPath>-->
-            <!--<systemPath>${project.basedir}/src/main/resources/craftbukkit-1.16.4.jar</systemPath>-->
         </dependency>
     </dependencies>
-
 
 
 </project>
