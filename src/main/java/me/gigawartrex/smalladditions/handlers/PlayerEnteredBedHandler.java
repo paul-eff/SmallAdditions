@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class PlayerEnteredBedHandler implements Listener
 {
     private MessageHelper msghelp;
-    private final float percentageNeeded = 0.25f;
+    private final float percentageNeeded = 1f;
 
     private boolean oneWillWakeUp = false;
 
@@ -28,9 +28,8 @@ public class PlayerEnteredBedHandler implements Listener
         ArrayList<Player> playersInSameWorld = new ArrayList<>();
         int playersSleeping = 0;
 
-        for (Object obj : Constants.console.getServer().getOnlinePlayers().toArray())
+        for (Player player : Constants.console.getServer().getOnlinePlayers())
         {
-            Player player = (Player) obj;
             if (player.getWorld() == eventPlayer.getWorld())
             {
                 playersInSameWorld.add(player);
@@ -46,13 +45,13 @@ public class PlayerEnteredBedHandler implements Listener
             {
                 if (eventPlayer.isSleeping() && !oneWillWakeUp)
                 {
+                    // eventPlayer needs to be added manually as he is not yet sleeping during line 31-38
                     int playersSleeping = finalPlayersSleeping + 1;
                     float percentageSleeping = (playersSleeping * 1.0f) / (playersInSameWorld.size() * 1.0f);
+                    int playersNeeded = (int) Math.ceil((percentageNeeded / (percentageSleeping / playersSleeping))) - playersSleeping;
 
                     for (Player player : playersInSameWorld)
                     {
-                        int playersNeeded = (int) Math.ceil((percentageNeeded / (percentageSleeping / playersSleeping))) - playersSleeping;
-
                         if (player != eventPlayer)
                         {
                             if (percentageSleeping < percentageNeeded)
@@ -81,7 +80,6 @@ public class PlayerEnteredBedHandler implements Listener
                             @Override
                             public void run()
                             {
-                                eventPlayer.getWorld().getFullTime();
                                 eventPlayer.getWorld().setTime(0);
                                 for (Player player : playersInSameWorld)
                                 {
