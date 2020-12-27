@@ -11,10 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SmallAdditions extends JavaPlugin
 {
-    //TODO: Ore multiplication (macerator)
-    //TODO: Right click Wheat to harvest and replant
-    //TODO: Create first book file
-
     private MessageHelper msghelp;
 
     @Override

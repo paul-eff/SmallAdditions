@@ -25,8 +25,6 @@ public class ItemBreakHandler implements Listener
 
         for (int x = 0; x < inv.getStorageContents().length; x++)
         {
-            //TODO: Implement so that armor also is affected
-            //TODO: Implement that all items are affected
             ItemStack currItem = inv.getItem(x);
 
             if (currItem != null)

@@ -49,11 +49,10 @@ public class BookWriter {
 
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 
-				writer.write("-- ERROR -- \n");
-				writer.write("File for this Book not found in Plugin Folder. \n");
-				writer.write("Please let a System Admin check in \n");
-				writer.write("<Server Home Folder>/plugins/SmallAdditions/BookTextFiles/ \n");
-				writer.write("-- ERROR -- \n");
+				writer.write("-- WIP -- \n");
+				writer.write("This book was not filled with content yet. \n");
+				writer.write("  -SimpleAdditions Team \n");
+				writer.write("-- WIP -- \n");
 
 			} catch (IOException e) {
 				e.printStackTrace();
