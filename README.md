@@ -26,6 +26,7 @@ New ideas and issues can be be directly submitted to this repository.
 - Enderchest inventory see of players
 ### Ideas and WIP:
 - Chunkloading (WIP)
+- Right clicking wheat harvests/replants it
 - Add armor and general items to tool refill
 - More minor admin features
 
