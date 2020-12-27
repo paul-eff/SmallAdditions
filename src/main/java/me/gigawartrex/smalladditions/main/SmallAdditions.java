@@ -1,7 +1,7 @@
 package me.gigawartrex.smalladditions.main;
 
-import me.gigawartrex.smalladditions.commands.sa;
-import me.gigawartrex.smalladditions.commands.saTabComplete;
+import me.gigawartrex.smalladditions.commands.Sa;
+import me.gigawartrex.smalladditions.commands.SaTabComplete;
 import me.gigawartrex.smalladditions.handlers.*;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.BookWriter;
@@ -23,8 +23,8 @@ public final class SmallAdditions extends JavaPlugin
         msghelp = new MessageHelper();
 
         //Command registration
-        getCommand("sa").setExecutor(new sa());
-        getCommand("sa").setTabCompleter(new saTabComplete());
+        getCommand("sa").setExecutor(new Sa());
+        getCommand("sa").setTabCompleter(new SaTabComplete());
 
         //File registration
         Config config = new Config();

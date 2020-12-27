@@ -3,6 +3,7 @@ package me.gigawartrex.smalladditions.commands;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
+import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class sa implements CommandExecutor
+public class Sa implements CommandExecutor
 {
     private final MessageHelper msghelp = new MessageHelper();
     private final Config config = new Config();
@@ -21,7 +22,7 @@ public class sa implements CommandExecutor
     {
         if (sender instanceof Player)
         {
-            Player player = (Player) sender;
+            Player player = ((Player) sender).getPlayer();
             boolean isOP = player.isOp();
 
             switch (args[0])
@@ -53,7 +54,7 @@ public class sa implements CommandExecutor
                         msghelp.sendPlayer(player, "Did you mean \"/sa menu\"?", ChatColor.RED);
                     } else
                     {
-                        saMenu.createDefaultMenu(player).open(player);
+                        Constants.mainMenu.open(player);
                     }
                     break;
                 case "resetall":
