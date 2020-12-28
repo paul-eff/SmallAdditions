@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class PlayerEnteredBedHandler implements Listener
 {
     private MessageHelper msghelp;
-    private final float percentageNeeded = 1f;
+    private final float percentageNeeded = 0.25f;
 
     private boolean oneWillWakeUp = false;
 

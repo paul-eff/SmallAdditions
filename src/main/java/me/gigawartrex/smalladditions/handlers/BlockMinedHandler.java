@@ -103,7 +103,7 @@ public class BlockMinedHandler implements Listener
                                 for (ItemStack item : block.getDrops(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType())))
                                 {
                                     ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
-                                    if (!noFortuneBlocks.contains(block.getType()))
+                                    if (!noFortuneBlocks.contains(block.getType()) && ((block.getType() != item.getType()) || autosmelt))
                                     {
                                         if (mainHand.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS))
                                         {
@@ -126,7 +126,7 @@ public class BlockMinedHandler implements Listener
                                                     else if (randChance > 0.8) item.setAmount(item.getAmount() * 4);
                                                     break;
                                                 default:
-                                                    System.out.println("[SmallAdditions] BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level (" + enchLevel + ")");
+                                                    msghelp.sendConsole("BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level (" + enchLevel + ")", ChatColor.RED);
                                             }
                                         } else if (fortune && ((block.getType() != item.getType()) || autosmelt))
                                         {
