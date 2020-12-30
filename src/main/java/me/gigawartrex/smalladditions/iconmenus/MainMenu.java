@@ -7,13 +7,28 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Class to create the standard README book.
+ *
+ * @author Paul Ferlitz
+ * @version 1.0 2020-12-30 Initial Version
+ * @since 1.0
+ */
 public class MainMenu extends MenuTemplate
 {
+    /**
+     * Main method to generate the book object.
+     *
+     * @return The {@link IconMenu} as configured.
+     * @since 1.0
+     */
     public IconMenu generateMenu()
     {
+        // Setup
         return new IconMenu("Mastering", 18, event -> {
             Leveling leveling = new Leveling(event.getPlayer());
 
+            // Switch for command executed/item clicked
             switch (event.getName())
             {
                 case "Exit":
@@ -120,6 +135,7 @@ public class MainMenu extends MenuTemplate
             }
             event.setWillClose(true);
         }, Constants.plugin)
+                // Set items
                 .setOption(0, new ItemStack(Material.DIRT, 1), "Exit", "Click to exit options.")
                 .setOption(1, new ItemStack(Material.REDSTONE_BLOCK, 1), "Toggle", "Turn mastering on/off.")
                 .setOption(3, new ItemStack(Material.OAK_SAPLING, 1), "Replant", "Replant cut down trees.")

@@ -5,69 +5,112 @@ import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+/**
+ * Class for handling a player specific leveling e.g. how my block mined -> which level reached.
+ *
+ * @author Paul Ferlitz
+ * @version 1.0 2020-12-29 Initial Version
+ * @since 1.0
+ */
 public class Leveling
 {
-
+    // Class variables
     private final Player player;
     private final Config config;
 
+    /**
+     * Class constructor.
+     *
+     * @param player The target player.
+     * @since 1.0
+     */
     public Leveling(Player player)
     {
         this.player = player;
         this.config = new Config();
     }
 
-    private int getDryLevel()
+    /**
+     * Method to get a players current level. Will write 0 on null or error.
+     *
+     * @return The players current level.
+     * @since 1.0
+     */
+    private int getPlainLevel()
     {
-        int holder;
+        int currLevel;
         try
         {
-            holder = Integer.parseInt(config.read("Config.Players." + player.getUniqueId() + ".Leveling.Level"));
+            currLevel = Integer.parseInt(config.read("Config.Players." + player.getUniqueId() + ".Leveling.Level"));
         } catch (NumberFormatException e)
         {
-            holder = 0;
+            currLevel = 0;
             config.write("Config.Players." + player.getUniqueId() + ".Leveling.Level", "0");
         }
 
-        if (holder < 0)
+        if (currLevel < 0)
         {
-            holder = 0;
+            currLevel = 0;
             config.write("Config.Players." + player.getUniqueId() + ".Leveling.Level", "0");
         }
-        return holder;
+        return currLevel;
     }
 
-    private int getDryBlocks()
+    /**
+     * Method to get a players current blocks mined. Will write 0 on null or error.
+     *
+     * @return The players current blocks mined.
+     * @since 1.0
+     */
+    private int getPlainBlocks()
     {
-        int holder;
+        int currBlocksMined;
         try
         {
-            holder = Integer.parseInt(config.read("Config.Players." + player.getUniqueId() + ".Leveling.Blocks"));
+            currBlocksMined = Integer.parseInt(config.read("Config.Players." + player.getUniqueId() + ".Leveling.Blocks"));
         } catch (NumberFormatException e)
         {
-            holder = 0;
+            currBlocksMined = 0;
             config.write("Config.Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
         }
-        if (holder < 0)
+        if (currBlocksMined < 0)
         {
-            holder = 0;
+            currBlocksMined = 0;
             config.write("Config.Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
         }
-        return holder;
+        return currBlocksMined;
     }
 
+    /**
+     * Method that recalculates, writes and returns the current player's level.
+     *
+     * @return The play's current and final level.
+     * @since 1.0
+     */
     public int getLevel()
     {
         recalcValues();
         return Integer.parseInt(config.read("Config.Players." + player.getUniqueId() + ".Leveling.Level"));
     }
 
+    /**
+     * Method that recalculates, writes and returns the current player's mined blocks count.
+     *
+     * @return The play's current and final mined blocks count.
+     * @since 1.0
+     */
     public int getBlocks()
     {
         recalcValues();
         return Integer.parseInt(config.read("Config.Players." + player.getUniqueId() + ".Leveling.Blocks"));
     }
 
+    /**
+     * Method that adds x to the player's mined blocks count.
+     *
+     * @param amount The amount of blocks mined.
+     * @since 1.0
+     */
     private void addBlocks(int amount)
     {
         int blocks = getBlocks();
@@ -75,82 +118,100 @@ public class Leveling
         config.write("Config.Players." + player.getUniqueId() + ".Leveling.Blocks", "" + blocks);
     }
 
+    /**
+     * Method that compares blocks mined count and level to adjust them accordingly (e.g. adjust blocks mined if admin sets player's level).
+     *
+     * @since 1.0
+     */
     private void recalcValues()
     {
-        for (int cnt = 1; cnt <= 2; cnt++)
+        /*
+         * I know... this for-loop makes no sense. I dont' know either why this is here.
+         * But at this point I am to afraid to debug it. Deal with it :)
+         */
+        for (int i = 1; i <= 2; i++)
         {
-            int currLevel = getDryLevel();
-            int currBlocks = getDryBlocks();
+            int currLevel = getPlainLevel();
+            int currBlocks = getPlainBlocks();
             int maxLevel = 0;
 
-            for (int temp = 0; temp < Constants.modsList.size(); temp++)
+            // Get highest possible level of all mods
+            for (int j = 0; j < Constants.modsList.size(); j++)
             {
-                if (maxLevel < Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + Constants.modsList.get(temp))))
+                if (maxLevel < Integer.parseInt(config.read("Config.Leveling.Modlevel." + Constants.modsList.get(j))))
                 {
-                    maxLevel = Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + Constants.modsList.get(temp)));
+                    maxLevel = Integer.parseInt(config.read("Config.Leveling.Modlevel." + Constants.modsList.get(j)));
                 }
             }
 
-            //Adjust Level
+            // Adjust player's level
             int blocksForLevel;
             if (currLevel == 0)
             {
                 blocksForLevel = 0;
             } else
             {
-                blocksForLevel = Integer.parseInt(config.read(config.getFileName() + ".Leveling." + currLevel));
+                blocksForLevel = Integer.parseInt(config.read("Config.Leveling." + currLevel));
             }
 
             if (currBlocks > blocksForLevel)
             {
-                int i = 1;
-                if ((currLevel + i) <= maxLevel)
+                int counter = 1;
+                if ((currLevel + counter) <= maxLevel)
                 {
-                    while (currBlocks >= Integer.parseInt(config.read("Config.Leveling." + (currLevel + i))))
+                    while (currBlocks >= Integer.parseInt(config.read("Config.Leveling." + (currLevel + counter))))
                     {
-                        i++;
-                        if ((currLevel + i) > maxLevel)
+                        counter++;
+                        if ((currLevel + counter) > maxLevel)
                         {
                             break;
                         }
                     }
-                    i--;
-                    config.write(config.getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "" + (currLevel + i));
-                    currLevel = currLevel + i;
+                    counter--;
+                    config.write("Config.Players." + player.getUniqueId() + ".Leveling.Level", "" + (currLevel + counter));
+                    currLevel = currLevel + counter;
                 }
             }
 
-            //Adjust Blocks
+            // Adjust player's mined blocks
             int blocksForCurrLevel;
             if (currLevel == 0)
             {
                 blocksForCurrLevel = 0;
             } else
             {
-                blocksForCurrLevel = Integer.parseInt(config.read(config.getFileName() + ".Leveling." + currLevel));
+                blocksForCurrLevel = Integer.parseInt(config.read("Config.Leveling." + currLevel));
             }
 
             if (blocksForCurrLevel > currBlocks)
             {
-                config.write(config.getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "" + blocksForCurrLevel);
-                currBlocks = blocksForCurrLevel;
+                config.write("Config.Players." + player.getUniqueId() + ".Leveling.Blocks", "" + blocksForCurrLevel);
             }
         }
     }
 
+    /**
+     * Method that calculates if a new level was reached.
+     *
+     * @param amount The amount of blocks mined.
+     * @since 1.0
+     */
     public void calcNextLevel(int amount)
     {
-
         MessageHelper mh = new MessageHelper();
 
+        // Loop until it breaks. Happens when amount was fully distributed
         while (true)
         {
+            // Get current values
             int currLevel = getLevel();
             int currBlocks = getBlocks();
             if (!config.read("Config.Leveling." + (currLevel + 1)).equals(""))
             {
+                // Calculate difference to next level
                 int nextLevelBlocks = Integer.parseInt(config.read("Config.Leveling." + (currLevel + 1)));
                 int blocksDiff = nextLevelBlocks - currBlocks;
+                // Level Up handling - with rest
                 if (amount > blocksDiff)
                 {
                     addBlocks(blocksDiff);
@@ -159,11 +220,12 @@ public class Leveling
                     mh.sendPlayer(player, "Level Up! You are now Level " + getLevel(), ChatColor.GOLD);
                     for (int temp = 0; temp < Constants.modsList.size(); temp++)
                     {
-                        if (getLevel() == Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + Constants.modsList.get(temp))))
+                        if (getLevel() == Integer.parseInt(config.read("Config.Leveling.Modlevel." + Constants.modsList.get(temp))))
                         {
                             mh.sendPlayer(player, "You unlocked the " + Constants.modsList.get(temp) + " Mod!", ChatColor.GOLD);
                         }
                     }
+                    // Level Up handling - no rest
                 } else if (amount == blocksDiff)
                 {
                     addBlocks(amount);
@@ -171,18 +233,20 @@ public class Leveling
                     mh.sendPlayer(player, "Level Up! You are now Level " + getLevel(), ChatColor.GOLD);
                     for (int temp = 0; temp < Constants.modsList.size(); temp++)
                     {
-                        if (getLevel() == Integer.parseInt(config.read(config.getFileName() + ".Leveling.Modlevel." + Constants.modsList.get(temp))))
+                        if (getLevel() == Integer.parseInt(config.read("Config.Leveling.Modlevel." + Constants.modsList.get(temp))))
                         {
                             mh.sendPlayer(player, "You unlocked the " + Constants.modsList.get(temp) + " Mod!", ChatColor.GOLD);
                         }
                     }
                     break;
+                    // No level Up handling
                 } else
                 {
                     addBlocks(amount);
                     break;
                 }
-            }else
+                // Just add blocks amount if max level was already reached
+            } else
             {
                 addBlocks(amount);
                 break;
