@@ -11,16 +11,13 @@ import org.bukkit.inventory.ItemStack;
  * Class to create the standard README book.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-30 Initial Version
- * @since 1.0
  */
 public class MainMenu extends MenuTemplate
 {
     /**
      * Main method to generate the book object.
      *
-     * @return The {@link IconMenu} as configured.
-     * @since 1.0
+     * @return the {@link IconMenu} as configured
      */
     public IconMenu generateMenu()
     {

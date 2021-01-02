@@ -16,8 +16,6 @@ import org.bukkit.inventory.ItemStack;
  * Class for handling "/sa" commands.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-28 Initial Version
- * @since 1.0
  */
 public class Sa implements CommandExecutor
 {
@@ -28,12 +26,11 @@ public class Sa implements CommandExecutor
     /**
      * Main method handling incoming commands.
      *
-     * @param sender The command sender.
-     * @param cmd    The base command, e.g. "sa".
-     * @param label  N/A.
-     * @param args   All following subcommands as an array.
-     * @return If command was parsed and executed successfully.
-     * @since 1.0
+     * @param sender the command sender
+     * @param cmd    the base command, e.g. "sa"
+     * @param label  N/A
+     * @param args   the following subcommands as an array
+     * @return {@code True} if the command was parsed and executed successfully
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)

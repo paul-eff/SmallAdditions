@@ -8,110 +8,126 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-abstract class FileHelper {
-
+/**
+ * Class for handling general file interactions.
+ *
+ * @author Paul Ferlitz
+ */
+abstract class FileHelper
+{
+    // Class variables
     private String fileName; // Layout: "fileName"
     private final String basePath = "plugins/" + Constants.name + "/";
     private String path = ""; // Layout: "folder1/folder2/"
 
     /**
-     * First Constructor to create one file in the base Plugin directory
+     * Constructor to create one file in the base plugin directory.
      *
-     * @param fileName Name of the file without a file suffix
+     * @param fileName the name of the file without a file suffix
      */
-    public FileHelper(String fileName) {
+    public FileHelper(String fileName)
+    {
         this.fileName = fileName;
 
         // Create Base Directory
         File file = new File(this.basePath);
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             file.mkdirs();
         }
     }
 
     /**
-     * Second Constructor to create one file in a custom directory
+     * Constructor to create one file in a custom directory.
      *
-     * @param path     Path of the file
-     * @param fileName Name of the file without a file suffix
+     * @param path     the path of the file inside the plugin's base directory
+     * @param fileName the name of the file without a file suffix
      */
-    public FileHelper(String path, String fileName) {
+    public FileHelper(String path, String fileName)
+    {
         this.path = path;
         this.fileName = fileName;
 
         // Create Base Directory
         File file = new File(this.basePath);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
+        if (!file.exists()) file.mkdirs();
 
         // Create Directory if specified
-        if (!this.path.equals("") && !this.path.equals(" ")) {
+        if (!this.path.equals("") && !this.path.equals(" "))
+        {
             file = new File(this.basePath + this.path);
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            if (!file.exists()) file.mkdirs();
         }
     }
 
     /**
-     * Method to return the file name
+     * Method to return the file name.
      *
-     * @return The file name
+     * @return the file name
      */
-    public String getFileName() {
+    public String getFileName()
+    {
         return fileName;
     }
 
     /**
-     * Method to return a file
+     * Method to return a file.
      *
-     * @return File associated with this object
+     * @return the file associated with this object
      */
-    public YamlConfiguration loadFile() {
+    public YamlConfiguration loadFile()
+    {
         YamlConfiguration ymlFile = new YamlConfiguration();
-        try {
+        try
+        {
             ymlFile.load(this.basePath + this.path + this.fileName + ".yml");
             return ymlFile;
-        } catch (IOException | InvalidConfigurationException e) {
+        } catch (IOException | InvalidConfigurationException e)
+        {
             e.printStackTrace();
         }
         return null;
     }
 
     /**
-     * Method to save a file
+     * Method to save a file.
      *
-     * @param file The file which should be saved
-     * @return If the operation was successful or not
+     * @param file the file which should be saved
+     * @return {@code True} if the operation was successful or not
      */
-    public boolean saveFile(YamlConfiguration file) {
-        try {
+    public boolean saveFile(YamlConfiguration file)
+    {
+        try
+        {
             file.save(this.basePath + this.path + this.fileName + ".yml");
             return true;
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
         return false;
     }
 
     /**
-     * Method to check for a file's existence
+     * Method to check for a file's existence.
      *
-     * @return If file exists
+     * @return {@code True} if the file exists
      */
-    public boolean checkForFile() {
+    public boolean checkForFile()
+    {
         File file = new File(this.basePath + this.path + this.fileName + ".yml");
         return file.exists();
     }
 
     /**
-     * Method to delete a file
+     * Method to delete a file.
      *
-     * @return If the operation was successful
+     * @return {@code True} if the operation was successful
      */
-    public boolean deleteFile() {
-        if (checkForFile()) {
+    public boolean deleteFile()
+    {
+        if (checkForFile())
+        {
             File file = new File(this.basePath + this.path + this.fileName + ".yml");
             file.delete();
             return true;
@@ -120,25 +136,34 @@ abstract class FileHelper {
     }
 
     /**
-     * Method to create a file
+     * Method to create a file.
      *
-     * @return If operation was successful
+     * @return {@code True} if operation was successful
      */
-    public boolean createFile() {
-        if (!checkForFile()) {
-            if (!this.fileName.equals("")) {
+    public boolean createFile()
+    {
+        if (!checkForFile())
+        {
+            if (!this.fileName.equals(""))
+            {
                 File file = new File(this.basePath + this.path + this.fileName + ".yml");
-                if (!file.exists()) {
-                    try {
+                if (!file.exists())
+                {
+                    try
+                    {
                         file.createNewFile();
-                    } catch (IOException e) {
+                    } catch (IOException e)
+                    {
                         e.printStackTrace();
                     }
                 }
-            } else {
-                try {
+            } else
+            {
+                try
+                {
                     throw new NoFileNameException();
-                } catch (NoFileNameException e) {
+                } catch (NoFileNameException e)
+                {
                     e.printStackTrace();
                 }
             }

@@ -14,8 +14,6 @@ import java.util.List;
  * Class for handling "/sa" command tab completions.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-28 Initial Version
- * @since 1.0
  */
 public class SaTabComplete implements TabCompleter
 {
@@ -25,12 +23,11 @@ public class SaTabComplete implements TabCompleter
     /**
      * Main method handling incoming command's tab completions.
      *
-     * @param sender The command sender.
-     * @param cmd    The base command, e.g. "sa".
-     * @param label  N/A.
-     * @param args   All following subcommands as an array.
-     * @return ArrayList of Strings that can be applied to the given command.
-     * @since 1.0
+     * @param sender the command sender
+     * @param cmd    the base command, e.g. "sa"
+     * @param label  N/A
+     * @param args   the following subcommands as an array
+     * @return a {@code ArrayList<String>} holding possible command options
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args)

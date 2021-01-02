@@ -1,24 +1,22 @@
 package me.gigawartrex.smalladditions.helpers;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
  * Class housing all sorts of helpers for ingame Minecraft operations.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-29 Initial Version
- * @since 1.0
  */
 public class Helper
 {
     /**
      * Generates a random number inclusive between min and max.
      *
-     * @param min Minimum Number generated.
-     * @param max Maximum Number generated.
-     * @return The randomly generated number.
-     * @since 1.0
+     * @param min the smallest possible number
+     * @param max the biggest possible number
+     * @return the pseudo randomly generated number
      */
     public static int randNumFromRange(int min, int max)
     {
@@ -28,15 +26,14 @@ public class Helper
     /**
      * Offsets the given location by the entered values.
      *
-     * @param loc Original location to be edited.
-     * @param x   X offset.
-     * @param y   Y offset.
-     * @param z   Z offset.
-     * @return The new Location.
-     * @since 1.0
+     * @param loc the original location to be edited
+     * @param x   the X offset
+     * @param y   the Y offset
+     * @param z   the Z offset
+     * @return the new Location
      */
-    public static Location getLocation(Player player, Location loc, int x, int y, int z)
+    public static Location getLocation(Location loc, int x, int y, int z)
     {
-        return new Location(player.getWorld(), loc.getX() + x, loc.getY() + y, loc.getZ() + z);
+        return new Location(loc.getWorld(), loc.getX() + x, loc.getY() + y, loc.getZ() + z);
     }
 }

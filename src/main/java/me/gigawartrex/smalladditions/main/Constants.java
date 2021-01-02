@@ -10,6 +10,11 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class for holding plugin wide constants.
+ *
+ * @author Paul Ferlitz
+ */
 public class Constants
 {
     // Plugin wide essentials

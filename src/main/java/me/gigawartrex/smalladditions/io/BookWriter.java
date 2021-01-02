@@ -9,57 +9,72 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class BookWriter {
+/**
+ * Class for handling writing files for a specified book.
+ *
+ * @author Paul Ferlitz
+ */
+public class BookWriter
+{
+    // Class variables
+    private final MessageHelper msghelp = new MessageHelper();
 
-	private final MessageHelper msghelp = new MessageHelper();
+    /**
+     * Class constructor.
+     */
+    public BookWriter()
+    {
+        File directory = new File("./plugins/" + Constants.name + "/BookTextFiles/");
 
-	public BookWriter() {
+        if (!directory.exists()) directory.mkdirs();
+    }
 
-		File directory = new File("./plugins/" + Constants.name + "/BookTextFiles/");
+    /**
+     * Method to check for a default book file, or reset it.
+     *
+     * @param fileName the books source file name
+     * @param reset    if the source file should be reset to it's default
+     */
+    public void defaultBook(String fileName, boolean reset)
+    {
+        File file = new File("./plugins/" + Constants.name + "/BookTextFiles/" + fileName + ".txt");
 
-		if (!directory.exists()) {
-			directory.mkdirs();
-		}
-	}
+        // Delete file in case of reset
+        if (file.exists() && reset) file.delete();
 
-	public void defaultBook(String fileName, boolean reset) {
+        if (file.exists())
+        {
+            msghelp.sendConsole(fileName + " found and (re)loaded!", ChatColor.GREEN);
+        } else
+        {
+            if (reset)
+            {
+                msghelp.sendConsole("Deleting " + fileName + " and creating default...", ChatColor.RED);
+            } else
+            {
+                msghelp.sendConsole(fileName + " not found. Creating default...", ChatColor.RED);
+            }
+            try
+            {
+                file.createNewFile();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
 
-		File file = new File("./plugins/" + Constants.name + "/BookTextFiles/" + fileName + ".txt");
+            // Write default to file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
+            {
+                writer.write("-- WIP -- \n");
+                writer.write("This book was not filled with content yet. \n");
+                writer.write("  -SimpleAdditions Team \n");
+                writer.write("-- WIP -- \n");
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
 
-		if (file.exists() && reset) {
-			file.delete();
-		}
-
-		if (file.exists()) {
-
-			msghelp.sendConsole(fileName + " found and (re)loaded!", ChatColor.GREEN);
-		} else {
-
-			if (reset) {
-				msghelp.sendConsole("Deleting " + fileName + " and creating default...", ChatColor.RED);
-			} else {
-				msghelp.sendConsole(fileName + " not found. Creating default...", ChatColor.RED);
-			}
-
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-
-				writer.write("-- WIP -- \n");
-				writer.write("This book was not filled with content yet. \n");
-				writer.write("  -SimpleAdditions Team \n");
-				writer.write("-- WIP -- \n");
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			msghelp.sendConsole("New " + fileName + " created!", ChatColor.GREEN);
-		}
-
-	}
+            msghelp.sendConsole("New " + fileName + " created!", ChatColor.GREEN);
+        }
+    }
 }

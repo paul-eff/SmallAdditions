@@ -9,10 +9,19 @@ import me.gigawartrex.smalladditions.io.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * The plugin's main class/entry point.
+ *
+ * @author Paul Ferlitz
+ */
 public final class SmallAdditions extends JavaPlugin
 {
+    // Class variables
     private MessageHelper msghelp;
 
+    /**
+     * Method that fires on every "load" of the plugin (e.g. server start/reload)
+     */
     @Override
     public void onEnable()
     {
@@ -49,6 +58,9 @@ public final class SmallAdditions extends JavaPlugin
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
 
+    /**
+     * Method that fires on every "unload" of the plugin (e.g. server stop/reload)
+     */
     @Override
     public void onDisable()
     {

@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
  * Class for sending messages to entities on the server or interacting with it.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-30 Initial Version
- * @since 1.0
  */
 public class MessageHelper
 {
@@ -20,8 +18,6 @@ public class MessageHelper
 
     /**
      * Class constructor
-     *
-     * @since 1.0
      */
     public MessageHelper()
     {
@@ -33,9 +29,8 @@ public class MessageHelper
     /**
      * Method to send a colored message to the console.
      *
-     * @param msg      Message string to be sent.
-     * @param msgColor Color of the message sent.
-     * @since 1.0
+     * @param msg      the message {@code String} to be sent
+     * @param msgColor the {@code ChatColor} of the message sent
      */
     public void sendConsole(String msg, ChatColor msgColor)
     {
@@ -44,9 +39,10 @@ public class MessageHelper
 
     /**
      * Method to send a plain message to the console.
+     * {@code ChatColor} defaults to {@link ChatColor#WHITE}
      *
-     * @param msg Message string to be sent.
-     * @since 1.0
+     * @param msg the message {@code String} to be sent
+     * @see MessageHelper#sendConsole(String, ChatColor)
      */
     public void sendConsole(String msg)
     {
@@ -56,10 +52,9 @@ public class MessageHelper
     /**
      * Method to send a colored message to a player.
      *
-     * @param player   The target player.
-     * @param msg      The string to be sent.
-     * @param msgColor Color of the message sent.
-     * @since 1.0
+     * @param player   the target {@code Player}
+     * @param msg      the {@code String} to be sent
+     * @param msgColor the {@code ChatColor} of the message sent
      */
     public void sendPlayer(Player player, String msg, ChatColor msgColor)
     {
@@ -68,10 +63,11 @@ public class MessageHelper
 
     /**
      * Method to send a plain message to a player.
+     * {@code ChatColor} defaults to {@link ChatColor#WHITE}
      *
-     * @param player The target player.
-     * @param msg    The string to be sent.
-     * @since 1.0
+     * @param player the target {@code Player}
+     * @param msg    the {@code String} to be sent
+     * @see MessageHelper#sendAllPlayers(String, ChatColor)
      */
     public void sendPlayer(Player player, String msg)
     {
@@ -81,9 +77,8 @@ public class MessageHelper
     /**
      * Method to send a colored message to all online player.
      *
-     * @param msg      The string to be sent.
-     * @param msgColor Color of the message sent.
-     * @since 1.0
+     * @param msg      the {@code String} to be sent
+     * @param msgColor the {@code ChatColor} of the message sent
      */
     public void sendAllPlayers(String msg, ChatColor msgColor)
     {
@@ -95,9 +90,10 @@ public class MessageHelper
 
     /**
      * Method to send a plain message to all online player.
+     * {@code ChatColor} defaults to {@link ChatColor#WHITE}.
      *
-     * @param msg The string to be sent.
-     * @since 1.0
+     * @param msg the {@code String} to be sent
+     * @see MessageHelper#sendAllPlayers(String, ChatColor)
      */
     public void sendAllPlayers(String msg)
     {
@@ -111,9 +107,8 @@ public class MessageHelper
      * Method to send a colored message to all available recipients. Uses {@link #sendConsole(String, ChatColor)} and
      * {@link #sendAllPlayers(String, ChatColor)}.
      *
-     * @param msg      The string to be sent.
-     * @param msgColor Color of the message sent.
-     * @since 1.0
+     * @param msg      the {@code String} to be sent
+     * @param msgColor the {@code ChatColor} of the message sent
      */
     public void sendAll(String msg, ChatColor msgColor)
     {
@@ -122,10 +117,11 @@ public class MessageHelper
     }
 
     /**
-     * Method to send a plain message to all available recipients. Uses {@link #sendConsole(String)} and {@link #sendAllPlayers(String)}.
+     * Method to send a plain message to all available recipients.
+     * {@code ChatColor} defaults to {@link ChatColor#WHITE}.
      *
-     * @param msg The string to be sent.
-     * @since 1.0
+     * @param msg The {@code String} to be sent.
+     * @see MessageHelper#sendAllPlayers(String, ChatColor) 
      */
     public void sendAll(String msg)
     {

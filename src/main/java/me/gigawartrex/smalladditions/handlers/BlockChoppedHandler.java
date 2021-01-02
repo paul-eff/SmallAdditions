@@ -55,7 +55,7 @@ public class BlockChoppedHandler implements Listener
                         //Reset variable(s)
                         boolean firstBlockIsGrounded = false;
                         //Check if chopped block is grounded to later evaluate replant conditions
-                        Location locUnderOrigBlock = Helper.getLocation(eventPlayer, event.getBlock().getLocation(), 0, -1, 0);
+                        Location locUnderOrigBlock = Helper.getLocation(event.getBlock().getLocation(), 0, -1, 0);
                         boolean isDirt = locUnderOrigBlock.getBlock().getType().equals(Material.DIRT);
                         boolean isGrass = locUnderOrigBlock.getBlock().getType().equals(Material.GRASS);
 

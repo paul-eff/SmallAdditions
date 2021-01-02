@@ -8,8 +8,6 @@ import me.gigawartrex.smalladditions.io.Config;
  * Abstract template class for {@link IconMenu}.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-30 Initial Version
- * @since 1.0
  */
 public abstract class MenuTemplate
 {
@@ -19,8 +17,6 @@ public abstract class MenuTemplate
 
     /**
      * Class constructor.
-     *
-     * @since 1.0
      */
     public MenuTemplate()
     {
@@ -29,10 +25,9 @@ public abstract class MenuTemplate
     }
 
     /**
-     * Get the books {@link MessageHelper}.
+     * Get the books MessageHelper.
      *
-     * @return The {@link MessageHelper}.
-     * @since 1.0
+     * @return the {@link MessageHelper}.
      */
     public MessageHelper getMessageHelper()
     {
@@ -40,10 +35,9 @@ public abstract class MenuTemplate
     }
 
     /**
-     * Get the books {@link Config}.
+     * Get the books Config.
      *
-     * @return The {@link Config}.
-     * @since 1.0
+     * @return the {@link Config}
      */
     public Config getConfig()
     {
@@ -51,9 +45,9 @@ public abstract class MenuTemplate
     }
 
     /**
-     * Method to gerenate and return a custom {@link IconMenu}
+     * Method to generate and return a custom IconMenu.
      *
-     * @return The custom {@link IconMenu}
+     * @return the custom {@link IconMenu}
      */
     public abstract IconMenu generateMenu();
 }

@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
  *
  * @author Paul Ferlitz
  * @version 1.0 2020-12-29 Initial Version
- * @since 1.0
  */
 public class Leveling
 {
@@ -21,8 +20,7 @@ public class Leveling
     /**
      * Class constructor.
      *
-     * @param player The target player.
-     * @since 1.0
+     * @param player the target player
      */
     public Leveling(Player player)
     {
@@ -31,10 +29,9 @@ public class Leveling
     }
 
     /**
-     * Method to get a players current level. Will write 0 on null or error.
+     * Method to get a player's current level. Will write 0 on null or error.
      *
-     * @return The players current level.
-     * @since 1.0
+     * @return the players current level.
      */
     private int getPlainLevel()
     {
@@ -57,10 +54,9 @@ public class Leveling
     }
 
     /**
-     * Method to get a players current blocks mined. Will write 0 on null or error.
+     * Method to get a player's current blocks mined. Will write 0 on null or error.
      *
-     * @return The players current blocks mined.
-     * @since 1.0
+     * @return the player's current blocks mined
      */
     private int getPlainBlocks()
     {
@@ -84,8 +80,7 @@ public class Leveling
     /**
      * Method that recalculates, writes and returns the current player's level.
      *
-     * @return The play's current and final level.
-     * @since 1.0
+     * @return the play's current and final level
      */
     public int getLevel()
     {
@@ -96,8 +91,7 @@ public class Leveling
     /**
      * Method that recalculates, writes and returns the current player's mined blocks count.
      *
-     * @return The play's current and final mined blocks count.
-     * @since 1.0
+     * @return the play's current and final mined blocks count
      */
     public int getBlocks()
     {
@@ -108,8 +102,7 @@ public class Leveling
     /**
      * Method that adds x to the player's mined blocks count.
      *
-     * @param amount The amount of blocks mined.
-     * @since 1.0
+     * @param amount the amount of blocks mined
      */
     private void addBlocks(int amount)
     {
@@ -120,14 +113,13 @@ public class Leveling
 
     /**
      * Method that compares blocks mined count and level to adjust them accordingly (e.g. adjust blocks mined if admin sets player's level).
-     *
-     * @since 1.0
      */
     private void recalcValues()
     {
         /*
          * I know... this for-loop makes no sense. I dont' know either why this is here.
-         * But at this point I am to afraid to debug it. Deal with it :)
+         * But at this point I am to afraid to debug it.
+         * Also I don't want to if it works. Deal with it :)
          */
         for (int i = 1; i <= 2; i++)
         {
@@ -193,8 +185,7 @@ public class Leveling
     /**
      * Method that calculates if a new level was reached.
      *
-     * @param amount The amount of blocks mined.
-     * @since 1.0
+     * @param amount the amount of blocks mined
      */
     public void calcNextLevel(int amount)
     {
