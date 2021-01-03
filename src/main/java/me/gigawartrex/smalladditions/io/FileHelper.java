@@ -13,7 +13,7 @@ import java.io.IOException;
  *
  * @author Paul Ferlitz
  */
-abstract class FileHelper
+public abstract class FileHelper
 {
     // Class variables
     private String fileName; // Layout: "fileName"
@@ -93,7 +93,7 @@ abstract class FileHelper
      * Method to save a file.
      *
      * @param file the file which should be saved
-     * @return {@code True} if the operation was successful or not
+     * @return {@code True} if the operation was successful
      */
     public boolean saveFile(YamlConfiguration file)
     {
