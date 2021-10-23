@@ -18,15 +18,27 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class for handling when a player digs.
+ *
+ * @author Paul Ferlitz
+ */
 public class BlockDugHandler implements Listener
 {
+    // Class variables
     private final Config config = new Config();
     private final MessageHelper msghelp = new MessageHelper();
 
+    // Class wide important values
     private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_SHOVEL, Material.STONE_SHOVEL, Material.IRON_SHOVEL, Material.GOLDEN_SHOVEL, Material.DIAMOND_SHOVEL, Material.NETHERITE_SHOVEL)); // Allowed Tools
     private final ArrayList<Material> allowedMaterials = new ArrayList<>(Arrays.asList(Material.GRAVEL, Material.CLAY)); // Allowed Materials
     private int maxMinerSize = 0;
 
+    /**
+     * Main event handler.
+     *
+     * @param event the event triggered
+     */
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
