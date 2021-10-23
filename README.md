@@ -1,8 +1,8 @@
 # SmallAdditions 1.0
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0-blue">
-  <img src="https://img.shields.io/badge/bukkit-1.16.4-green">
-  <img src="https://img.shields.io/badge/paper-1.16.4-green">
+  <img src="https://img.shields.io/badge/bukkit-1.17.1-green">
+  <img src="https://img.shields.io/badge/paper-1.17.1-green">
 </p>
 
 SmallAdditions is a Bukkit/Paper server plugin which aims to improve vanilla gameplay just a smidge.
@@ -30,6 +30,6 @@ New ideas and issues can be be directly submitted to this repository.
 - Add armor and general items to tool refill
 - More minor admin features
 
-Documentation: https://paulferlitz.github.io/SmallAdditions/  
+Documentation: https://paul-eff.github.io/SmallAdditions/  
 Bukkit:&nbsp;https://www.spigotmc.org/wiki/buildtools/#compile-craftbukkit  
 Paper:&nbsp;&nbsp;https://papermc.io/downloads
