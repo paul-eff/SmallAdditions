@@ -117,9 +117,9 @@ public class Leveling
     private void recalcValues()
     {
         /*
-         * I know... this for-loop makes no sense. I dont' know either why this is here.
-         * But at this point I am to afraid to debug it.
-         * Also I don't want to if it works. Deal with it :)
+         * I know... this for-loop makes no sense. I don't know either why this is here.
+         * But at this point I am too afraid to debug it.
+         * Also, I don't want to if it works. Deal with it :)
          */
         for (int i = 1; i <= 2; i++)
         {

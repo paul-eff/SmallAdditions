@@ -1,8 +1,6 @@
 package me.gigawartrex.smalladditions.helpers;
 
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 /**
  * Class housing all sorts of helpers for ingame Minecraft operations.

@@ -101,14 +101,14 @@ public class BlockDugHandler implements Listener
                             }
                             if (sizeReached) break;
                         }
-
+                        // Get player's current activated mods
                         boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
                         int actualMinedBlocks = 0;
-
+                        // Iterate over all possible blocks
                         for (Block block : validMinerBlocks)
                         {
                             ItemStack item;
-
+                            // Check if block is of specific type and apply mods / enchantments
                             if (block.getType() == Material.GRAVEL)
                             {
                                 item = new ItemStack(Material.FLINT);
@@ -117,7 +117,7 @@ public class BlockDugHandler implements Listener
                                 {
                                     item.setAmount(Helper.randNumFromRange(1, 4));
                                 }
-
+                                // Remove mined block
                                 block.setType(Material.AIR);
 
                                 if (Math.random() > 0.9)
@@ -136,13 +136,14 @@ public class BlockDugHandler implements Listener
                                 {
                                     item.setAmount(Helper.randNumFromRange(3, 4));
                                 }
+                                // Remove mined block
                                 block.setType(Material.AIR);
                                 block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
                             }
 
                             actualMinedBlocks++;
                             ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
-
+                            // Damage item according to durability enchantment
                             if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                             {
                                 int enchLevel;
