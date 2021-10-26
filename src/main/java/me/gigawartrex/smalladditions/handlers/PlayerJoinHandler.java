@@ -10,15 +10,27 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
+/**
+ * Class for handling when a player joins the server.
+ *
+ * @author Paul Ferlitz
+ */
 public class PlayerJoinHandler implements Listener
 {
+    // Class variables
     private final Config config = new Config();
 
+    /**
+     * Main event handler.
+     *
+     * @param event the event triggered
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)
     {
         event.getPlayer().setSleepingIgnored(false);
 
+        // Set default values for players that are first time joining
         if (config.read("Config.Players." + event.getPlayer().getUniqueId()).equals(""))
         {
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Level", "0");
@@ -37,6 +49,7 @@ public class PlayerJoinHandler implements Listener
         boolean freeSlot = false;
         Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "README");
 
+        // Check if player has a free slot for starter book
         for (ItemStack stack : event.getPlayer().getInventory().getStorageContents())
         {
             if (stack != null)
@@ -63,8 +76,10 @@ public class PlayerJoinHandler implements Listener
             }
         }
 
+        // Check if he already received book
         boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?"));
 
+        // If all conditions are met, spawn a book in player's inventory
         if (add && freeSlot && !receivedBook)
         {
             event.getPlayer().getInventory().addItem(refBook);

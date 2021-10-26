@@ -11,10 +11,19 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 
+/**
+ * Class for handling item magnet functionality.
+ *
+ * @author Paul Ferlitz
+ */
 public class ItemMagnetHandler
 {
+    // Class variables
     Config config = new Config();
 
+    /**
+     * Class constructor.
+     */
     public ItemMagnetHandler()
     {
         // Magnet Loop, picks up items for all players that have it activated.
@@ -25,6 +34,7 @@ public class ItemMagnetHandler
             {
                 for (Player player : Constants.plugin.getServer().getOnlinePlayers())
                 {
+                    // Sneaking disables magnet
                     if (Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Magnet")) && !player.isSneaking())
                     {
                         boolean playedSound = false;
@@ -34,6 +44,7 @@ public class ItemMagnetHandler
                         {
                             if (ent instanceof Item)
                             {
+                                // Security distance so that players can still drop items reliably
                                 if (player.getLocation().distance(ent.getLocation()) >= 1.5)
                                 {
                                     ItemStack item = ((Item) ent).getItemStack();
@@ -57,6 +68,7 @@ public class ItemMagnetHandler
                                         changesInWorld = true;
                                     }
                                 }
+                                // Play sound on pickup
                                 if (!playedSound && changesInWorld)
                                 {
                                     double volume = 0.5;

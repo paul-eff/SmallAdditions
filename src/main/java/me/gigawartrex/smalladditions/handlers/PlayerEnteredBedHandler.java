@@ -11,13 +11,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
+/**
+ * Class for handling when a player enters a bed.
+ *
+ * @author Paul Ferlitz
+ */
 public class PlayerEnteredBedHandler implements Listener
 {
+    // Class variables
     private MessageHelper msghelp;
     private final float percentageNeeded = 0.25f;
 
     private boolean oneWillWakeUp = false;
 
+    /**
+     * Main event handler.
+     *
+     * @param event the event triggered
+     */
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
@@ -27,7 +38,7 @@ public class PlayerEnteredBedHandler implements Listener
 
         ArrayList<Player> playersInSameWorld = new ArrayList<>();
         int playersSleeping = 0;
-
+        // Save all players in same world as sleeping player
         for (Player player : Constants.console.getServer().getOnlinePlayers())
         {
             if (player.getWorld() == eventPlayer.getWorld())
@@ -38,6 +49,7 @@ public class PlayerEnteredBedHandler implements Listener
         }
 
         int finalPlayersSleeping = playersSleeping;
+        // Runnable to schedule messages
         new BukkitRunnable()
         {
             @Override
@@ -49,9 +61,10 @@ public class PlayerEnteredBedHandler implements Listener
                     int playersSleeping = finalPlayersSleeping + 1;
                     float percentageSleeping = (playersSleeping * 1.0f) / (playersInSameWorld.size() * 1.0f);
                     int playersNeeded = (int) Math.ceil((percentageNeeded / (percentageSleeping / playersSleeping))) - playersSleeping;
-
+                    // Go over all players in same world (list)
                     for (Player player : playersInSameWorld)
                     {
+                        // For all not event players send messages
                         if (player != eventPlayer)
                         {
                             if (percentageSleeping < percentageNeeded)
@@ -61,6 +74,7 @@ public class PlayerEnteredBedHandler implements Listener
                             {
                                 msghelp.sendPlayer(player, eventPlayer.getName() + " just went to bed! Good night...", ChatColor.GOLD);
                             }
+                        // And for event players also send messages
                         } else
                         {
                             if (percentageSleeping < percentageNeeded)
@@ -72,14 +86,17 @@ public class PlayerEnteredBedHandler implements Listener
                             }
                         }
                     }
+                    // If sleeping threshold is reached
                     if (percentageSleeping >= percentageNeeded && !oneWillWakeUp)
                     {
+                        // Set oneWillWakeUp to true so that this action is only called one time
                         oneWillWakeUp = true;
                         new BukkitRunnable()
                         {
                             @Override
                             public void run()
                             {
+                                // Set world time to morning and wake alle players
                                 eventPlayer.getWorld().setTime(0);
                                 for (Player player : playersInSameWorld)
                                 {

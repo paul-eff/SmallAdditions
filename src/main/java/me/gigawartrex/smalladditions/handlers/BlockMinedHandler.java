@@ -19,6 +19,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class for handling when a player mines blocks.
+ *
+ * @author Paul Ferlitz
+ */
 public class BlockMinedHandler implements Listener
 {
     private final Config config = new Config();
