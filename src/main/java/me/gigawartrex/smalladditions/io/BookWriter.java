@@ -65,10 +65,9 @@ public class BookWriter
             // Write default to file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file)))
             {
-                writer.write("-- WIP -- \n");
-                writer.write("This book was not filled with content yet. \n");
-                writer.write("  -SimpleAdditions Team \n");
-                writer.write("-- WIP -- \n");
+                writer.write("Thanks for downloading SimpleAdditions!         \n");
+                writer.write("Type \"/help SimpleAdditions\" for in depth information, or just \"/sa menu\" to get right into it! \n");
+                writer.write("-SimpleAdditions Team \n");
             } catch (IOException e)
             {
                 e.printStackTrace();
