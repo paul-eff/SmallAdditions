@@ -1,6 +1,7 @@
 package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
+import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -19,9 +20,10 @@ import java.util.ArrayList;
 public class PlayerEnteredBedHandler implements Listener
 {
     // Class variables
-    private MessageHelper msghelp;
-    private final float percentageNeeded = 0.25f;
+    private final MessageHelper msghelp = new MessageHelper();
+    private final Config config = new Config();
 
+    private float percentageNeeded;
     private boolean oneWillWakeUp = false;
 
     /**
@@ -32,9 +34,8 @@ public class PlayerEnteredBedHandler implements Listener
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
-        //Load needed classes
-        msghelp = new MessageHelper();
         Player eventPlayer = event.getPlayer();
+        percentageNeeded = Float.parseFloat(config.read("Config.Settings.serverPercentageSleepingForSkip"));
 
         ArrayList<Player> playersInSameWorld = new ArrayList<>();
         int playersSleeping = 0;
