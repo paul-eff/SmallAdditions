@@ -1,6 +1,6 @@
-# SmallAdditions 1.1.0
+# SmallAdditions 1.1.1
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.1.0-blue">
+  <img src="https://img.shields.io/badge/version-1.1.1-blue">
   <img src="https://img.shields.io/badge/bukkit-1.18.1-green">
   <img src="https://img.shields.io/badge/paper-1.18.1-green">
 </p>
@@ -16,6 +16,7 @@ New ideas and issues can be be directly submitted to this repository.
 - Gravel vein digging
 - Modifiers like Fortune, Autosmelt and Replant
 - Item magnet
+- Right clicking wheat harvests/replants it
 ### Passive features:
 - x% in world have to sleep for next day
 - Broken tool refill
@@ -26,8 +27,8 @@ New ideas and issues can be be directly submitted to this repository.
 - Enderchest inventory see of players
 ### Ideas and WIP:
 - Chunkloading (WIP)
-- Right clicking wheat harvests/replants it
 - Add armor and general items to tool refill
+- Refill should respect all items of one kind (e.g. diamond and wooden hoe)
 - More minor admin features
 
 Documentation: https://paul-eff.github.io/SmallAdditions/  

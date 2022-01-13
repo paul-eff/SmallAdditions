@@ -45,6 +45,7 @@ public final class SmallAdditions extends JavaPlugin
         getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerRightclicksCropHandler(), this);
 
         //getServer().getPluginManager().registerEvents(new ChunkUnloadHandler(), this);
         //getServer().getPluginManager().registerEvents(new ChunkLoadHandler(), this);

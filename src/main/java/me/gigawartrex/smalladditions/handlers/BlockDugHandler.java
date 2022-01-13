@@ -4,6 +4,7 @@ import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -189,6 +191,7 @@ public class BlockDugHandler implements Listener
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerItemBreakEvent(player, item));
             player.getInventory().removeItem(item);
         } else
         {

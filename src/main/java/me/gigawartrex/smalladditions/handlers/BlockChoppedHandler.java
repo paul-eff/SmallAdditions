@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -228,6 +229,7 @@ public class BlockChoppedHandler implements Listener
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {
+            Bukkit.getServer().getPluginManager().callEvent(new PlayerItemBreakEvent(player, item));
             player.getInventory().removeItem(item);
         } else
         {
