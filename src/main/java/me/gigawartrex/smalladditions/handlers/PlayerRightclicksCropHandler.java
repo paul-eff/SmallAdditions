@@ -27,7 +27,7 @@ public class PlayerRightclicksCropHandler implements Listener
         {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK)
             {
-                if (event.getItem().getType().toString().contains("_HOE"))
+                if (event.getItem() != null && event.getItem().getType().toString().contains("_HOE"))
                 {
                     Block clickedBlock = event.getClickedBlock();
                     for (Crop crop : Crop.values())
