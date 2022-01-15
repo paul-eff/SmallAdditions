@@ -2,13 +2,12 @@ package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.Chest;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +25,8 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerDeathHandler implements Listener
 {
     private final MessageHelper msghelp = new MessageHelper();
+    private final int minHeight = -64;
+    private final int maxHeight = 319;
 
     /**
      * Main event handler.
@@ -37,45 +38,56 @@ public class PlayerDeathHandler implements Listener
     {
         // Set fundamentals
         Player eventPlayer = event.getEntity();
+        Block origBlock = eventPlayer.getWorld().getBlockAt(eventPlayer.getLocation());
         ItemStack[] playerInventoryContents = eventPlayer.getInventory().getContents().clone();
-        Block origBlock = eventPlayer.getLocation().getBlock();
-        // Make sure deathbox is well over y = 0
-        if (origBlock.getY() < 10) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), 10, origBlock.getZ());
+        // Make sure deathbox is definitely over minHeight
+        if (origBlock.getY() <= minHeight)
+        {
+            int startHeight = minHeight + 1;
+            if (origBlock.getWorld().getEnvironment() == World.Environment.THE_END) startHeight = 10;
+            origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), startHeight, origBlock.getZ());
+        }
         // Check for free space for chest
-        while (origBlock.getType() != Material.AIR || origBlock.getRelative(BlockFace.WEST).getType() != Material.AIR)
+        while (neighbouringBlockType(origBlock, Material.BEDROCK))
         {
             // Clamp min and max y levels
-            if (origBlock.getRelative(BlockFace.UP).getType() == Material.BEDROCK ||
-                    Math.abs(eventPlayer.getLocation().getY() - origBlock.getLocation().getY()) >= 50 ||
-                    origBlock.getY() > 250)
+            if (origBlock.getY() > maxHeight)
             {
                 origBlock = eventPlayer.getLocation().getBlock();
-                if (origBlock.getY() < 10) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), 10, origBlock.getZ());
-                if (origBlock.getY() > 250) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), 250, origBlock.getZ());
+                if (origBlock.getY() <= minHeight) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), minHeight + 5, origBlock.getZ());
+                if (origBlock.getY() >= maxHeight) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), maxHeight - 5, origBlock.getZ());
                 break;
             }
             origBlock = origBlock.getRelative(BlockFace.UP);
         }
         // Calculate XP
-        int newXP = event.getNewTotalExp();
+        int temp = 7 * eventPlayer.getLevel();
+        int newXP = temp <= 100 ? temp : 100;
         event.getDrops().clear();
         Block finalOrigBlock = origBlock;
         // Spawn chest with items
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
             // Create double chest entity
-            org.bukkit.block.data.type.Chest left = (org.bukkit.block.data.type.Chest) Material.CHEST.createBlockData();
-            org.bukkit.block.data.type.Chest right = (org.bukkit.block.data.type.Chest) Material.CHEST.createBlockData();
-            left.setType(org.bukkit.block.data.type.Chest.Type.RIGHT);
-            right.setType(org.bukkit.block.data.type.Chest.Type.LEFT);
-            finalOrigBlock.setBlockData(left, false);
-            finalOrigBlock.getRelative(BlockFace.WEST).setBlockData(right, false);
-            // Set location
-            Location loc = finalOrigBlock.getLocation();
-            Block block = loc.getBlock();
+            Block leftSide = finalOrigBlock;
+            Block rightSide = finalOrigBlock.getRelative(BlockFace.WEST);
+            leftSide.setType(Material.CHEST);
+            rightSide.setType(Material.CHEST);
+
+            Chest leftChestData = (Chest)leftSide.getBlockData();
+            Chest rightChestData = (Chest)rightSide.getBlockData();
+            leftChestData.setFacing(BlockFace.NORTH);
+            leftChestData.setType(Chest.Type.RIGHT);
+            rightChestData.setFacing(BlockFace.NORTH);
+            rightChestData.setType(Chest.Type.LEFT);
+
+            leftSide.setBlockData(leftChestData);
+            rightSide.setBlockData(rightChestData);
+
+            // Fill chest
+            Block block = finalOrigBlock.getLocation().getBlock();
             org.bukkit.block.Chest chest = (org.bukkit.block.Chest) block.getState();
             Inventory inv = chest.getInventory();
-            // Fill chest
             for (ItemStack item : playerInventoryContents)
             {
                 if (item != null)
@@ -120,5 +132,17 @@ public class PlayerDeathHandler implements Listener
             msghelp.sendPlayer(eventPlayer, "Please remove the chest when found...", ChatColor.RED);
             msghelp.sendConsole(eventPlayer.getName() + " died at X: \"" + finalOrigBlock.getX() + "\" Y: \"" + finalOrigBlock.getY() + "\" Z: \"" + finalOrigBlock.getZ() + "\" (Deathbox created)", ChatColor.WHITE);
         }, 20 * 3);
+    }
+
+    private boolean neighbouringBlockType(Block sourceBlock, Material possibleNeighbour)
+    {
+        for (BlockFace face : BlockFace.values())
+        {
+            if (face.isCartesian() && face != BlockFace.DOWN)
+            {
+                if (sourceBlock.getRelative(face).getType() == possibleNeighbour) return true;
+            }
+        }
+        return false;
     }
 }
