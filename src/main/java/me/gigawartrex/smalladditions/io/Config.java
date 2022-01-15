@@ -78,6 +78,8 @@ public class Config extends FileHelper
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "0");
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Book received?", "" + false);
+                    write(getFileName() + ".Players." + player.getUniqueId() + ".Magnet", "" + false);
+                    write(getFileName() + ".Players." + player.getUniqueId() + ".Ninjajoin", "" + false);
 
                     writePlayerStatus(player, false);
                     for (String mod : Constants.modsList)

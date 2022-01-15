@@ -4,6 +4,7 @@ import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -37,6 +38,7 @@ public class PlayerJoinHandler implements Listener
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Leveling.Blocks", "0");
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + false);
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Magnet", "" + false);
+            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Ninjajoin", "" + false);
 
             config.writePlayerStatus(event.getPlayer(), false);
             for (String mod : Constants.modsList)
@@ -44,6 +46,11 @@ public class PlayerJoinHandler implements Listener
                 config.writeModStatus(event.getPlayer(), mod, false);
             }
         }
+
+        // For ninjajoin
+        String yamlPath = "Config.Players." + event.getPlayer().getUniqueId() + ".Ninjajoin";
+        if (Boolean.parseBoolean(config.read(yamlPath))) event.setJoinMessage("");
+        if (!event.getPlayer().isOp()) config.write(yamlPath, "" + false);
 
         boolean add = true;
         boolean freeSlot = false;

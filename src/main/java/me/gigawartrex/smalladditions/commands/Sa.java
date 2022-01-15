@@ -6,11 +6,15 @@ import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class for handling "/sa" commands.
@@ -82,14 +86,7 @@ public class Sa implements CommandExecutor
                 // Command to reset all SimpleAdditions files/settings
                 case "resetall":
                     // Doesn't accept any additional arguments
-                    if (args.length != 1)
-                    {
-                        msghelp.sendPlayer(player, "Did you mean \"/sa resetall\"?", ChatColor.RED);
-                    } else
-                    {
-                        // Is console only
-                        msghelp.sendPlayer(player, "This is a console only command. Contact your system admin for help.", ChatColor.RED);
-                    }
+                    msghelp.sendPlayer(player, "This is a console only command. Contact your system admin for help.", ChatColor.RED);
                     break;
                 // Look into / interact with other players inventory
                 case "invsee":
@@ -143,6 +140,35 @@ public class Sa implements CommandExecutor
                         }
                     }
                     break;
+                // A toggle to suppress the player-joined message
+                case "ninjajoin":
+                    if (isOP)
+                    {
+                        if (args.length == 1)
+                        {
+                            String yamlPath = "Config.Players." + player.getUniqueId() + ".Ninjajoin";
+                            String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
+                            config.write(yamlPath, newStatus);
+                            msghelp.sendPlayer(player, "Ninjajoin status set to: " + newStatus, ChatColor.GREEN);
+                        } else if (args.length == 2)
+                        {
+                            for (OfflinePlayer targetPlayer : Bukkit.getOfflinePlayers())
+                            {
+                                if (targetPlayer.getName().equals(args[1]))
+                                {
+                                    String yamlPath = "Config.Players." + targetPlayer.getUniqueId() + ".Ninjajoin";
+                                    String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
+                                    config.write(yamlPath, newStatus);
+                                    msghelp.sendPlayer(player, "Toggled " + targetPlayer.getName() + "'s Ninjajoin status to: " + newStatus, ChatColor.GREEN);
+                                    break;
+                                }
+                            }
+                        }
+                    } else
+                    {
+                        msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
+                    }
+                    break;
                 // Command to easily test new code
                 case "test":
                     if (isOP)
@@ -160,6 +186,7 @@ public class Sa implements CommandExecutor
                     break;
             }
         } else
+
         {
             switch (args[0])
             {
@@ -172,6 +199,25 @@ public class Sa implements CommandExecutor
                     } else
                     {
                         config.defaultConfig(true);
+                    }
+                    break;
+                case "ninjajoin":
+                    if (args.length == 2)
+                    {
+                        for (OfflinePlayer targetPlayer : Bukkit.getOfflinePlayers())
+                        {
+                            if (targetPlayer.getName().equals(args[1]))
+                            {
+                                String yamlPath = "Config.Players." + targetPlayer.getUniqueId() + ".Ninjajoin";
+                                String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
+                                config.write(yamlPath, newStatus);
+                                msghelp.sendConsole("Toggled " + targetPlayer.getName() + "'s Ninjajoin status to: " + newStatus, ChatColor.GREEN);
+                                break;
+                            }
+                        }
+                    } else
+                    {
+                        msghelp.sendConsole("Did you mean \"/sa ninjajoin <playername>\"?", ChatColor.RED);
                     }
                     break;
                 default:

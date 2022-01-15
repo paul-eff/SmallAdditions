@@ -18,7 +18,7 @@ import java.util.List;
 public class SaTabComplete implements TabCompleter
 {
     // Class variables
-    private final ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "invsee", "enderinvsee", "resetall", "book", "menu"));
+    private final ArrayList<String> arg0List = new ArrayList<>(Arrays.asList("test", "ninjajoin","invsee", "enderinvsee", "resetall", "book", "menu"));
 
     /**
      * Main method handling incoming command's tab completions.
@@ -37,13 +37,13 @@ public class SaTabComplete implements TabCompleter
             if (sender instanceof Player && !sender.isOp())
             {
                 // Return only not OP commands
-                return arg0List.subList(4, arg0List.size());
+                return arg0List.subList(5, arg0List.size());
             }
             return arg0List;
         } else if (args.length == 2)
         {
             // Return all currently online players
-            if (sender instanceof Player && !sender.isOp())
+            if (sender instanceof Player)
             {
                 ArrayList<String> players = new ArrayList<>();
                 for (Player player : Bukkit.getServer().getOnlinePlayers())
