@@ -32,6 +32,7 @@ New ideas and issues can be be directly submitted to this repository.
 - Add armor and general items to tool refill
 - Refill should respect all items of one kind (e.g. diamond and wooden hoe)
 - More minor admin features
+- New and better logger + log levels
 
 Documentation: https://paul-eff.github.io/SmallAdditions/  
 Bukkit:&nbsp;https://www.spigotmc.org/wiki/buildtools/#compile-craftbukkit  
