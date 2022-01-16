@@ -166,31 +166,40 @@ public class BlockMinedHandler implements Listener
                                     switch (block.getType().toString())
                                     {
                                         case "COAL_ORE":
+                                        case "DEEPSLATE_COAL_ORE":
                                             xpToDrop = Helper.randNumFromRange(0, 2);
+                                            break;
+                                        case "NETHER_GOLD_ORE":
+                                            xpToDrop = Helper.randNumFromRange(0, 1);
                                             break;
                                         case "DIAMOND_ORE":
                                         case "EMERALD_ORE":
+                                        case "DEEPSLATE_DIAMOND_ORE":
+                                        case "DEEPSLATE_EMERALD_ORE":
                                             xpToDrop = Helper.randNumFromRange(3, 7);
                                             break;
                                         case "LAPIS_ORE":
+                                        case "DEEPSLATE_LAPIS_ORE":
                                         case "NETHER_QUARTZ_ORE":
                                             xpToDrop = Helper.randNumFromRange(2, 5);
                                             break;
                                         case "REDSTONE_ORE":
+                                        case "DEEPSLATE_REDSTONE_ORE":
                                             xpToDrop = Helper.randNumFromRange(1, 5);
-                                            break;
-                                        case "IRON_ORE":
-                                        case "GOLD_ORE":
-                                            if (autosmelt)
-                                            {
-                                                xpToDrop = 1;
-                                            }
                                             break;
                                         case "SPAWNER":
                                             xpToDrop = Helper.randNumFromRange(15, 43);
                                             break;
-                                        case "NETHER_GOLD_ORE":
-                                            xpToDrop = Helper.randNumFromRange(0, 1);
+                                        case "IRON_ORE":
+                                        case "GOLD_ORE":
+                                        case "COPPER_ORE":
+                                        case "DEEPSLATE_IRON_ORE":
+                                        case "DEEPSLATE_GOLD_ORE":
+                                        case "DEEPSLATE_COPPER_ORE":
+                                            if (autosmelt)
+                                            {
+                                                xpToDrop = 1;
+                                            }
                                             break;
                                     }
                                     // Spawn XP
@@ -247,12 +256,15 @@ public class BlockMinedHandler implements Listener
      */
     private ItemStack evaluateDrop(ItemStack material)
     {
-        if (material.getType() == Material.IRON_ORE)
+        if (material.getType().toString().contains("RAW_IRON"))
         {
             material.setType(Material.IRON_INGOT);
-        } else if (material.getType() == Material.GOLD_ORE)
+        } else if (material.getType().toString().contains("RAW_GOLD"))
         {
             material.setType(Material.GOLD_INGOT);
+        } else if (material.getType().toString().contains("RAW_COPPER"))
+        {
+            material.setType(Material.COPPER_INGOT);
         }
         return material;
     }
