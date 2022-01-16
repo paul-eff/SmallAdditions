@@ -109,6 +109,7 @@ public class BlockMinedHandler implements Listener
                         boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
                         boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
                         int actualMinedBlocks = 0;
+                        int totalXpToDrop = 0;
                         // Iterate over all possible blocks
                         for (Block block : validMinerBlocks)
                         {
@@ -161,52 +162,52 @@ public class BlockMinedHandler implements Listener
                                     {
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
                                     }
-                                    // Drop XP according to block type
-                                    int xpToDrop = 0;
-                                    switch (block.getType().toString())
-                                    {
-                                        case "COAL_ORE":
-                                        case "DEEPSLATE_COAL_ORE":
-                                            xpToDrop = Helper.randNumFromRange(0, 2);
-                                            break;
-                                        case "NETHER_GOLD_ORE":
-                                            xpToDrop = Helper.randNumFromRange(0, 1);
-                                            break;
-                                        case "DIAMOND_ORE":
-                                        case "EMERALD_ORE":
-                                        case "DEEPSLATE_DIAMOND_ORE":
-                                        case "DEEPSLATE_EMERALD_ORE":
-                                            xpToDrop = Helper.randNumFromRange(3, 7);
-                                            break;
-                                        case "LAPIS_ORE":
-                                        case "DEEPSLATE_LAPIS_ORE":
-                                        case "NETHER_QUARTZ_ORE":
-                                            xpToDrop = Helper.randNumFromRange(2, 5);
-                                            break;
-                                        case "REDSTONE_ORE":
-                                        case "DEEPSLATE_REDSTONE_ORE":
-                                            xpToDrop = Helper.randNumFromRange(1, 5);
-                                            break;
-                                        case "SPAWNER":
-                                            xpToDrop = Helper.randNumFromRange(15, 43);
-                                            break;
-                                        case "IRON_ORE":
-                                        case "GOLD_ORE":
-                                        case "COPPER_ORE":
-                                        case "DEEPSLATE_IRON_ORE":
-                                        case "DEEPSLATE_GOLD_ORE":
-                                        case "DEEPSLATE_COPPER_ORE":
-                                            if (autosmelt)
-                                            {
-                                                xpToDrop = 1;
-                                            }
-                                            break;
-                                    }
-                                    // Spawn XP
-                                    if (xpToDrop > 0)
-                                    {
-                                        block.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class).setExperience(xpToDrop);
-                                    }
+                                }
+                                int xpToDrop = 0;
+                                // Drop XP according to block type
+                                switch (block.getType().toString())
+                                {
+                                    case "COAL_ORE":
+                                    case "DEEPSLATE_COAL_ORE":
+                                        xpToDrop = Helper.randNumFromRange(0, 2);
+                                        break;
+                                    case "NETHER_GOLD_ORE":
+                                        xpToDrop = Helper.randNumFromRange(0, 1);
+                                        break;
+                                    case "DIAMOND_ORE":
+                                    case "EMERALD_ORE":
+                                    case "DEEPSLATE_DIAMOND_ORE":
+                                    case "DEEPSLATE_EMERALD_ORE":
+                                        xpToDrop = Helper.randNumFromRange(3, 7);
+                                        break;
+                                    case "LAPIS_ORE":
+                                    case "DEEPSLATE_LAPIS_ORE":
+                                    case "NETHER_QUARTZ_ORE":
+                                        xpToDrop = Helper.randNumFromRange(2, 5);
+                                        break;
+                                    case "REDSTONE_ORE":
+                                    case "DEEPSLATE_REDSTONE_ORE":
+                                        xpToDrop = Helper.randNumFromRange(1, 5);
+                                        break;
+                                    case "SPAWNER":
+                                        xpToDrop = Helper.randNumFromRange(15, 43);
+                                        break;
+                                    case "IRON_ORE":
+                                    case "GOLD_ORE":
+                                    case "COPPER_ORE":
+                                    case "DEEPSLATE_IRON_ORE":
+                                    case "DEEPSLATE_GOLD_ORE":
+                                    case "DEEPSLATE_COPPER_ORE":
+                                        if (autosmelt)
+                                        {
+                                            xpToDrop = 1;
+                                        }
+                                        break;
+                                }
+                                System.out.println(xpToDrop);
+                                if (xpToDrop > 0)
+                                {
+                                    totalXpToDrop += xpToDrop;
                                 }
                                 // Remove mined block
                                 block.setType(Material.AIR);
@@ -229,6 +230,11 @@ public class BlockMinedHandler implements Listener
                                     damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                 }
                             }
+                        }
+                        System.out.println("Total: " + totalXpToDrop);
+                        if (totalXpToDrop > 0)
+                        {
+                            eventPlayer.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class).setExperience(totalXpToDrop);
                         }
 
                         leveling.calcNextLevel(actualMinedBlocks);
