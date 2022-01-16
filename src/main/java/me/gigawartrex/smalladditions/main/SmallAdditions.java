@@ -38,11 +38,11 @@ public final class SmallAdditions extends JavaPlugin
         bookWriter.defaultBook("SmallAdditions Guide", false);
 
         //Event registration
-        getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
         getServer().getPluginManager().registerEvents(new ItemBreakHandler(), this);
         getServer().getPluginManager().registerEvents(new BlockChoppedHandler(), this);
         getServer().getPluginManager().registerEvents(new BlockMinedHandler(), this);
         getServer().getPluginManager().registerEvents(new BlockDugHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerRightclicksCropHandler(), this);

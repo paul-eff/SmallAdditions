@@ -3,7 +3,9 @@ package me.gigawartrex.smalladditions.handlers;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,6 +41,7 @@ public class PlayerJoinHandler implements Listener
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Book received?", "" + false);
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Magnet", "" + false);
             config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Ninjajoin", "" + false);
+            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Hide", "" + false);
 
             config.writePlayerStatus(event.getPlayer(), false);
             for (String mod : Constants.modsList)
@@ -48,9 +51,17 @@ public class PlayerJoinHandler implements Listener
         }
 
         // For ninjajoin
-        String yamlPath = "Config.Players." + event.getPlayer().getUniqueId() + ".Ninjajoin";
-        if (Boolean.parseBoolean(config.read(yamlPath))) event.setJoinMessage("");
-        if (!event.getPlayer().isOp()) config.write(yamlPath, "" + false);
+        if (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Ninjajoin"))) event.setJoinMessage("");
+        if (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Hide")))
+        {
+            Constants.console.getServer().dispatchCommand(Constants.console, "sa hide " + event.getPlayer().getName());
+        }
+        if (!event.getPlayer().isOp())
+        {
+            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Ninjajoin", "" + false);
+            // TODO: Implement LeaveHandler to remove from list if an admin forgets!
+            config.write("Config.Players." + event.getPlayer().getUniqueId() + ".Hide", "" + false);
+        }
 
         boolean add = true;
         boolean freeSlot = false;

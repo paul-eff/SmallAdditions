@@ -13,8 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Class for handling "/sa" commands.
@@ -26,6 +26,7 @@ public class Sa implements CommandExecutor
     // Class variables
     private final MessageHelper msghelp = new MessageHelper();
     private final Config config = new Config();
+    private ArrayList<Player> hiddenPlayers = new ArrayList<>();
 
     /**
      * Main method handling incoming commands.
@@ -169,11 +170,62 @@ public class Sa implements CommandExecutor
                         msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
                     }
                     break;
+                // Command to hide an admin from everybody
+                case "hide":
+                    if (isOP)
+                    {
+                        Player hideablePlayer = null;
+                        if (args.length == 1)
+                        {
+                            String yamlPath = "Config.Players." + player.getUniqueId() + ".Hide";
+                            String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
+                            config.write(yamlPath, newStatus);
+                            msghelp.sendPlayer(player, "Hide status set to: " + newStatus, ChatColor.GREEN);
+                            hideablePlayer = player;
+                        } else if (args.length == 2)
+                        {
+                            for (OfflinePlayer targetPlayer : Bukkit.getOfflinePlayers())
+                            {
+                                if (targetPlayer.getName().equals(args[1]))
+                                {
+                                    String yamlPath = "Config.Players." + targetPlayer.getUniqueId() + ".Hide";
+                                    String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
+                                    config.write(yamlPath, newStatus);
+                                    msghelp.sendPlayer(player, "Toggled " + targetPlayer.getName() + "'s Hide status to: " + newStatus, ChatColor.GREEN);
+                                    hideablePlayer = targetPlayer.getPlayer();
+                                    break;
+                                }
+                            }
+                        }
+                        boolean inList = hiddenPlayers.contains(hideablePlayer);
+                        for (Player p : Bukkit.getOnlinePlayers())
+                        {
+                            if (p == hideablePlayer) continue;
+                            if (inList)
+                            {
+                                p.showPlayer(Constants.plugin, hideablePlayer);
+                            } else
+                            {
+                                p.hidePlayer(Constants.plugin, hideablePlayer);
+                            }
+                        }
+                        if (inList)
+                        {
+                            hiddenPlayers.remove(hideablePlayer);
+                        } else
+                        {
+                            hiddenPlayers.add(hideablePlayer);
+                        }
+                    } else
+                    {
+                        msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
+                    }
+                    break;
                 // Command to easily test new code
                 case "test":
                     if (isOP)
                     {
-                        // Empty for now
+                        // Code for testing here
                     } else
                     {
                         msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
@@ -218,6 +270,21 @@ public class Sa implements CommandExecutor
                     } else
                     {
                         msghelp.sendConsole("Did you mean \"/sa ninjajoin <playername>\"?", ChatColor.RED);
+                    }
+                    break;
+                case "hide":
+                    if (args.length == 2)
+                    {
+                        Player player = Bukkit.getPlayer(args[1]);
+                        for (Player p : Bukkit.getOnlinePlayers())
+                        {
+                            if (p.getName().equals(args[1])) continue;
+                            p.hidePlayer(Constants.plugin, player);
+                            if (!hiddenPlayers.contains(p)) hiddenPlayers.add(p);
+                        }
+                    } else
+                    {
+                        msghelp.sendConsole("Did you mean \"/sa hide <playername>\"?", ChatColor.RED);
                     }
                     break;
                 default:
