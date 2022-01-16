@@ -204,7 +204,6 @@ public class BlockMinedHandler implements Listener
                                         }
                                         break;
                                 }
-                                System.out.println(xpToDrop);
                                 if (xpToDrop > 0)
                                 {
                                     totalXpToDrop += xpToDrop;
@@ -231,7 +230,6 @@ public class BlockMinedHandler implements Listener
                                 }
                             }
                         }
-                        System.out.println("Total: " + totalXpToDrop);
                         if (totalXpToDrop > 0)
                         {
                             eventPlayer.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class).setExperience(totalXpToDrop);
