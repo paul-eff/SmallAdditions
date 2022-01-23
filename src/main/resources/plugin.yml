@@ -25,3 +25,9 @@ commands:
   sa resetall:
     description: Resets all files and statistics.
     usage: /<command>
+  sa hide:
+    description: Let's a player hide from others and not be displayed on scoreboards etc.
+    usage: /<command>
+  sa ninjajoin:
+    description: Let's a player join without the join message beeing displayed.
+    usage: /<command>

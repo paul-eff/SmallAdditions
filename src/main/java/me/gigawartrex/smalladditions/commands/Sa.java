@@ -44,6 +44,10 @@ public class Sa implements CommandExecutor
         if (sender instanceof Player)
         {
             Player player = ((Player) sender).getPlayer();
+            if (args.length < 1) {
+                msghelp.sendPlayer(player, "Wrong command usage. Type \"/help SmallAdditions\" for more details.", ChatColor.RED);
+                return true;
+            }
             boolean isOP = player.isOp();
 
             switch (args[0])
@@ -238,8 +242,12 @@ public class Sa implements CommandExecutor
                     break;
             }
         } else
-
         {
+            if (args.length < 1) {
+                msghelp.sendConsole("Wrong command usage. Type \"/help SmallAdditions\" for more details.", ChatColor.RED);
+                return true;
+            }
+
             switch (args[0])
             {
                 // Command to reset all SimpleAdditions files/settings
