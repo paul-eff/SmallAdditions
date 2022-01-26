@@ -47,14 +47,11 @@ public final class SmallAdditions extends JavaPlugin
         getServer().getPluginManager().registerEvents(new PlayerEnteredBedHandler(), this);
         getServer().getPluginManager().registerEvents(new PlayerRightclicksCropHandler(), this);
 
-        //getServer().getPluginManager().registerEvents(new ChunkUnloadHandler(), this);
-        //getServer().getPluginManager().registerEvents(new ChunkLoadHandler(), this);
-        //getServer().getPluginManager().registerEvents(new WorldUnloadHandler(), this);
-        //getServer().getPluginManager().registerEvents(new WorldLoadHandler(), this);
-
         //Other Handler registration
         new ItemMagnetHandler();
-        //new ChunkLoaderHandler();
+
+        //New Recipes
+        new Recipes(this);
 
         msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }

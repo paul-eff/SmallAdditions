@@ -22,6 +22,8 @@ New ideas and issues can be be directly submitted to this repository.
 - Broken tool refill
 - Deathboxes
 - First time joined book
+- Raw ore block to smelted ore block
+- Colored wool + dye = recoloring
 ### Admin features:
 - Inventory see of players
 - Enderchest inventory see of players
@@ -29,8 +31,6 @@ New ideas and issues can be be directly submitted to this repository.
 - Hide (player can't be seen anymore)
 ### Ideas and WIP:
 - Support Silk Touch
-- Raw ore block to smelted ore block
-- Colored wool + dye = recoloring
 - Add armor and general items to tool refill
 - Refill should respect all items of one kind (e.g. diamond and wooden hoe)
 - More minor admin features
