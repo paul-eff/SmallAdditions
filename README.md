@@ -31,7 +31,6 @@ New ideas and issues can be be directly submitted to this repository.
 - Support Silk Touch
 - Raw ore block to smelted ore block
 - Colored wool + dye = recoloring
-- Chunkloading (WIP)
 - Add armor and general items to tool refill
 - Refill should respect all items of one kind (e.g. diamond and wooden hoe)
 - More minor admin features
