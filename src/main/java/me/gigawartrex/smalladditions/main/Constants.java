@@ -1,7 +1,7 @@
 package me.gigawartrex.smalladditions.main;
 
 import me.gigawartrex.smalladditions.helpers.IconMenu;
-import me.gigawartrex.smalladditions.iconmenus.MainMenu;
+import me.gigawartrex.smalladditions.helpers.MainMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

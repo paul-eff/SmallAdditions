@@ -1,4 +1,4 @@
-package me.gigawartrex.smalladditions.iconmenus;
+package me.gigawartrex.smalladditions.helpers;
 
 import me.gigawartrex.smalladditions.helpers.IconMenu;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
