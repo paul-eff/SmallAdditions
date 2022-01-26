@@ -1,6 +1,6 @@
-# SmallAdditions 1.1.3
+# SmallAdditions 1.1.4
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.1.3-blue">
+  <img src="https://img.shields.io/badge/version-1.1.4-blue">
   <img src="https://img.shields.io/badge/bukkit-1.18.1-green">
   <img src="https://img.shields.io/badge/paper-1.18.1-green">
 </p>
