@@ -79,8 +79,9 @@ public class BlockChoppedHandler implements Listener
                         Location locUnderOrigBlock = Helper.getLocation(event.getBlock().getLocation(), 0, -1, 0);
                         boolean isDirt = locUnderOrigBlock.getBlock().getType().equals(Material.DIRT);
                         boolean isGrass = locUnderOrigBlock.getBlock().getType().equals(Material.GRASS);
+                        boolean isNylium = locUnderOrigBlock.getBlock().getType().toString().contains("_NYLIUM");
 
-                        if (isDirt || isGrass)
+                        if (isDirt || isGrass || isNylium)
                         {
                             firstBlockIsGrounded = true;
                         }
@@ -245,6 +246,7 @@ public class BlockChoppedHandler implements Listener
      */
     private void plantSapling(Block origBlock, Material eventMaterial, ArrayList<Block> saplingNeighbours, Boolean bigTree)
     {
+        // TODO: Does not support nether saplings
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
             //Get Material needed from eventBlock for sapling material
@@ -295,11 +297,11 @@ public class BlockChoppedHandler implements Listener
         for (Block b : allNeighbours)
         {
             // Determine if it is a tree (has leaves)
-            if (!hasLeaves && b.getType().toString().contains("_LEAVES"))
+            if (!hasLeaves && b.getType().toString().contains("_LEAVES") || b.getType().toString().contains("_WART_BLOCK"))
             {
                 hasLeaves = true;
                 // All block types are accepted for felling
-            } else if (b.getType().toString().contains("_LOG") && b.getType() == eventMaterial)
+            } else if ((b.getType().toString().contains("_LOG") || b.getType().toString().contains("_STEM")) && b.getType() == eventMaterial)
             {
                 if (!current_search.contains(b) && !validLumberjackBlocks.contains(b))
                 {

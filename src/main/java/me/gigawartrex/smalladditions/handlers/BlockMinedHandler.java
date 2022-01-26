@@ -122,13 +122,13 @@ public class BlockMinedHandler implements Listener
                             // Iterate over all possible blocks
                             for (Block block : validMinerBlocks)
                             {
+                                mainHand = eventPlayer.getInventory().getItemInMainHand();
                                 // Check if block is applicable
-                                if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
+                                if (allowedItems.contains(mainHand.getType()))
                                 {
                                     // Get drops
-                                    for (ItemStack item : block.getDrops(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType())))
+                                    for (ItemStack item : block.getDrops(mainHand))
                                     {
-                                        mainHand = eventPlayer.getInventory().getItemInMainHand();
                                         // Check if block has no fortune multiplier
                                         if (!noFortuneBlocks.contains(block.getType()) && ((block.getType() != item.getType()) || autosmelt))
                                         {
