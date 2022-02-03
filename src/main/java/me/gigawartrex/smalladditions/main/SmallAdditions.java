@@ -34,8 +34,7 @@ public final class SmallAdditions extends JavaPlugin
         //File registration
         Config config = new Config();
         config.defaultConfig(false);
-        BookWriter bookWriter = new BookWriter();
-        bookWriter.defaultBook("SmallAdditions Guide", false);
+        new BookWriter().defaultBook("SmallAdditions Guide", false);
 
         //Event registration
         getServer().getPluginManager().registerEvents(new ItemBreakHandler(), this);

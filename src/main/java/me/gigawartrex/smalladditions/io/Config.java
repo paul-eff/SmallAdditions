@@ -59,15 +59,15 @@ public class Config extends FileHelper
                 ymlFile.set(getFileName() + ".Settings.Mods." + mod, "true");
             }
 
-            for (int level = 1; level <= (Constants.modsList.size() * 5); level++)
+            /*for (int level = 1; level <= (Constants.modsList.size() * 5); level++)
             {
                 ymlFile.set(getFileName() + ".Leveling." + level, "" + (level * 100));
-            }
+            }*/
 
-            for (int level = 5; level <= (Constants.modsList.size() * 5); level += 5)
+            /*for (int level = 5; level <= (Constants.modsList.size() * 5); level += 5)
             {
                 ymlFile.set(getFileName() + ".Leveling.Modlevel." + Constants.modsList.get((level / 5) - 1), "" + level);
-            }
+            }*/
 
             saveFile(ymlFile);
 
@@ -75,14 +75,14 @@ public class Config extends FileHelper
             {
                 if (read("Config.Players." + player.getUniqueId()).equals(""))
                 {
-                    write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "0");
-                    write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
+                    write(getFileName() + ".Players." + player.getUniqueId() + ".Name", player.getName());
+                    //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "0");
+                    //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Book received?", "" + false);
-                    write(getFileName() + ".Players." + player.getUniqueId() + ".Magnet", "" + false);
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Ninjajoin", "" + false);
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Hide", "" + false);
 
-                    writePlayerStatus(player, false);
+                    //writePlayerStatus(player, false);
                     for (String mod : Constants.modsList)
                     {
                         writeModStatus(player, mod, false);
@@ -95,7 +95,8 @@ public class Config extends FileHelper
     }
 
     /**
-     * Method to ensure a file exists. Should be called before any serious file interaction.
+     * Method to ensure a file exists.
+     * Should be called before any serious file interaction.
      */
     private void doRuntimeCheck()
     {
@@ -140,11 +141,11 @@ public class Config extends FileHelper
      * @param player  the target {@code Player}
      * @param isUsing if the {@code Player} is using the mode
      */
-    public void writePlayerStatus(Player player, Boolean isUsing)
+    /*public void writePlayerStatus(Player player, Boolean isUsing)
     {
         write(getFileName() + ".Players." + player.getUniqueId() + ".Name", player.getName());
         write(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?", "" + isUsing);
-    }
+    }*/
 
     /**
      * Method to read if the player is using the mastering mode.
@@ -153,7 +154,7 @@ public class Config extends FileHelper
      * @param player the target {@code Player}
      * @return {@code True} if the {@code Player} is using the mode
      */
-    public boolean readPlayerStatus(Player player)
+    /*public boolean readPlayerStatus(Player player)
     {
         if (read(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?").equals(""))
         {
@@ -161,7 +162,7 @@ public class Config extends FileHelper
             write(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?", "" + false);
         }
         return Boolean.parseBoolean(read(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?"));
-    }
+    }*/
 
     /**
      * Method to write a player's mod using status.

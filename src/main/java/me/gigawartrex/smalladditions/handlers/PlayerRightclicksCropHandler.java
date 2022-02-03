@@ -69,6 +69,7 @@ public class PlayerRightclicksCropHandler implements Listener
      * @param item   the item which should be damaged
      */
     @SuppressWarnings("deprecation")
+    // TODO: Use Damageable to get rid of deprecated setDurability...
     private void damageItem(Player player, ItemStack item)
     {
         item.setDurability((short) (item.getDurability() + 1));

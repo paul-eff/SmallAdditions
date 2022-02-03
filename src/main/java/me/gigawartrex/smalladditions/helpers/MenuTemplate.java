@@ -1,7 +1,5 @@
 package me.gigawartrex.smalladditions.helpers;
 
-import me.gigawartrex.smalladditions.helpers.IconMenu;
-import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 
 /**

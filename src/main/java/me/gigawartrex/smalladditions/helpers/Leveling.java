@@ -9,8 +9,8 @@ import org.bukkit.entity.Player;
  * Class for handling a player specific leveling e.g. how my block mined and which level reached.
  *
  * @author Paul Ferlitz
- * @version 1.0 2020-12-29 Initial Version
  */
+@Deprecated
 public class Leveling
 {
     // Class variables
