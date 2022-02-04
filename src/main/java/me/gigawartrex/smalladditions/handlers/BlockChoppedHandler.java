@@ -1,7 +1,6 @@
 package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.helpers.Helper;
-import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
@@ -36,8 +35,8 @@ public class BlockChoppedHandler implements Listener
     // Class wide important values
     private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLDEN_AXE, Material.DIAMOND_AXE, Material.NETHERITE_AXE)); // Allowed Tools
     private final ArrayList<Material> validLogs = new ArrayList<>(Arrays.asList(Material.CRIMSON_STEM, Material.WARPED_STEM)); // Allowed log types
-    private int maxLumberjackSize = 0;
     private final int timeToReplant = 2; //in seconds
+    private int maxLumberjackSize = 0;
 
     /**
      * Main event handler.
@@ -54,10 +53,9 @@ public class BlockChoppedHandler implements Listener
             if (event.getBlock().getType().toString().contains("_LOG") || validLogs.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
-                Leveling leveling = new Leveling(eventPlayer);
-                boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
+                //Leveling leveling = new Leveling(eventPlayer);
 
-                if (active)
+                if (config.readModStatus(eventPlayer, "Veining"))
                 {
                     if (event.getPlayer().isSneaking())
                     {
@@ -148,7 +146,7 @@ public class BlockChoppedHandler implements Listener
                         if (hasLeaves)
                         {
                             // Check for autosmelt mod
-                            boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
+                            //boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
                             int actualChoppedBlocks = 0;
 
                             // Iterate over all valid blocks
@@ -160,7 +158,7 @@ public class BlockChoppedHandler implements Listener
                                     if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                                     {
                                         // Evaluate drop if autosmelt is on
-                                        Material dropMaterial = block.getType();
+                                        /*Material dropMaterial = block.getType();
                                         if (autosmelt)
                                         {
                                             dropMaterial = Material.CHARCOAL;
@@ -169,6 +167,7 @@ public class BlockChoppedHandler implements Listener
                                         block.setType(Material.AIR);
                                         actualChoppedBlocks++;
                                         block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(dropMaterial, 1));
+
                                         ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
 
                                         // Respect Unbreaking enchantment
@@ -186,6 +185,9 @@ public class BlockChoppedHandler implements Listener
                                         {
                                             damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                         }
+                                        */
+                                        block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
+                                        damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                     }
                                 }
                             }
@@ -193,7 +195,7 @@ public class BlockChoppedHandler implements Listener
                             // Replant sapling if all conditions met
                             if (firstBlockIsGrounded && allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                             {
-                                boolean replant = Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Replant")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Replant"));
+                                boolean replant = config.readModStatus(eventPlayer, "Replant") && Boolean.parseBoolean(config.read("Config.Settings.Mods.Replant"));
 
                                 if (replant)
                                 {
@@ -202,7 +204,7 @@ public class BlockChoppedHandler implements Listener
                             }
 
                             // Add chopped blocks and misc
-                            leveling.calcNextLevel(actualChoppedBlocks);
+                            //leveling.calcNextLevel(actualChoppedBlocks);
                             msghelp.sendConsole(eventPlayer.getName() + " just chopped down a tree at X:" + eventBlock.getX() +
                                     " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
                         }
@@ -211,7 +213,7 @@ public class BlockChoppedHandler implements Listener
                         to_search.clear();
                     } else
                     {
-                        leveling.calcNextLevel(1);
+                        //leveling.calcNextLevel(1);
                     }
                 }
             }
@@ -227,6 +229,16 @@ public class BlockChoppedHandler implements Listener
     @SuppressWarnings("deprecation")
     private void damageItem(Player player, ItemStack item)
     {
+        if (item.getEnchantments().containsKey(Enchantment.DURABILITY))
+        {
+            int enchLevel = item.getEnchantments().get(Enchantment.DURABILITY);
+            double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
+
+            if (Math.random() > chance)
+            {
+                return;
+            }
+        }
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {

@@ -25,7 +25,7 @@ public class Constants
     public static final String version = plugin.getDescription().getVersion();
 
     // Specific constants
-    public static final ArrayList<String> modsList = new ArrayList<>(Arrays.asList("Magnet", "Replant"));
+    public static final ArrayList<String> modsList = new ArrayList<>(Arrays.asList("Veining", "Magnet", "Replant"));
 
     // Menus
     public static final IconMenu mainMenu = new MainMenu().generateMenu();

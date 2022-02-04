@@ -38,7 +38,7 @@ public class PlayerJoinHandler implements Listener
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Name", eventPlayer.getName());
             //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "0");
             //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
-            config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Book received?", "" + false);
+            config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Book received", "" + false);
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Ninjajoin", "" + false);
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Hide", "" + false);
 
@@ -94,13 +94,13 @@ public class PlayerJoinHandler implements Listener
         }
 
         // Check if he already received book
-        boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Book received?"));
+        boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Book received"));
 
         // If all conditions are met, spawn a book in player's inventory
         if (add && freeSlot && !receivedBook)
         {
             eventPlayer.getInventory().addItem(refBook);
-            config.write("Config.Players." + eventPlayer.getUniqueId() + ".Book received?", "" + true);
+            config.write("Config.Players." + eventPlayer.getUniqueId() + ".Book received", "" + true);
         }
     }
 }

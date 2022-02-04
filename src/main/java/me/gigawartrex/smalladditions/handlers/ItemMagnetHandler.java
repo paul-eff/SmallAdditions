@@ -35,7 +35,7 @@ public class ItemMagnetHandler
                 for (Player player : Constants.plugin.getServer().getOnlinePlayers())
                 {
                     // Sneaking disables magnet
-                    if (Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Magnet")) && !player.isSneaking())
+                    if (config.readModStatus(player, "Magnet") && !player.isSneaking())
                     {
                         boolean playedSound = false;
                         boolean changesInWorld = false;

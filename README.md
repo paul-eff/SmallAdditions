@@ -30,6 +30,7 @@ New ideas and issues can be be directly submitted to this repository.
 - Ninjajoin (no "joined server" message when player joins server)
 - Hide (player can't be seen anymore)
 ### Ideas and WIP:
+- BedHandler should also handle thunder effectively
 - Support Silk Touch
 - Add armor and general items to tool refill
 - Refill should respect all items of one kind (e.g. diamond and wooden hoe)

@@ -1,7 +1,5 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.helpers.Helper;
-import me.gigawartrex.smalladditions.helpers.Leveling;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import org.bukkit.Bukkit;
@@ -51,11 +49,9 @@ public class BlockDugHandler implements Listener
             if (allowedMaterials.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
-                Leveling leveling = new Leveling(eventPlayer);
+                //Leveling leveling = new Leveling(eventPlayer);
 
-                boolean active = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Mastering on?"));
-
-                if (active)
+                if (config.readModStatus(eventPlayer, "Veining"))
                 {
                     if (event.getPlayer().isSneaking())
                     {
@@ -104,12 +100,12 @@ public class BlockDugHandler implements Listener
                             if (sizeReached) break;
                         }
                         // Get player's current activated mods
-                        boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
+                        //boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
                         int actualMinedBlocks = 0;
                         // Iterate over all possible blocks
                         for (Block block : validMinerBlocks)
                         {
-                            ItemStack item;
+                            /*ItemStack item;
                             // Check if block is of specific type and apply mods / enchantments
                             if (block.getType() == Material.GRAVEL)
                             {
@@ -141,10 +137,11 @@ public class BlockDugHandler implements Listener
                                 // Remove mined block
                                 block.setType(Material.AIR);
                                 block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
-                            }
-
+                            }*/
+                            block.breakNaturally(eventPlayer.getInventory().getItemInMainHand());
+                            damageItem(eventPlayer, eventPlayer.getInventory().getItemInMainHand());
                             actualMinedBlocks++;
-                            ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
+                            /*ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
                             // Damage item according to durability enchantment
                             if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
                             {
@@ -159,10 +156,10 @@ public class BlockDugHandler implements Listener
                             } else
                             {
                                 damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                            }
+                            }*/
                         }
 
-                        leveling.calcNextLevel(actualMinedBlocks);
+                        //leveling.calcNextLevel(actualMinedBlocks);
 
                         msghelp.sendConsole(eventPlayer.getName() + " just dug up a " + eventMaterial + " vein (Size: " + validMinerBlocks.size()
                                 + ") at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
@@ -172,7 +169,7 @@ public class BlockDugHandler implements Listener
                         to_search.clear();
                     } else
                     {
-                        leveling.calcNextLevel(1);
+                        //leveling.calcNextLevel(1);
                     }
                 }
             }
@@ -188,6 +185,16 @@ public class BlockDugHandler implements Listener
     @SuppressWarnings("deprecation")
     private void damageItem(Player player, ItemStack item)
     {
+        if (item.getEnchantments().containsKey(Enchantment.DURABILITY))
+        {
+            int enchLevel = item.getEnchantments().get(Enchantment.DURABILITY);
+            double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
+
+            if (Math.random() > chance)
+            {
+                return;
+            }
+        }
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {

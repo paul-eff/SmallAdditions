@@ -7,7 +7,9 @@ public enum NewSmeltable
 {
     IRON_BLOCK(Material.RAW_IRON_BLOCK, new ItemStack(Material.IRON_BLOCK), 0.7 * 9, 10 * 8),
     COPPER_BLOCK(Material.RAW_COPPER_BLOCK, new ItemStack(Material.COPPER_BLOCK), 0.7 * 9, 10 * 8),
-    GOLD_BLOCK(Material.RAW_GOLD_BLOCK, new ItemStack(Material.GOLD_BLOCK), 1 * 9, 10 * 8);
+    GOLD_BLOCK(Material.RAW_GOLD_BLOCK, new ItemStack(Material.GOLD_BLOCK), 1 * 9, 10 * 8),
+
+    BUDDING_AMETHYST(Material.AMETHYST_BLOCK, new ItemStack(Material.BUDDING_AMETHYST), 50, 10 * 8 * 9 * 16);
 
 
     private final Material input;

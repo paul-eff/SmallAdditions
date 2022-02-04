@@ -49,7 +49,7 @@ public class MainMenu extends MenuTemplate
                     break;
                 default:
                     // Not using readModStatus as an empty String means there was an error!
-                    String readFromConfig = getConfig().read("Config.Players." + event.getPlayer().getUniqueId() + "." + event.getName());
+                    String readFromConfig = getConfig().read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods." + event.getName());
                     if (!readFromConfig.equals(""))
                     {
                         boolean isOn = Boolean.parseBoolean(readFromConfig);
@@ -99,7 +99,8 @@ public class MainMenu extends MenuTemplate
                 // Set items
                 .setOption(1, new ItemStack(Material.DIRT, 1), "Exit", "Click to exit options.")
                 .setOption(7, new ItemStack(Material.BOOK, 1), "Status", "Show current status.")
-                .setOption(3, new ItemStack(Material.IRON_BLOCK, 1), "Magnet", "(WIP!!!) Turn magnet on/off.")
+                .setOption(3, new ItemStack(Material.IRON_PICKAXE, 1), "Veining", "Mine/Chop/Dig same adjacent blocks.")
+                .setOption(4, new ItemStack(Material.IRON_BLOCK, 1), "Magnet", "(WIP!!!) Turn magnet on/off.")
                 .setOption(5, new ItemStack(Material.OAK_SAPLING, 1), "Replant", "Replant cut down trees.");
         //.setOption(1, new ItemStack(Material.REDSTONE_BLOCK, 1), "Toggle", "Turn mastering on/off.")
         //.setOption(4, new ItemStack(Material.FURNACE, 1), "Autosmelt", "Directly smelt items that were harvested/mined.")

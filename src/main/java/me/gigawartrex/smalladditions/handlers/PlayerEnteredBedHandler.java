@@ -4,6 +4,7 @@ import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.ChatColor;
+import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,6 +36,13 @@ public class PlayerEnteredBedHandler implements Listener
     public void onBedEnter(PlayerBedEnterEvent event)
     {
         Player eventPlayer = event.getPlayer();
+        // TODO: This is a very ugly hack, please make a nice handling for bed time and thunder time
+        if (eventPlayer.getWorld().isThundering() && eventPlayer.getWorld().getTime() <= 12550){
+            eventPlayer.getWorld().setThundering(false);
+            eventPlayer.getWorld().setWeatherDuration(20 * 5);
+            return;
+        }
+        if (eventPlayer.getPlayerWeather() == WeatherType.DOWNFALL)
         percentageNeeded = Float.parseFloat(config.read("Config.Settings.serverPercentageSleepingForSkip"));
 
         ArrayList<Player> playersInSameWorld = new ArrayList<>();
@@ -58,7 +66,7 @@ public class PlayerEnteredBedHandler implements Listener
             {
                 if (eventPlayer.isSleeping() && !oneWillWakeUp)
                 {
-                    // eventPlayer needs to be added manually as he is not yet sleeping during line 31-38
+                    // eventPlayer needs to be added manually as he was not yet sleeping
                     int playersSleeping = finalPlayersSleeping + 1;
                     float percentageSleeping = (playersSleeping * 1.0f) / (playersInSameWorld.size() * 1.0f);
                     int playersNeeded = (int) Math.ceil((percentageNeeded / (percentageSleeping / playersSleeping))) - playersSleeping;
@@ -99,6 +107,7 @@ public class PlayerEnteredBedHandler implements Listener
                             {
                                 // Set world time to morning and wake alle players
                                 eventPlayer.getWorld().setTime(0);
+                                if (eventPlayer.getWorld().isThundering()) eventPlayer.getWorld().setThunderDuration(5);
                                 for (Player player : playersInSameWorld)
                                 {
                                     msghelp.sendPlayer(player, "Wakey-wakey, rise and shine!", ChatColor.GOLD);

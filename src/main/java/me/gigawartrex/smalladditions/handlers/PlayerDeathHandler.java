@@ -5,7 +5,6 @@ import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.DoubleChest;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.Chest;
 import org.bukkit.entity.ExperienceOrb;

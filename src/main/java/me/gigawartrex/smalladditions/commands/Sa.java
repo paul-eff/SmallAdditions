@@ -4,9 +4,9 @@ import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class for handling "/sa" commands.
@@ -44,7 +45,8 @@ public class Sa implements CommandExecutor
         if (sender instanceof Player)
         {
             Player player = ((Player) sender).getPlayer();
-            if (args.length < 1) {
+            if (args.length < 1)
+            {
                 msghelp.sendPlayer(player, "Wrong command usage. Type \"/help SmallAdditions\" for more details.", ChatColor.RED);
                 return true;
             }
@@ -67,9 +69,9 @@ public class Sa implements CommandExecutor
                             {
                                 player.getInventory().addItem(new Book("SmallAdditions Guide", "GigaWarTr3x", "Rules"));
 
-                                if (!Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Book received?")))
+                                if (!Boolean.parseBoolean(config.read("Config.Players." + player.getUniqueId() + ".Book received")))
                                 {
-                                    config.write("Config.Players." + player.getUniqueId() + ".Book received?", "" + true);
+                                    config.write("Config.Players." + player.getUniqueId() + ".Book received", "" + true);
                                 }
                                 break;
                             }
@@ -230,6 +232,58 @@ public class Sa implements CommandExecutor
                     if (isOP)
                     {
                         // Code for testing here
+                        Location defaultLoc = player.getLocation();
+                        int radius = 10;
+                        boolean breakCondition = false;
+                        for (int x = defaultLoc.getBlockX() - radius; x <= defaultLoc.getBlockX() + radius && !breakCondition; x++)
+                        {
+                            for (int y = defaultLoc.getBlockY() - radius; y <= defaultLoc.getBlockY() + radius && !breakCondition; y++)
+                            {
+                                for (int z = defaultLoc.getBlockZ() - radius; z <= defaultLoc.getBlockZ() + radius && !breakCondition; z++)
+                                {
+                                    if (defaultLoc.getWorld().getBlockAt(x, y, z).getType() == Material.ENDER_CHEST)
+                                    {
+                                        player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(x+1, y, z).getLocation());
+
+                                        int finalX = x;
+                                        int finalY = y;
+                                        int finalZ = z;
+
+                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                                        {
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX-1, finalY, finalZ).getLocation());
+                                        }, 20 * 1);
+                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                                        {
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ+1).getLocation());
+                                        }, 20 * 2);
+                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                                        {
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ-1).getLocation());
+                                        }, 20 * 3);
+                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                                        {
+                                            defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ).setType(Material.AIR);
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ).getLocation());
+
+                                            player.getWorld().strikeLightning(player.getLocation());
+                                            Block b = defaultLoc.getBlock();
+                                            b.setType(Material.REDSTONE_WIRE);
+                                            for (int i = 0; i <= 20; i++)
+                                            {
+                                                int xOffset = (int) Math.round(Math.random() * 6) - 3;
+                                                int zOffset = (int) Math.round(Math.random() * 6) - 3;
+                                                if (defaultLoc.clone().add(xOffset, 0, zOffset).getBlock().getType() != Material.AIR) continue;
+                                                b = defaultLoc.clone().add(xOffset, 0, zOffset).getBlock();
+                                                b.setType(Material.REDSTONE_WIRE);
+                                            }
+                                        }, 20 * 4);
+
+                                        breakCondition = true;
+                                    }
+                                }
+                            }
+                        }
                     } else
                     {
                         msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
@@ -243,7 +297,8 @@ public class Sa implements CommandExecutor
             }
         } else
         {
-            if (args.length < 1) {
+            if (args.length < 1)
+            {
                 msghelp.sendConsole("Wrong command usage. Type \"/help SmallAdditions\" for more details.", ChatColor.RED);
                 return true;
             }
