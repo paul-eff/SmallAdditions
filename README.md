@@ -13,17 +13,20 @@ New ideas and issues can be be directly submitted to this repository.
 ### Active features:
 - Ore vein mining
 - Whole tree felling
-- Tree replanting on felling
+  - Auto-replanting possible
 - Gravel vein digging
 - Item magnet
-- Right clicking wheat harvests/replants it
+- Right clicking wheat harvests it
+  - Auto-replanting possible
 ### Passive features:
 - x% in world have to sleep for next day
 - Broken tool refill
 - Deathboxes
 - First time joined book
-- Raw ore block to smelted ore block
-- Colored wool + dye = recoloring
+- New crafting / smelting recipes:
+  - Raw ore block to smelted ore block - (Raw iron ore block + 8x Coal = Iron block)
+  - Colored wool + dye = recoloring - (Red wool + Blue dye = Blue wool)
+  - Budding amethyst - (Amethyst block + 16x Coal block = Budding amethyst)
 ### Admin features:
 - Inventory see of players
 - Enderchest inventory see of players
