@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -72,6 +73,16 @@ public class PlayerRightclicksCropHandler implements Listener
     // TODO: Use Damageable to get rid of deprecated setDurability...
     private void damageItem(Player player, ItemStack item)
     {
+        if (item.getEnchantments().containsKey(Enchantment.DURABILITY))
+        {
+            int enchLevel = item.getEnchantments().get(Enchantment.DURABILITY);
+            double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
+
+            if (Math.random() > chance)
+            {
+                return;
+            }
+        }
         item.setDurability((short) (item.getDurability() + 1));
         if (item.getDurability() >= item.getType().getMaxDurability())
         {

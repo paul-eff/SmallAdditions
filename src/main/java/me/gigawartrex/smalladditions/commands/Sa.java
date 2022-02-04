@@ -6,16 +6,13 @@ import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class for handling "/sa" commands.
@@ -243,7 +240,7 @@ public class Sa implements CommandExecutor
                                 {
                                     if (defaultLoc.getWorld().getBlockAt(x, y, z).getType() == Material.ENDER_CHEST)
                                     {
-                                        player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(x+1, y, z).getLocation());
+                                        player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(x + 1, y, z).getLocation());
 
                                         int finalX = x;
                                         int finalY = y;
@@ -251,15 +248,15 @@ public class Sa implements CommandExecutor
 
                                         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
                                         {
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX-1, finalY, finalZ).getLocation());
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX - 1, finalY, finalZ).getLocation());
                                         }, 20 * 1);
                                         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
                                         {
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ+1).getLocation());
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ + 1).getLocation());
                                         }, 20 * 2);
                                         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
                                         {
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ-1).getLocation());
+                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ - 1).getLocation());
                                         }, 20 * 3);
                                         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
                                         {

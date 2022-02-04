@@ -2,7 +2,10 @@ package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -73,8 +76,8 @@ public class PlayerDeathHandler implements Listener
             leftSide.setType(Material.CHEST);
             rightSide.setType(Material.CHEST);
 
-            Chest leftChestData = (Chest)leftSide.getBlockData();
-            Chest rightChestData = (Chest)rightSide.getBlockData();
+            Chest leftChestData = (Chest) leftSide.getBlockData();
+            Chest rightChestData = (Chest) rightSide.getBlockData();
             leftChestData.setFacing(BlockFace.NORTH);
             leftChestData.setType(Chest.Type.RIGHT);
             rightChestData.setFacing(BlockFace.NORTH);

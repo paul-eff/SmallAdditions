@@ -52,18 +52,8 @@ public class BlockMinedHandler implements Listener
             if (event.getBlock().getType().toString().contains("_ORE") || validOres.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
-                ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
 
-                /*if (mainHand.getEnchantments().containsKey(Enchantment.SILK_TOUCH))
-                {
-                    msghelp.sendPlayer(eventPlayer, "You're using a pickaxe with Silk Touch, this is not supported at the moment. Mining normally!", ChatColor.RED);
-                    event.getBlock().breakNaturally();
-                }*/
-                //Leveling leveling = new Leveling(eventPlayer);
-
-                boolean active = config.readModStatus(eventPlayer, "Veining");
-
-                if (active)
+                if (config.readModStatus(eventPlayer, "Veining"))
                 {
                     if (event.getPlayer().isSneaking())
                     {
@@ -111,64 +101,18 @@ public class BlockMinedHandler implements Listener
                             }
                             if (sizeReached) break;
                         }
-                        // Get player's current activated mods
-                        //boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
-                        //boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
-                        int actualMinedBlocks = 0;
+
                         int totalXpToDrop = 0;
                         // Iterate over all possible blocks
                         for (Block block : validMinerBlocks)
                         {
-                            mainHand = eventPlayer.getInventory().getItemInMainHand();
+                            ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
                             // Check if block is applicable
                             if (allowedItems.contains(mainHand.getType()))
                             {
-                                // Get drops
-                                for (ItemStack item : block.getDrops(mainHand))
-                                {
-                                    // Check if block has no fortune multiplier
-                                    /*if (!noFortuneBlocks.contains(block.getType()) && ((block.getType() != item.getType()) || autosmelt))
-                                    {
-                                        // Check if item in hand has fortune
-                                        if (mainHand.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS))
-                                        {
-                                            // Determine fortune level and drop accordingly
-                                            int enchLevel;
-                                            enchLevel = mainHand.getEnchantments().get(Enchantment.LOOT_BONUS_BLOCKS);
-                                            double randChance = Math.random();
+                                block.breakNaturally(eventPlayer.getInventory().getItemInMainHand());
+                                damageItem(eventPlayer, eventPlayer.getInventory().getItemInMainHand());
 
-                                            switch (enchLevel)
-                                            {
-                                                case 1:
-                                                    if (randChance > 0.66) item.setAmount(item.getAmount() * 2);
-                                                    break;
-                                                case 2:
-                                                    if (randChance > 0.5 && randChance <= 0.75) item.setAmount(item.getAmount() * 2);
-                                                    else if (randChance > 0.75) item.setAmount(item.getAmount() * 3);
-                                                    break;
-                                                case 3:
-                                                    if (randChance > 0.4 && randChance <= 0.6) item.setAmount(item.getAmount() * 2);
-                                                    if (randChance > 0.6 && randChance <= 0.8) item.setAmount(item.getAmount() * 3);
-                                                    else if (randChance > 0.8) item.setAmount(item.getAmount() * 4);
-                                                    break;
-                                                default:
-                                                    msghelp.sendConsole("BlockMinedHandler.java [130:45] - Undefined Luck enchantment Level (" + enchLevel + ")", ChatColor.RED);
-                                            }
-                                            // No enchantment, just fortune mod
-                                        } else if (fortune && ((block.getType() != item.getType()) || autosmelt))
-                                        {
-                                            item.setAmount(Helper.randNumFromRange(1, 3));
-                                        }
-                                    }*/
-                                    // Drops smelted or normal form
-                                    /*if (autosmelt)
-                                    {
-                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), evaluateDrop(item));
-                                    } else
-                                    {
-                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
-                                    }*/
-                                }
                                 int xpToDrop = 0;
                                 // Drop XP according to block type
                                 switch (block.getType().toString())
@@ -210,28 +154,6 @@ public class BlockMinedHandler implements Listener
                                 {
                                     totalXpToDrop += xpToDrop;
                                 }
-                                // Remove mined block
-                                //block.setType(Material.AIR);
-                                block.breakNaturally(eventPlayer.getInventory().getItemInMainHand());
-                                damageItem(eventPlayer, eventPlayer.getInventory().getItemInMainHand());
-                                actualMinedBlocks++;
-
-                                /*mainHand = eventPlayer.getInventory().getItemInMainHand();
-                                // Damage item according to durability enchantment
-                                if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
-                                {
-                                    int enchLevel;
-                                    enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
-                                    double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
-
-                                    if (Math.random() > (1 - chance))
-                                    {
-                                        damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                                    }
-                                } else
-                                {
-                                    damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                                }*/
                             }
                         }
                         if (totalXpToDrop > 0)
@@ -239,43 +161,16 @@ public class BlockMinedHandler implements Listener
                             eventPlayer.getWorld().spawn(eventPlayer.getLocation(), ExperienceOrb.class).setExperience(totalXpToDrop);
                         }
 
-                        //leveling.calcNextLevel(actualMinedBlocks);
-
-                        msghelp.sendConsole(eventPlayer.getName() + " just mined a " + eventMaterial + " vein (Size: " + actualMinedBlocks
+                        msghelp.sendConsole(eventPlayer.getName() + " just mined a " + eventMaterial + " vein (Size: " + validMinerBlocks.size()
                                 + ") at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
 
                         validMinerBlocks.clear();
                         current_search.clear();
                         to_search.clear();
-                    } else
-                    {
-                        //leveling.calcNextLevel(1);
                     }
                 }
             }
         }
-    }
-
-    /**
-     * This method determines the item to be dropped from a mined block
-     *
-     * @param material The Material which's item drop is to be found
-     * @return returns the item drop
-     */
-    @Deprecated
-    private ItemStack evaluateDrop(ItemStack material)
-    {
-        if (material.getType().toString().contains("RAW_IRON"))
-        {
-            material.setType(Material.IRON_INGOT);
-        } else if (material.getType().toString().contains("RAW_GOLD"))
-        {
-            material.setType(Material.GOLD_INGOT);
-        } else if (material.getType().toString().contains("RAW_COPPER"))
-        {
-            material.setType(Material.COPPER_INGOT);
-        }
-        return material;
     }
 
     /**

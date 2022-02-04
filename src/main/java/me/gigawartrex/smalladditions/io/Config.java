@@ -59,16 +59,6 @@ public class Config extends FileHelper
                 ymlFile.set(getFileName() + ".Settings.Mods." + mod, "true");
             }
 
-            /*for (int level = 1; level <= (Constants.modsList.size() * 5); level++)
-            {
-                ymlFile.set(getFileName() + ".Leveling." + level, "" + (level * 100));
-            }*/
-
-            /*for (int level = 5; level <= (Constants.modsList.size() * 5); level += 5)
-            {
-                ymlFile.set(getFileName() + ".Leveling.Modlevel." + Constants.modsList.get((level / 5) - 1), "" + level);
-            }*/
-
             saveFile(ymlFile);
 
             for (Player player : Constants.console.getServer().getOnlinePlayers())
@@ -76,13 +66,10 @@ public class Config extends FileHelper
                 if (read("Config.Players." + player.getUniqueId()).equals(""))
                 {
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Name", player.getName());
-                    //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "0");
-                    //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Book received", "" + false);
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Ninjajoin", "" + false);
                     write(getFileName() + ".Players." + player.getUniqueId() + ".Hide", "" + false);
 
-                    //writePlayerStatus(player, false);
                     for (String mod : Constants.modsList)
                     {
                         writeModStatus(player, mod, false);
@@ -134,35 +121,6 @@ public class Config extends FileHelper
         if (ymlFile.get(path) != null) return ymlFile.getString(path);
         return "";
     }
-
-    /**
-     * Method to set if the player is using the mastering mode.
-     *
-     * @param player  the target {@code Player}
-     * @param isUsing if the {@code Player} is using the mode
-     */
-    /*public void writePlayerStatus(Player player, Boolean isUsing)
-    {
-        write(getFileName() + ".Players." + player.getUniqueId() + ".Name", player.getName());
-        write(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?", "" + isUsing);
-    }*/
-
-    /**
-     * Method to read if the player is using the mastering mode.
-     * Defaults to false if the player has no entry.
-     *
-     * @param player the target {@code Player}
-     * @return {@code True} if the {@code Player} is using the mode
-     */
-    /*public boolean readPlayerStatus(Player player)
-    {
-        if (read(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?").equals(""))
-        {
-            write(getFileName() + ".Players." + player.getUniqueId() + ".Name", player.getName());
-            write(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?", "" + false);
-        }
-        return Boolean.parseBoolean(read(getFileName() + ".Players." + player.getUniqueId() + ".Mastering on?"));
-    }*/
 
     /**
      * Method to write a player's mod using status.

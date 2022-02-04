@@ -121,7 +121,7 @@ public class MessageHelper
      * {@code ChatColor} defaults to {@link ChatColor#WHITE}.
      *
      * @param msg The {@code String} to be sent.
-     * @see MessageHelper#sendAllPlayers(String, ChatColor) 
+     * @see MessageHelper#sendAllPlayers(String, ChatColor)
      */
     public void sendAll(String msg)
     {

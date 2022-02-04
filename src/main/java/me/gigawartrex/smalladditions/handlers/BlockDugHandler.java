@@ -49,7 +49,6 @@ public class BlockDugHandler implements Listener
             if (allowedMaterials.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
-                //Leveling leveling = new Leveling(eventPlayer);
 
                 if (config.readModStatus(eventPlayer, "Veining"))
                 {
@@ -99,77 +98,18 @@ public class BlockDugHandler implements Listener
                             }
                             if (sizeReached) break;
                         }
-                        // Get player's current activated mods
-                        //boolean fortune = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Fortune")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Fortune")));
-                        int actualMinedBlocks = 0;
                         // Iterate over all possible blocks
                         for (Block block : validMinerBlocks)
                         {
-                            /*ItemStack item;
-                            // Check if block is of specific type and apply mods / enchantments
-                            if (block.getType() == Material.GRAVEL)
-                            {
-                                item = new ItemStack(Material.FLINT);
-
-                                if (fortune)
-                                {
-                                    item.setAmount(Helper.randNumFromRange(1, 4));
-                                }
-                                // Remove mined block
-                                block.setType(Material.AIR);
-
-                                if (Math.random() > 0.9)
-                                {
-                                    block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
-                                } else
-                                {
-                                    block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(Material.GRAVEL));
-                                }
-                            } else if (block.getType() == Material.CLAY)
-                            {
-                                item = new ItemStack(Material.CLAY_BALL);
-                                item.setAmount(Helper.randNumFromRange(1, 4));
-
-                                if (fortune)
-                                {
-                                    item.setAmount(Helper.randNumFromRange(3, 4));
-                                }
-                                // Remove mined block
-                                block.setType(Material.AIR);
-                                block.getWorld().dropItemNaturally(eventPlayer.getLocation(), item);
-                            }*/
                             block.breakNaturally(eventPlayer.getInventory().getItemInMainHand());
                             damageItem(eventPlayer, eventPlayer.getInventory().getItemInMainHand());
-                            actualMinedBlocks++;
-                            /*ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
-                            // Damage item according to durability enchantment
-                            if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
-                            {
-                                int enchLevel;
-                                enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
-                                double chance = (100 / (enchLevel + 1) * 1.0) / 100.0;
-
-                                if (Math.random() > (1 - chance))
-                                {
-                                    damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                                }
-                            } else
-                            {
-                                damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                            }*/
                         }
-
-                        //leveling.calcNextLevel(actualMinedBlocks);
-
                         msghelp.sendConsole(eventPlayer.getName() + " just dug up a " + eventMaterial + " vein (Size: " + validMinerBlocks.size()
                                 + ") at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
 
                         validMinerBlocks.clear();
                         current_search.clear();
                         to_search.clear();
-                    } else
-                    {
-                        //leveling.calcNextLevel(1);
                     }
                 }
             }

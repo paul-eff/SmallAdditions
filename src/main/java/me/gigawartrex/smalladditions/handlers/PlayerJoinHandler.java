@@ -36,13 +36,10 @@ public class PlayerJoinHandler implements Listener
         if (config.read("Config.Players." + eventPlayer.getUniqueId()).equals(""))
         {
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Name", eventPlayer.getName());
-            //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Level", "0");
-            //write(getFileName() + ".Players." + player.getUniqueId() + ".Leveling.Blocks", "0");
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Book received", "" + false);
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Ninjajoin", "" + false);
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Hide", "" + false);
 
-            //writePlayerStatus(player, false);
             for (String mod : Constants.modsList)
             {
                 config.writeModStatus(eventPlayer, mod, false);

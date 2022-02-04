@@ -53,7 +53,6 @@ public class BlockChoppedHandler implements Listener
             if (event.getBlock().getType().toString().contains("_LOG") || validLogs.contains(event.getBlock().getType()))
             {
                 Player eventPlayer = event.getPlayer();
-                //Leveling leveling = new Leveling(eventPlayer);
 
                 if (config.readModStatus(eventPlayer, "Veining"))
                 {
@@ -120,7 +119,6 @@ public class BlockChoppedHandler implements Listener
                             }
                             if (sizeReached) break;
                         }
-
                         // Sapling position detection
                         ArrayList<Block> saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));
                         saplingNeighbours.clear();
@@ -141,14 +139,9 @@ public class BlockChoppedHandler implements Listener
                         {
                             saplingNeighbours.add(event.getBlock().getRelative(BlockFace.WEST));
                         }
-
                         // If a real tree was detected proceed with felling
                         if (hasLeaves)
                         {
-                            // Check for autosmelt mod
-                            //boolean autosmelt = (Boolean.parseBoolean(config.read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods.Autosmelt")) && Boolean.parseBoolean(config.read("Config.Settings.Mods.Autosmelt")));
-                            int actualChoppedBlocks = 0;
-
                             // Iterate over all valid blocks
                             for (Block block : validLumberjackBlocks)
                             {
@@ -157,41 +150,11 @@ public class BlockChoppedHandler implements Listener
                                     // Player still holding valid tool?
                                     if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                                     {
-                                        // Evaluate drop if autosmelt is on
-                                        /*Material dropMaterial = block.getType();
-                                        if (autosmelt)
-                                        {
-                                            dropMaterial = Material.CHARCOAL;
-                                        }
-
-                                        block.setType(Material.AIR);
-                                        actualChoppedBlocks++;
-                                        block.getWorld().dropItemNaturally(eventPlayer.getLocation(), new ItemStack(dropMaterial, 1));
-
-                                        ItemStack mainHand = eventPlayer.getInventory().getItemInMainHand();
-
-                                        // Respect Unbreaking enchantment
-                                        if (mainHand.getEnchantments().containsKey(Enchantment.DURABILITY))
-                                        {
-                                            int enchLevel;
-                                            enchLevel = mainHand.getEnchantments().get(Enchantment.DURABILITY);
-                                            double chance = (100 / (enchLevel + 1) * 1.0) / 100.0;
-
-                                            if (Math.random() > (1 - chance))
-                                            {
-                                                damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                                            }
-                                        } else
-                                        {
-                                            damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
-                                        }
-                                        */
                                         block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
                                         damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                     }
                                 }
                             }
-
                             // Replant sapling if all conditions met
                             if (firstBlockIsGrounded && allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                             {
@@ -202,18 +165,12 @@ public class BlockChoppedHandler implements Listener
                                     plantSapling(eventBlock, eventMaterial, saplingNeighbours, (saplingNeighbours.size() > 1));
                                 }
                             }
-
-                            // Add chopped blocks and misc
-                            //leveling.calcNextLevel(actualChoppedBlocks);
                             msghelp.sendConsole(eventPlayer.getName() + " just chopped down a tree at X:" + eventBlock.getX() +
                                     " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
                         }
                         validLumberjackBlocks.clear();
                         current_search.clear();
                         to_search.clear();
-                    } else
-                    {
-                        //leveling.calcNextLevel(1);
                     }
                 }
             }

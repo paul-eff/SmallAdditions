@@ -37,13 +37,14 @@ public class PlayerEnteredBedHandler implements Listener
     {
         Player eventPlayer = event.getPlayer();
         // TODO: This is a very ugly hack, please make a nice handling for bed time and thunder time
-        if (eventPlayer.getWorld().isThundering() && eventPlayer.getWorld().getTime() <= 12550){
+        if (eventPlayer.getWorld().isThundering() && eventPlayer.getWorld().getTime() <= 12550)
+        {
             eventPlayer.getWorld().setThundering(false);
             eventPlayer.getWorld().setWeatherDuration(20 * 5);
             return;
         }
         if (eventPlayer.getPlayerWeather() == WeatherType.DOWNFALL)
-        percentageNeeded = Float.parseFloat(config.read("Config.Settings.serverPercentageSleepingForSkip"));
+            percentageNeeded = Float.parseFloat(config.read("Config.Settings.serverPercentageSleepingForSkip"));
 
         ArrayList<Player> playersInSameWorld = new ArrayList<>();
         int playersSleeping = 0;
@@ -83,7 +84,7 @@ public class PlayerEnteredBedHandler implements Listener
                             {
                                 msghelp.sendPlayer(player, eventPlayer.getName() + " just went to bed! Good night...", ChatColor.GOLD);
                             }
-                        // And for event players also send messages
+                            // And for event players also send messages
                         } else
                         {
                             if (percentageSleeping < percentageNeeded)
