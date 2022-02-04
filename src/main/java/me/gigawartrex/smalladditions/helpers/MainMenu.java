@@ -27,12 +27,12 @@ public class MainMenu extends MenuTemplate
                 case "Exit":
                     break;
                 case "Status":
-                    boolean magnetOn = getConfig().readModStatus(event.getPlayer(), "Magnet");
-                    boolean replantOn = getConfig().readModStatus(event.getPlayer(), "Replant");
-
                     getMessageHelper().sendPlayer(event.getPlayer(), "Status:", ChatColor.GOLD);
-                    getMessageHelper().sendPlayer(event.getPlayer(), "Magnet is " + (magnetOn ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF"));
-                    getMessageHelper().sendPlayer(event.getPlayer(), "Replant is " + (replantOn ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF"));
+                    for (String mod : Constants.modsList)
+                    {
+                        boolean currentMod = getConfig().readModStatus(event.getPlayer(), mod);
+                        getMessageHelper().sendPlayer(event.getPlayer(), mod + " is " + (currentMod ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF"));
+                    }
                     break;
                 default:
                     // Not using readModStatus as an empty String means there was an error!
@@ -43,11 +43,11 @@ public class MainMenu extends MenuTemplate
                         if (isOn)
                         {
                             getConfig().writeModStatus(event.getPlayer(), event.getName(), false);
-                            getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.RED + "off!");
+                            getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.RED + "OFF!");
                         } else
                         {
                             getConfig().writeModStatus(event.getPlayer(), event.getName(), true);
-                            getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.GREEN + "on!");
+                            getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.GREEN + "ON!");
                         }
                     } else
                     {
