@@ -34,7 +34,6 @@ public class BlockMinedHandler implements Listener
     // Class wide important values
     private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed tools
     private final ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Allowed blocks
-    private final ArrayList<Material> noFortuneBlocks = new ArrayList<>(Arrays.asList(Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Blocks where fortune effects should not be applied
     private int maxMinerSize = 0;
 
     /**
@@ -110,9 +109,6 @@ public class BlockMinedHandler implements Listener
                             // Check if block is applicable
                             if (allowedItems.contains(mainHand.getType()))
                             {
-                                block.breakNaturally(eventPlayer.getInventory().getItemInMainHand());
-                                damageItem(eventPlayer, eventPlayer.getInventory().getItemInMainHand());
-
                                 int xpToDrop = 0;
                                 // Drop XP according to block type
                                 switch (block.getType().toString())
@@ -154,6 +150,8 @@ public class BlockMinedHandler implements Listener
                                 {
                                     totalXpToDrop += xpToDrop;
                                 }
+                                block.breakNaturally(mainHand);
+                                damageItem(eventPlayer, mainHand);
                             }
                         }
                         if (totalXpToDrop > 0)

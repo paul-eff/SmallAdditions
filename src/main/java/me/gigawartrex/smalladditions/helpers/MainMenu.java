@@ -61,7 +61,7 @@ public class MainMenu extends MenuTemplate
                 .setOption(1, new ItemStack(Material.DIRT, 1), "Exit", "Click to exit options.")
                 .setOption(7, new ItemStack(Material.BOOK, 1), "Status", "Show current status.")
                 .setOption(3, new ItemStack(Material.IRON_PICKAXE, 1), "Veining", "Mine/Chop/Dig same adjacent blocks.")
-                .setOption(4, new ItemStack(Material.IRON_BLOCK, 1), "Magnet", "(WIP!!!) Turn magnet on/off.")
-                .setOption(5, new ItemStack(Material.OAK_SAPLING, 1), "Replant", "Replant cut down trees.");
+                .setOption(4, new ItemStack(Material.IRON_BLOCK, 1), "Magnet", "Simple item magnet.")
+                .setOption(5, new ItemStack(Material.OAK_SAPLING, 1), "Replant", "Replant cut down trees and crops.");
     }
 }
