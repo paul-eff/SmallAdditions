@@ -36,68 +36,65 @@ public class PlayerJoinHandler implements Listener
         if (config.read("Config.Players." + eventPlayer.getUniqueId()).equals(""))
         {
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Name", eventPlayer.getName());
-            config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Book received", "" + false);
-            config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Ninjajoin", "" + false);
-            config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Hide", "" + false);
+            config.writePlayerAttributeStatus(eventPlayer, "Book received", false);
+            config.writePlayerAttributeStatus(eventPlayer, "Ninjajoin", false);
+            config.writePlayerAttributeStatus(eventPlayer, "Hide", false);
 
             for (String mod : Constants.modsList)
             {
-                config.writeModStatus(eventPlayer, mod, false);
+                if (mod.equals("Veining") || mod.equals("Replant"))
+                {
+                    config.writeModStatus(eventPlayer, mod, true);
+                } else
+                {
+                    config.writeModStatus(eventPlayer, mod, false);
+                }
             }
         }
 
-        // For ninjajoin
-        if (Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Ninjajoin"))) event.setJoinMessage("");
-        if (Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Hide")))
+        if (config.readPlayerAttributeStatus(eventPlayer, "Ninjajoin")) event.setJoinMessage("");
+        if (config.readPlayerAttributeStatus(eventPlayer, "Hide"))
         {
             Constants.console.getServer().dispatchCommand(Constants.console, "sa hide " + eventPlayer.getName());
         }
-        if (!eventPlayer.isOp())
-        {
-            config.write("Config.Players." + eventPlayer.getUniqueId() + ".Ninjajoin", "" + false);
-            // TODO: Implement LeaveHandler to remove from list if an admin forgets!
-            config.write("Config.Players." + eventPlayer.getUniqueId() + ".Hide", "" + false);
-        }
 
-        boolean add = true;
-        boolean freeSlot = false;
-        Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "README");
-
-        // Check if player has a free slot for starter book
-        for (ItemStack stack : eventPlayer.getInventory().getStorageContents())
+        // Check if he already received book, if not add
+        if (config.readPlayerAttributeStatus(eventPlayer, "Book received"))
         {
-            if (stack != null)
+            Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "README");
+            boolean add = true;
+            boolean freeSlot = false;
+
+            // Check if player has a free slot for starter book
+            for (ItemStack stack : eventPlayer.getInventory().getStorageContents())
             {
-                if (stack.getType().equals(Material.WRITTEN_BOOK))
+                if (stack != null)
                 {
-
-                    BookMeta meta = (BookMeta) stack.getItemMeta();
-
-                    if (meta.getTitle().equals(refBook.getMeta().getTitle()))
+                    if (stack.getType().equals(Material.WRITTEN_BOOK))
                     {
-                        if (meta.getAuthor().equals(refBook.getMeta().getAuthor()))
+                        BookMeta meta = (BookMeta) stack.getItemMeta();
+                        if (meta.getTitle().equals(refBook.getMeta().getTitle()))
                         {
-                            if (meta.getPages().equals(refBook.getMeta().getPages()))
+                            if (meta.getAuthor().equals(refBook.getMeta().getAuthor()))
                             {
-                                add = false;
+                                if (meta.getPages().equals(refBook.getMeta().getPages()))
+                                {
+                                    add = false;
+                                }
                             }
                         }
                     }
+                } else if (!freeSlot)
+                {
+                    freeSlot = true;
                 }
-            } else if (!freeSlot)
-            {
-                freeSlot = true;
             }
-        }
-
-        // Check if he already received book
-        boolean receivedBook = Boolean.parseBoolean(config.read("Config.Players." + eventPlayer.getUniqueId() + ".Book received"));
-
-        // If all conditions are met, spawn a book in player's inventory
-        if (add && freeSlot && !receivedBook)
-        {
-            eventPlayer.getInventory().addItem(refBook);
-            config.write("Config.Players." + eventPlayer.getUniqueId() + ".Book received", "" + true);
+            // If all conditions are met, spawn a book in player's inventory
+            if (add && freeSlot)
+            {
+                eventPlayer.getInventory().addItem(refBook);
+                config.writePlayerAttributeStatus(eventPlayer, "Book received", true);
+            }
         }
     }
 }

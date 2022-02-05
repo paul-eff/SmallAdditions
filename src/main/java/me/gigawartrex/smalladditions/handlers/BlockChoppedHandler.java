@@ -213,7 +213,7 @@ public class BlockChoppedHandler implements Listener
      * @param origBlock the firstly hit block of the tree
      * @param bigTree   is it a "big tree" -> is the stem 2x2
      */
-    private void plantSapling(Block origBlock, Material eventMaterial, ArrayList<Block> saplingNeighbours, Boolean bigTree)
+    private void plantSapling(Block origBlock, Material eventMaterial, ArrayList<Block> saplingNeighbours, boolean bigTree)
     {
         // TODO: Does not support nether saplings
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->

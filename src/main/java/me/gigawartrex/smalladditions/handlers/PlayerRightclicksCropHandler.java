@@ -1,5 +1,6 @@
 package me.gigawartrex.smalladditions.handlers;
 
+import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.main.Crop;
 import org.bukkit.Bukkit;
@@ -21,6 +22,9 @@ import java.util.Collection;
 
 public class PlayerRightclicksCropHandler implements Listener
 {
+    // Class variables
+    private final Config config = new Config();
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerUse(PlayerInteractEvent event)
     {
@@ -39,21 +43,28 @@ public class PlayerRightclicksCropHandler implements Listener
                             if (ageable.getAge() == ageable.getMaximumAge())
                             {
                                 Collection<ItemStack> drops = clickedBlock.getDrops();
-                                clickedBlock.setType(Material.AIR);
+                                boolean replantOn = config.readModStatus(event.getPlayer(), "Replant");
                                 for (ItemStack drop : drops)
                                 {
                                     if (drop.getType() == crop.getSeedDrop())
                                     {
-                                        drop.setAmount(drop.getAmount() - 1);
+                                        if (replantOn)
+                                        {
+                                            drop.setAmount(drop.getAmount() - 1);
+                                        }
                                         if (drop.getAmount() <= 0) continue;
                                     }
                                     clickedBlock.getWorld().dropItemNaturally(clickedBlock.getLocation(), drop);
                                 }
-                                Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                                clickedBlock.setType(Material.AIR);
+                                if (replantOn)
                                 {
-                                    clickedBlock.setType(crop.getSeed());
-                                    ((Ageable) clickedBlock.getBlockData()).setAge(0);
-                                }, 2);
+                                    Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                                    {
+                                        clickedBlock.setType(crop.getSeed());
+                                        ((Ageable) clickedBlock.getBlockData()).setAge(0);
+                                    }, 2);
+                                }
                                 damageItem(event.getPlayer(), event.getItem());
                             }
                         }

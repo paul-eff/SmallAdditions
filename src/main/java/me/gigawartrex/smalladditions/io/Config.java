@@ -129,7 +129,7 @@ public class Config extends FileHelper
      * @param mod     the mod in question
      * @param isUsing {@code True} if the {@code Player} is using the mod
      */
-    public void writeModStatus(Player player, String mod, Boolean isUsing)
+    public void writeModStatus(Player player, String mod, boolean isUsing)
     {
         write(getFileName() + ".Players." + player.getUniqueId() + ".Mods." + mod, "" + isUsing);
     }
@@ -150,5 +150,35 @@ public class Config extends FileHelper
             write(getFileName() + ".Players." + player.getUniqueId() + ".Mods." + mod, "" + false);
         }
         return Boolean.parseBoolean(read(getFileName() + ".Players." + player.getUniqueId() + ".Mods." + mod));
+    }
+
+    /**
+     * Method to write a player's attribute using status.
+     *
+     * @param player    the target {@code Player}
+     * @param attribute the attribute in question
+     * @param isUsing   {@code True} if the attribute is active for the {@code Player}
+     */
+    public void writePlayerAttributeStatus(Player player, String attribute, boolean isUsing)
+    {
+        write(getFileName() + ".Players." + player.getUniqueId() + "." + attribute, "" + isUsing);
+    }
+
+    /**
+     * Method to read a player's attribute using status.
+     * Defaults to false if the player has no entry.
+     *
+     * @param player    the target {@code Player}
+     * @param attribute the attribute in question
+     * @return {@code True} if the attribute is active for the {@code Player}
+     */
+    public boolean readPlayerAttributeStatus(Player player, String attribute)
+    {
+        if (read(getFileName() + ".Players." + player.getUniqueId() + "." + attribute).equals(""))
+        {
+            write(getFileName() + ".Players." + player.getUniqueId() + ".Name", player.getName());
+            write(getFileName() + ".Players." + player.getUniqueId() + "." + attribute, "" + false);
+        }
+        return Boolean.parseBoolean(read(getFileName() + ".Players." + player.getUniqueId() + "." + attribute));
     }
 }

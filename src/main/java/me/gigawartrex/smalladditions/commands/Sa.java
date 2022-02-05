@@ -148,25 +148,42 @@ public class Sa implements CommandExecutor
                 case "ninjajoin":
                     if (isOP)
                     {
+                        boolean playerFound = false;
                         if (args.length == 1)
                         {
-                            String yamlPath = "Config.Players." + player.getUniqueId() + ".Ninjajoin";
-                            String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
-                            config.write(yamlPath, newStatus);
-                            msghelp.sendPlayer(player, "Ninjajoin status set to: " + newStatus, ChatColor.GREEN);
+                            boolean newStatus = config.readPlayerAttributeStatus(player, "Ninjajoin");
+                            config.writePlayerAttributeStatus(player, "Ninjajoin", !newStatus);
+                            if (newStatus)
+                            {
+                                msghelp.sendPlayer(player, "Ninjajoin turned " + ChatColor.RED + "OFF!");
+                            } else
+                            {
+                                msghelp.sendPlayer(player, "Ninjajoin turned " + ChatColor.GREEN + "ON!");
+                            }
+                            playerFound = true;
                         } else if (args.length == 2)
                         {
                             for (OfflinePlayer targetPlayer : Bukkit.getOfflinePlayers())
                             {
                                 if (targetPlayer.getName().equals(args[1]))
                                 {
-                                    String yamlPath = "Config.Players." + targetPlayer.getUniqueId() + ".Ninjajoin";
-                                    String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
-                                    config.write(yamlPath, newStatus);
-                                    msghelp.sendPlayer(player, "Toggled " + targetPlayer.getName() + "'s Ninjajoin status to: " + newStatus, ChatColor.GREEN);
+                                    boolean newStatus = Boolean.parseBoolean(config.read(config.getFileName() + ".Players." + targetPlayer.getUniqueId() + ".Ninjajoin"));
+                                    config.write(config.getFileName() + ".Players." + targetPlayer.getUniqueId() + ".Ninjajoin", "" + !newStatus);
+                                    if (newStatus)
+                                    {
+                                        msghelp.sendPlayer(player, "Ninjajoin (for player " + targetPlayer.getName() + ") turned " + ChatColor.RED + "OFF!");
+                                    } else
+                                    {
+                                        msghelp.sendPlayer(player, "Ninjajoin (for player " + targetPlayer.getName() + ") turned " + ChatColor.GREEN + "ON!");
+                                    }
+                                    playerFound = true;
                                     break;
                                 }
                             }
+                        }
+                        if (!playerFound)
+                        {
+                            msghelp.sendPlayer(player, "The target player does not exist or never joined this server!", ChatColor.RED);
                         }
                     } else
                     {
@@ -177,47 +194,68 @@ public class Sa implements CommandExecutor
                 case "hide":
                     if (isOP)
                     {
+                        boolean playerFound = false;
                         Player hideablePlayer = null;
                         if (args.length == 1)
                         {
-                            String yamlPath = "Config.Players." + player.getUniqueId() + ".Hide";
-                            String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
-                            config.write(yamlPath, newStatus);
-                            msghelp.sendPlayer(player, "Hide status set to: " + newStatus, ChatColor.GREEN);
+                            boolean newStatus = config.readPlayerAttributeStatus(player, "Hide");
+                            config.writePlayerAttributeStatus(player, "Hide", !newStatus);
+                            if (newStatus)
+                            {
+                                msghelp.sendPlayer(player, "Hide turned " + ChatColor.RED + "OFF!");
+                            } else
+                            {
+                                msghelp.sendPlayer(player, "Hide turned " + ChatColor.GREEN + "ON!");
+                            }
                             hideablePlayer = player;
+                            playerFound = true;
                         } else if (args.length == 2)
                         {
                             for (OfflinePlayer targetPlayer : Bukkit.getOfflinePlayers())
                             {
                                 if (targetPlayer.getName().equals(args[1]))
                                 {
-                                    String yamlPath = "Config.Players." + targetPlayer.getUniqueId() + ".Hide";
-                                    String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
-                                    config.write(yamlPath, newStatus);
-                                    msghelp.sendPlayer(player, "Toggled " + targetPlayer.getName() + "'s Hide status to: " + newStatus, ChatColor.GREEN);
+                                    boolean newStatus = Boolean.parseBoolean(config.read(config.getFileName() + ".Players." + targetPlayer.getUniqueId() + ".Hide"));
+                                    config.write(config.getFileName() + ".Players." + targetPlayer.getUniqueId() + ".Hide", "" + !newStatus);
+                                    if (newStatus)
+                                    {
+                                        msghelp.sendPlayer(player, "Hide (for player " + targetPlayer.getName() + ") turned " + ChatColor.RED + "OFF!");
+                                    } else
+                                    {
+                                        msghelp.sendPlayer(player, "Hide (for player " + targetPlayer.getName() + ") turned " + ChatColor.GREEN + "ON!");
+                                    }
                                     hideablePlayer = targetPlayer.getPlayer();
+                                    playerFound = true;
                                     break;
                                 }
                             }
                         }
-                        boolean inList = hiddenPlayers.contains(hideablePlayer);
-                        for (Player p : Bukkit.getOnlinePlayers())
+                        if (hideablePlayer != null && hideablePlayer.isOnline())
                         {
-                            if (p == hideablePlayer) continue;
+                            boolean inList = hiddenPlayers.contains(hideablePlayer);
+
+                            for (Player p : Bukkit.getOnlinePlayers())
+                            {
+                                if (p == hideablePlayer) continue;
+                                if (inList)
+                                {
+                                    p.showPlayer(Constants.plugin, hideablePlayer);
+                                } else
+                                {
+                                    p.hidePlayer(Constants.plugin, hideablePlayer);
+                                }
+                            }
                             if (inList)
                             {
-                                p.showPlayer(Constants.plugin, hideablePlayer);
+                                hiddenPlayers.remove(hideablePlayer);
                             } else
                             {
-                                p.hidePlayer(Constants.plugin, hideablePlayer);
+                                hiddenPlayers.add(hideablePlayer);
                             }
                         }
-                        if (inList)
+                        if (!playerFound)
                         {
-                            hiddenPlayers.remove(hideablePlayer);
-                        } else
-                        {
-                            hiddenPlayers.add(hideablePlayer);
+                            msghelp.sendPlayer(player, "The target player does not exist or never joined this server!", ChatColor.RED);
                         }
                     } else
                     {
@@ -299,7 +337,6 @@ public class Sa implements CommandExecutor
                 msghelp.sendConsole("Wrong command usage. Type \"/help SmallAdditions\" for more details.", ChatColor.RED);
                 return true;
             }
-
             switch (args[0])
             {
                 // Command to reset all SimpleAdditions files/settings
@@ -311,25 +348,6 @@ public class Sa implements CommandExecutor
                     } else
                     {
                         config.defaultConfig(true);
-                    }
-                    break;
-                case "ninjajoin":
-                    if (args.length == 2)
-                    {
-                        for (OfflinePlayer targetPlayer : Bukkit.getOfflinePlayers())
-                        {
-                            if (targetPlayer.getName().equals(args[1]))
-                            {
-                                String yamlPath = "Config.Players." + targetPlayer.getUniqueId() + ".Ninjajoin";
-                                String newStatus = config.read(yamlPath).equals("true") ? "false" : "true";
-                                config.write(yamlPath, newStatus);
-                                msghelp.sendConsole("Toggled " + targetPlayer.getName() + "'s Ninjajoin status to: " + newStatus, ChatColor.GREEN);
-                                break;
-                            }
-                        }
-                    } else
-                    {
-                        msghelp.sendConsole("Did you mean \"/sa ninjajoin <playername>\"?", ChatColor.RED);
                     }
                     break;
                 case "hide":
