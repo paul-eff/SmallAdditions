@@ -3,7 +3,9 @@ package me.gigawartrex.smalladditions.handlers;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,7 +38,16 @@ public class PlayerJoinHandler implements Listener
         if (config.read("Config.Players." + eventPlayer.getUniqueId()).equals(""))
         {
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Name", eventPlayer.getName());
-            config.writePlayerAttributeStatus(eventPlayer, "Book received", false);
+            boolean playerAlreadyKnown = false;
+            for(OfflinePlayer p : Bukkit.getOfflinePlayers())
+            {
+                if (p.getName().equals(eventPlayer.getName()))
+                {
+                    playerAlreadyKnown = true;
+                    break;
+                }
+            }
+            config.writePlayerAttributeStatus(eventPlayer, "Book received", playerAlreadyKnown);
             config.writePlayerAttributeStatus(eventPlayer, "Ninjajoin", false);
             config.writePlayerAttributeStatus(eventPlayer, "Hide", false);
 
@@ -59,7 +70,7 @@ public class PlayerJoinHandler implements Listener
         }
 
         // Check if he already received book, if not add
-        if (config.readPlayerAttributeStatus(eventPlayer, "Book received"))
+        if (!config.readPlayerAttributeStatus(eventPlayer, "Book received"))
         {
             Book refBook = new Book("SmallAdditions Guide", "GigaWarTr3x", "README");
             boolean add = true;
