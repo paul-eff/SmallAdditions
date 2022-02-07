@@ -25,7 +25,6 @@ public class PlayerRightclicksCropHandler implements Listener
     // Class variables
     private final Config config = new Config();
 
-    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerUse(PlayerInteractEvent event)
     {
         if (event.getHand() == EquipmentSlot.HAND)

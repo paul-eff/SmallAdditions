@@ -4,6 +4,7 @@ import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -22,7 +23,7 @@ public class PlayerQuitHandler implements Listener
      *
      * @param event the event triggered
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerQuit(PlayerQuitEvent event)    {
         Player eventPlayer = event.getPlayer();
         eventPlayer.setSleepingIgnored(false);
