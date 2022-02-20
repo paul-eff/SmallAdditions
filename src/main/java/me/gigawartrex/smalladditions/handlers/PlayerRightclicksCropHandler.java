@@ -10,7 +10,6 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -25,6 +24,7 @@ public class PlayerRightclicksCropHandler implements Listener
     // Class variables
     private final Config config = new Config();
 
+    @EventHandler
     public void onPlayerUse(PlayerInteractEvent event)
     {
         if (event.getHand() == EquipmentSlot.HAND)

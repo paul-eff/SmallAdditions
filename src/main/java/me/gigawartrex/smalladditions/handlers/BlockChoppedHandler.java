@@ -73,15 +73,9 @@ public class BlockChoppedHandler implements Listener
                         ArrayList<Block> to_search = new ArrayList<>();
 
                         //Check if chopped block is grounded to later evaluate replant conditions
-                        Location locUnderOrigBlock = Helper.getLocation(event.getBlock().getLocation(), 0, -1, 0);
-                        boolean isDirt = locUnderOrigBlock.getBlock().getType().equals(Material.DIRT);
-                        boolean isGrass = locUnderOrigBlock.getBlock().getType().equals(Material.GRASS);
-                        boolean isNylium = locUnderOrigBlock.getBlock().getType().toString().contains("_NYLIUM");
+                        Block blockUnderOrig = Helper.getLocation(event.getBlock().getLocation(), 0, -1, 0).getBlock();
 
-                        if (isDirt || isGrass || isNylium)
-                        {
-                            firstBlockIsGrounded = true;
-                        }
+                        if (!blockUnderOrig.isLiquid() && !blockUnderOrig.isPassable() && !blockUnderOrig.isEmpty()) firstBlockIsGrounded = true;
                         //Structural detection of tree
                         current_search.add(eventBlock);
                         boolean sizeReached = false;
@@ -139,6 +133,7 @@ public class BlockChoppedHandler implements Listener
                         {
                             saplingNeighbours.add(event.getBlock().getRelative(BlockFace.WEST));
                         }
+
                         // If a real tree was detected proceed with felling
                         if (hasLeaves)
                         {
