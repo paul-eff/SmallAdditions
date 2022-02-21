@@ -48,6 +48,7 @@ public final class SmallAdditions extends JavaPlugin
         getServer().getPluginManager().registerEvents(new PlayerRightclicksCropHandler(), this);
         getServer().getPluginManager().registerEvents(new EntityChangeBlockHandler(), this);
         getServer().getPluginManager().registerEvents(new EntityExplodeHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerItemStackEmptyHandler(), this);
 
         //Other Handler registration
         new ItemMagnetHandler();

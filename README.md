@@ -1,6 +1,6 @@
-# SmallAdditions 1.2.3
+# SmallAdditions 1.2.4
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.2.3-blue">
+  <img src="https://img.shields.io/badge/version-1.2.4-blue">
   <img src="https://img.shields.io/badge/bukkit-1.18.1-green">
   <img src="https://img.shields.io/badge/paper-1.18.1-green">
 </p>
@@ -21,6 +21,7 @@ New ideas and issues can be be directly submitted to this repository.
 ### Passive features:
 - x% in world have to sleep for next day
 - Broken tool refill
+- Empty ItemStack refill
 - Deathboxes
 - First time joined book
 - New crafting / smelting recipes:
