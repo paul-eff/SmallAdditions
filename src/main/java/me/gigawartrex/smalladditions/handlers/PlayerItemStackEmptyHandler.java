@@ -52,11 +52,14 @@ public class PlayerItemStackEmptyHandler implements Listener
                     continue;
                 }
             }
-            // Do the replace
-            ItemStack temp = inv.getItem(sourceInventorySlot);
-            inv.setItem(sourceInventorySlot, new ItemStack(Material.AIR));
-            inv.setItem(targetInventorySlot, temp);
-            eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+            if (targetInventorySlot != -1 && sourceInventorySlot != -1)
+            {
+                // Do the replace
+                ItemStack temp = inv.getItem(sourceInventorySlot);
+                inv.setItem(sourceInventorySlot, new ItemStack(Material.AIR));
+                inv.setItem(targetInventorySlot, temp);
+                eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+            }
         }
     }
 }
