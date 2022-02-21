@@ -11,17 +11,21 @@ New ideas and issues can be be directly submitted to this repository.
 
 
 ### Active features:
-- Ore vein mining
-- Whole tree felling
-  - Auto-replanting possible
-- Gravel vein digging
+- Vein Mining/Breaking - Breaking specific blocks, of same type, next to each other (Warning: Read more in Passive features - Broken tool refill)
+  - Ore vein mining
+  - Whole tree felling
+    - Auto-replanting possible
+  - Gravel vein digging
 - Item magnet
 - Right clicking wheat harvests it
   - Auto-replanting possible
 ### Passive features:
 - x% in world have to sleep for next day
 - Broken tool refill
+  - Ignores Silk Touch and Fortune tools
+  - When veining (breaking all of same type): Will use all tools in inventory, applicable for the material, until job done
 - Empty ItemStack refill
+- Broken Armor refill
 - Deathboxes
 - First time joined book
 - New crafting / smelting recipes:
@@ -35,8 +39,6 @@ New ideas and issues can be be directly submitted to this repository.
 - Hide (player can't be seen anymore)
 ### Ideas and WIP:
 - BedHandler should also handle thunder effectively
-- Add armor and general items to tool refill
-- Refill should respect all items of one kind (e.g. diamond and wooden hoe)
 - More minor admin features
 - New and better logger + log levels
 

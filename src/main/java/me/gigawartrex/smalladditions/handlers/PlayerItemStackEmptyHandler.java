@@ -22,7 +22,7 @@ public class PlayerItemStackEmptyHandler implements Listener
      * @param event the event triggered
      */
     @EventHandler
-    public void onBlockBreak(BlockPlaceEvent event)
+    public void onBlockPlaced(BlockPlaceEvent event)
     {
         // Initialize common needed variables
         Player eventPlayer = event.getPlayer();

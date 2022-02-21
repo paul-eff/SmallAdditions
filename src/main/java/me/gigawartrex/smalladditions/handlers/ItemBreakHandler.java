@@ -1,9 +1,11 @@
 package me.gigawartrex.smalladditions.handlers;
 
+import me.gigawartrex.smalladditions.main.ArmorType;
 import me.gigawartrex.smalladditions.main.MaterialPriority;
 import me.gigawartrex.smalladditions.main.ToolType;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,33 +39,56 @@ public class ItemBreakHandler implements Listener
         PlayerInventory inv = eventPlayer.getInventory();
 
         ArrayList<int[]> prioItems = new ArrayList<>();
-        String toolType = "";
+        String itemType = "";
         // Find out tool type (if it is a tool)
         for (ToolType tt : ToolType.values())
         {
             if (eventMaterial.toString().toLowerCase(Locale.ROOT).contains(tt.getMaterialTypeSubstring()))
             {
-                toolType = tt.getMaterialTypeSubstring();
+                itemType = tt.getMaterialTypeSubstring();
                 break;
             }
         }
+        if (itemType.equals(""))
+        {
+            // Find out armor type (if it is an armor)
+            for (ArmorType at : ArmorType.values())
+            {
+                if (eventMaterial.toString().toLowerCase(Locale.ROOT).contains(at.getMaterialTypeSubstring()))
+                {
+                    itemType = at.getMaterialTypeSubstring();
+                    break;
+                }
+            }
+        }
+
+        // TODO: Low Priority for Silk Touch and Luck
+
         int targetInventorySlot = -1;
         // Add all tools of same type with material priority to an array
-        for (int x = 0; x < inv.getStorageContents().length; x++)
+        for (int x = 0; x < inv.getContents().length; x++)
         {
             ItemStack currItem = inv.getItem(x);
             if (currItem == null) continue;
-            if(currItem.equals(eventItem) && targetInventorySlot == -1){
+            if (currItem.equals(eventItem) && targetInventorySlot == -1)
+            {
                 targetInventorySlot = x;
                 continue;
             }
-            if (currItem.getType().toString().toLowerCase(Locale.ROOT).contains(toolType))
-                prioItems.add(new int[]{x, MaterialPriority.getPriority(currItem)});
+            if (currItem.getType().toString().toLowerCase(Locale.ROOT).contains(itemType))
+            {
+                if (!currItem.containsEnchantment(Enchantment.SILK_TOUCH) && !currItem.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))
+                {
+                    prioItems.add(new int[]{x, MaterialPriority.getPriority(currItem)});
+                }
+            }
         }
-        if (prioItems.size() > 0)
+
+
+        if (prioItems.size() > 0 && targetInventorySlot != -1)
         {
             // Sort array from the lowest material priority to highest
-            Collections.sort(prioItems, (o1, o2) -> o1[1] > o2[1] ? 1 : -1);
+            Collections.sort(prioItems, (o1, o2) -> o1[1] < o2[1] ? 1 : -1);
             //Replace broken item
             ItemStack temp = inv.getItem(prioItems.get(0)[0]);
             inv.setItem(prioItems.get(0)[0], new ItemStack(Material.AIR));
