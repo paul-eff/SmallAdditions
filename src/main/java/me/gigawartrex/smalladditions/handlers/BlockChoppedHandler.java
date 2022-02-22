@@ -211,23 +211,23 @@ public class BlockChoppedHandler implements Listener
     private void plantSapling(Block origBlock, Material eventMaterial, ArrayList<Block> saplingNeighbours, boolean bigTree)
     {
         // TODO: Does not support nether saplings
+        //Get Material needed from eventBlock for sapling material
+        Material saplingMaterial = Material.getMaterial(eventMaterial.toString().substring(0, eventMaterial.toString().length() - 4) + "_SAPLING");
+        if(saplingMaterial == null) return;
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
-            //Get Material needed from eventBlock for sapling material
-            String matExtract = eventMaterial.toString().substring(0, eventMaterial.toString().length() - 4);
-
             if (bigTree)
             {
                 Location lastCornerBlockLocation = origBlock.getLocation();
                 for (Block block : saplingNeighbours)
                 {
-                    block.setType(Material.getMaterial(matExtract + "_SAPLING"));
+                    block.setType(saplingMaterial);
                     lastCornerBlockLocation.setX(lastCornerBlockLocation.getX() + (block.getX() - origBlock.getX()));
                     lastCornerBlockLocation.setZ(lastCornerBlockLocation.getZ() + (block.getZ() - origBlock.getZ()));
                 }
-                lastCornerBlockLocation.getBlock().setType(Material.getMaterial(matExtract + "_SAPLING"));
+                lastCornerBlockLocation.getBlock().setType(saplingMaterial);
             }
-            origBlock.setType(Material.getMaterial(matExtract + "_SAPLING"));
+            origBlock.setType(saplingMaterial);
         }, 20 * timeToReplant);
     }
 
