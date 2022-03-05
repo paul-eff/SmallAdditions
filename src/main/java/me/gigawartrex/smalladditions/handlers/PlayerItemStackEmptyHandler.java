@@ -26,9 +26,9 @@ public class PlayerItemStackEmptyHandler implements Listener
     {
         // Initialize common needed variables
         Player eventPlayer = event.getPlayer();
-        ItemStack itemStack = event.getItemInHand();
+        ItemStack eventItem = event.getItemInHand();
         // If current stack size = 1 -> when block is placed the stack will be empty
-        if (itemStack.getAmount() == 1)
+        if (eventItem.getAmount() == 1)
         {
             // Get inventory
             Inventory inv = eventPlayer.getInventory();
@@ -41,12 +41,12 @@ public class PlayerItemStackEmptyHandler implements Listener
 
                 ItemStack currItem = inv.getItem(x);
                 if (currItem == null) continue;
-                if (currItem == itemStack && targetInventorySlot == -1)
+                if (currItem.equals(eventItem) && targetInventorySlot == -1)
                 {
                     targetInventorySlot = x;
                     continue;
                 }
-                if (currItem.getType().equals(itemStack.getType()) && sourceInventorySlot == -1 && targetInventorySlot != x)
+                if (currItem.getType().equals(eventItem.getType()) && sourceInventorySlot == -1 && targetInventorySlot != x)
                 {
                     sourceInventorySlot = x;
                     continue;
