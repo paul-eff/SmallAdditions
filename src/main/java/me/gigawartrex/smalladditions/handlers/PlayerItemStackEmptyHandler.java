@@ -41,12 +41,12 @@ public class PlayerItemStackEmptyHandler implements Listener
 
                 ItemStack currItem = inv.getItem(x);
                 if (currItem == null) continue;
-                if (currItem.equals(itemStack) && targetInventorySlot == -1)
+                if (currItem == itemStack && targetInventorySlot == -1)
                 {
                     targetInventorySlot = x;
                     continue;
                 }
-                if (currItem.getType().equals(itemStack.getType()) && sourceInventorySlot == -1)
+                if (currItem.getType().equals(itemStack.getType()) && sourceInventorySlot == -1 && targetInventorySlot != x)
                 {
                     sourceInventorySlot = x;
                     continue;

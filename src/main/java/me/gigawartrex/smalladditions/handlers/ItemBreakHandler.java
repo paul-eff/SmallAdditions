@@ -62,7 +62,7 @@ public class ItemBreakHandler implements Listener
             }
         }
 
-        // TODO: Low Priority for Silk Touch and Luck
+        if (itemType.equals("")) return;
 
         int targetInventorySlot = -1;
         // Add all tools of same type with material priority to an array
@@ -83,7 +83,6 @@ public class ItemBreakHandler implements Listener
                 }
             }
         }
-
 
         if (prioItems.size() > 0 && targetInventorySlot != -1)
         {
