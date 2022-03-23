@@ -1,5 +1,6 @@
 package me.gigawartrex.smalladditions.handlers;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -27,6 +28,9 @@ public class PlayerItemStackEmptyHandler implements Listener
         // Initialize common needed variables
         Player eventPlayer = event.getPlayer();
         ItemStack eventItem = event.getItemInHand();
+
+        if(eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
+
         // If current stack size = 1 -> when block is placed the stack will be empty
         if (eventItem.getAmount() == 1)
         {

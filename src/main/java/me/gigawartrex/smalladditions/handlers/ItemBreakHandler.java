@@ -3,6 +3,7 @@ package me.gigawartrex.smalladditions.handlers;
 import me.gigawartrex.smalladditions.main.ArmorType;
 import me.gigawartrex.smalladditions.main.MaterialPriority;
 import me.gigawartrex.smalladditions.main.ToolType;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -37,6 +38,8 @@ public class ItemBreakHandler implements Listener
         ItemStack eventItem = event.getBrokenItem();
         Material eventMaterial = event.getBrokenItem().getType();
         PlayerInventory inv = eventPlayer.getInventory();
+
+        if(eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
 
         ArrayList<int[]> prioItems = new ArrayList<>();
         String itemType = "";
