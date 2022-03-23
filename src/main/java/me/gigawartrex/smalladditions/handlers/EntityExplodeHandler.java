@@ -19,12 +19,15 @@ public class EntityExplodeHandler implements Listener
     {
         boolean doCreeperGriefing = Boolean.parseBoolean(config.read("Config.Settings.doCreeperGriefing"));
 
-        if (!doCreeperGriefing && event.getEntity() != null && event.getEntity().getType() == EntityType.CREEPER)
+        if (event.getEntity() != null)
         {
-            event.blockList().clear();
-            Block eventBlock = event.getLocation().getBlock();
-            // TODO: Message when debug levels are implemented
-            //msghelp.sendConsole("Stopped a creeper from exploding at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
+            if (!doCreeperGriefing && event.getEntity().getType() == EntityType.CREEPER)
+            {
+                event.blockList().clear();
+                Block eventBlock = event.getLocation().getBlock();
+                // TODO: Message when debug levels are implemented
+                //msghelp.sendConsole("Stopped a Creeper from exploding at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
+            }
         }
     }
 }

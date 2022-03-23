@@ -33,7 +33,7 @@ public class BlockMinedHandler implements Listener
 
     // Class wide important values
     private final ArrayList<Material> allowedItems = new ArrayList<>(Arrays.asList(Material.WOODEN_PICKAXE, Material.STONE_PICKAXE, Material.IRON_PICKAXE, Material.GOLDEN_PICKAXE, Material.DIAMOND_PICKAXE, Material.NETHERITE_PICKAXE)); // Allowed tools
-    private final ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.BONE_BLOCK, Material.ANCIENT_DEBRIS)); // Allowed blocks
+    private final ArrayList<Material> validOres = new ArrayList<>(Arrays.asList(Material.GLOWSTONE, Material.BONE_BLOCK, Material.ANCIENT_DEBRIS, Material.MAGMA_BLOCK)); // Allowed blocks
     private int maxMinerSize = 0;
 
     /**
