@@ -30,6 +30,7 @@ public class PlayerItemStackEmptyHandler implements Listener
         ItemStack eventItem = event.getItemInHand();
 
         if(eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
+        if(eventItem.getType() == Material.POWDER_SNOW_BUCKET) return;
 
         // If current stack size = 1 -> when block is placed the stack will be empty
         if (eventItem.getAmount() == 1)

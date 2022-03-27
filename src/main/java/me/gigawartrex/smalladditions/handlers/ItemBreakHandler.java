@@ -40,6 +40,7 @@ public class ItemBreakHandler implements Listener
         PlayerInventory inv = eventPlayer.getInventory();
 
         if(eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
+        if(eventItem.getType() == Material.FISHING_ROD) return;
 
         ArrayList<int[]> prioItems = new ArrayList<>();
         String itemType = "";
