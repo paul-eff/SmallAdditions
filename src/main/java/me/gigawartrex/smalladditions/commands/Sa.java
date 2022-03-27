@@ -267,56 +267,11 @@ public class Sa implements CommandExecutor
                     if (isOP)
                     {
                         // Code for testing here
-                        Location defaultLoc = player.getLocation();
-                        int radius = 10;
-                        boolean breakCondition = false;
-                        for (int x = defaultLoc.getBlockX() - radius; x <= defaultLoc.getBlockX() + radius && !breakCondition; x++)
+                        for (int i = 0; i <= player.getInventory().getSize(); i++)
                         {
-                            for (int y = defaultLoc.getBlockY() - radius; y <= defaultLoc.getBlockY() + radius && !breakCondition; y++)
+                            if (player.getInventory().getItem(i) != null)
                             {
-                                for (int z = defaultLoc.getBlockZ() - radius; z <= defaultLoc.getBlockZ() + radius && !breakCondition; z++)
-                                {
-                                    if (defaultLoc.getWorld().getBlockAt(x, y, z).getType() == Material.ENDER_CHEST)
-                                    {
-                                        player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(x + 1, y, z).getLocation());
-
-                                        int finalX = x;
-                                        int finalY = y;
-                                        int finalZ = z;
-
-                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
-                                        {
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX - 1, finalY, finalZ).getLocation());
-                                        }, 20 * 1);
-                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
-                                        {
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ + 1).getLocation());
-                                        }, 20 * 2);
-                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
-                                        {
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ - 1).getLocation());
-                                        }, 20 * 3);
-                                        Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
-                                        {
-                                            defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ).setType(Material.AIR);
-                                            player.getWorld().strikeLightning(defaultLoc.getWorld().getBlockAt(finalX, finalY, finalZ).getLocation());
-
-                                            player.getWorld().strikeLightning(player.getLocation());
-                                            Block b = defaultLoc.getBlock();
-                                            b.setType(Material.REDSTONE_WIRE);
-                                            for (int i = 0; i <= 20; i++)
-                                            {
-                                                int xOffset = (int) Math.round(Math.random() * 6) - 3;
-                                                int zOffset = (int) Math.round(Math.random() * 6) - 3;
-                                                if (defaultLoc.clone().add(xOffset, 0, zOffset).getBlock().getType() != Material.AIR) continue;
-                                                b = defaultLoc.clone().add(xOffset, 0, zOffset).getBlock();
-                                                b.setType(Material.REDSTONE_WIRE);
-                                            }
-                                        }, 20 * 4);
-
-                                        breakCondition = true;
-                                    }
-                                }
+                                msghelp.sendPlayer(player, i + ": " + player.getInventory().getItem(i).getType());
                             }
                         }
                     } else

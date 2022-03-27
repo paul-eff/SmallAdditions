@@ -1,14 +1,18 @@
 package me.gigawartrex.smalladditions.handlers;
 
+import me.gigawartrex.smalladditions.helpers.InventoryManager;
+import me.gigawartrex.smalladditions.main.Constants;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
 
 /**
  * Class for handling player deaths.
@@ -29,12 +33,28 @@ public class PlayerItemStackEmptyHandler implements Listener
         Player eventPlayer = event.getPlayer();
         ItemStack eventItem = event.getItemInHand();
 
-        if(eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
-        if(eventItem.getType() == Material.POWDER_SNOW_BUCKET) return;
+        if (eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
+        if (eventItem.getType() == Material.POWDER_SNOW_BUCKET) return;
 
         // If current stack size = 1 -> when block is placed the stack will be empty
         if (eventItem.getAmount() == 1)
         {
+            InventoryManager im = new InventoryManager(eventPlayer);
+            Integer[] replacementItems = im.getAlternatives(eventItem);
+            System.out.println(Arrays.toString(replacementItems));
+            if (replacementItems.length > 0)
+            {
+                int a = im.getIndex(eventItem);
+                int b = im.getIndex(im.getInventory().getItem(replacementItems[0]));
+                System.out.println(a);
+                System.out.println(b);
+                if (a == -1 || b == -1) return;
+                Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+                {
+                    im.swapItems(a, b);
+                }, 2);
+            }
+            /*
             // Get inventory
             Inventory inv = eventPlayer.getInventory();
             int targetInventorySlot = -1;
@@ -65,6 +85,7 @@ public class PlayerItemStackEmptyHandler implements Listener
                 inv.setItem(targetInventorySlot, temp);
                 eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
             }
+            */
         }
     }
 }
