@@ -3,6 +3,7 @@ package me.gigawartrex.smalladditions.helpers;
 import me.gigawartrex.smalladditions.main.ArmorType;
 import me.gigawartrex.smalladditions.main.ToolType;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -82,7 +83,13 @@ public class InventoryManager
         for (int i = 0; i <= inventory.getSize(); i++)
         {
             ItemStack currItem = inventory.getItem(i);
-            if (currItem != null && currItem.getType().toString().toLowerCase(Locale.ROOT).contains(itemType)) itemIndices.add(i);
+            if (currItem != null)
+            {
+                if (!currItem.containsEnchantment(Enchantment.SILK_TOUCH) && !currItem.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))
+                {
+                    if (currItem.getType().toString().toLowerCase(Locale.ROOT).contains(itemType)) itemIndices.add(i);
+                }
+            }
         }
         return itemIndices.toArray(new Integer[0]);
     }
