@@ -85,9 +85,16 @@ public class InventoryManager
             ItemStack currItem = inventory.getItem(i);
             if (currItem != null)
             {
+                if (currItem.getType().toString().toLowerCase(Locale.ROOT).contains("pickaxe") && itemType.equals("axe")) continue;
                 if (!currItem.containsEnchantment(Enchantment.SILK_TOUCH) && !currItem.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))
                 {
-                    if (currItem.getType().toString().toLowerCase(Locale.ROOT).contains(itemType)) itemIndices.add(i);
+                    if (!itemType.equals(""))
+                    {
+                        if (!currItem.getType().toString().toLowerCase(Locale.ROOT).contains(itemType)) continue;
+                    }else{
+                        if (currItem.getType() != targetItemType) continue;
+                    }
+                    itemIndices.add(i);
                 }
             }
         }
