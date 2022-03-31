@@ -58,38 +58,6 @@ public class PlayerItemStackEmptyHandler implements Listener
                     eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
                 }, 1);
             }
-            /*
-            // Get inventory
-            Inventory inv = eventPlayer.getInventory();
-            int targetInventorySlot = -1;
-            int sourceInventorySlot = -1;
-            // Iterate over inventory to determine target slot and where to get new ItemStack from
-            for (int x = 0; x < inv.getStorageContents().length; x++)
-            {
-                if (targetInventorySlot != -1 && sourceInventorySlot != -1) break;
-
-                ItemStack currItem = inv.getItem(x);
-                if (currItem == null) continue;
-                if (currItem.equals(eventItem) && targetInventorySlot == -1)
-                {
-                    targetInventorySlot = x;
-                    continue;
-                }
-                if (currItem.getType().equals(eventItem.getType()) && sourceInventorySlot == -1 && targetInventorySlot != x)
-                {
-                    sourceInventorySlot = x;
-                    continue;
-                }
-            }
-            if (targetInventorySlot != -1 && sourceInventorySlot != -1)
-            {
-                // Do the replace
-                ItemStack temp = inv.getItem(sourceInventorySlot);
-                inv.setItem(sourceInventorySlot, new ItemStack(Material.AIR));
-                inv.setItem(targetInventorySlot, temp);
-                eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
-            }
-            */
         }
     }
 }
