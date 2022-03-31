@@ -6,10 +6,7 @@ public enum ToolType
     SHOVEL("shovel"),
     SWORD("sword"),
     AXE("axe"),
-    HOE("hoe"),
-    FLINT_AND_STEEL("flint_and_steel"),
-    FISHING_ROD("fishing_rod"),
-    SHEARS("shears");
+    HOE("hoe");
 
     private final String materialTypeSubstring;
 

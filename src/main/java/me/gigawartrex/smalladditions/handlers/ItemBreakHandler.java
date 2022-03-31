@@ -1,22 +1,19 @@
 package me.gigawartrex.smalladditions.handlers;
 
-import me.gigawartrex.smalladditions.main.ArmorType;
+import me.gigawartrex.smalladditions.helpers.InventoryManager;
+import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.main.MaterialPriority;
-import me.gigawartrex.smalladditions.main.ToolType;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemBreakEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
+import java.util.Arrays;
 
 /**
  * Class for handling when an item breaks.
@@ -36,12 +33,41 @@ public class ItemBreakHandler implements Listener
         // Initialize common needed variables
         Player eventPlayer = event.getPlayer();
         ItemStack eventItem = event.getBrokenItem();
-        Material eventMaterial = event.getBrokenItem().getType();
-        PlayerInventory inv = eventPlayer.getInventory();
 
-        if(eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
-        if(eventItem.getType() == Material.FISHING_ROD) return;
+        if (eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
 
+        InventoryManager im = new InventoryManager(eventPlayer);
+        Integer[] replacementItems = im.getAllIndicesFuzzy(eventItem.getType());
+
+        if (replacementItems.length > 1)
+        {
+            int a = im.getIndex(eventItem);
+            int b = a;
+
+            if(replacementItems.length > 2)
+            {
+                Arrays.sort(replacementItems, (a1, b1) -> {
+                    Inventory inv = eventPlayer.getInventory();
+                    return MaterialPriority.getPriority(inv.getItem(a1)) > MaterialPriority.getPriority(inv.getItem(b1)) ? 1 : -1;
+                });
+            }
+
+            int iterator = 0;
+            while (b == a)
+            {
+                b = replacementItems[iterator];
+                iterator++;
+            }
+            if (a == -1 || b == -1) return;
+            int finalB = b;
+            Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+            {
+                im.swapItems(a, finalB);
+                eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+            }, 1);
+        }
+
+        /*
         ArrayList<int[]> prioItems = new ArrayList<>();
         String itemType = "";
         // Find out tool type (if it is a tool)
@@ -98,5 +124,6 @@ public class ItemBreakHandler implements Listener
             inv.setItem(targetInventorySlot, temp);
             eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
         }
+        */
     }
 }

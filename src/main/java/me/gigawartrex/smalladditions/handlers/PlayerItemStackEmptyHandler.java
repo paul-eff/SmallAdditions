@@ -4,8 +4,7 @@ import me.gigawartrex.smalladditions.helpers.InventoryManager;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.block.data.Ageable;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,25 +33,30 @@ public class PlayerItemStackEmptyHandler implements Listener
         ItemStack eventItem = event.getItemInHand();
 
         if (eventPlayer.getGameMode() != GameMode.SURVIVAL) return;
-        if (eventItem.getType() == Material.POWDER_SNOW_BUCKET) return;
 
         // If current stack size = 1 -> when block is placed the stack will be empty
         if (eventItem.getAmount() == 1)
         {
             InventoryManager im = new InventoryManager(eventPlayer);
-            Integer[] replacementItems = im.getAlternatives(eventItem);
-            System.out.println(Arrays.toString(replacementItems));
-            if (replacementItems.length > 0)
+            Integer[] replacementItems = im.getAllIndices(eventItem.getType());
+
+            if (replacementItems.length > 1)
             {
                 int a = im.getIndex(eventItem);
-                int b = im.getIndex(im.getInventory().getItem(replacementItems[0]));
-                System.out.println(a);
-                System.out.println(b);
+                int b = a;
+                int iterator = 0;
+                while (b == a)
+                {
+                    b = replacementItems[iterator];
+                    iterator++;
+                }
                 if (a == -1 || b == -1) return;
+                int finalB = b;
                 Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
                 {
-                    im.swapItems(a, b);
-                }, 2);
+                    im.swapItems(a, finalB);
+                    eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+                }, 1);
             }
             /*
             // Get inventory

@@ -145,6 +145,7 @@ public class BlockChoppedHandler implements Listener
                                     // Player still holding valid tool?
                                     if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                                     {
+
                                         block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
                                         damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                     }
