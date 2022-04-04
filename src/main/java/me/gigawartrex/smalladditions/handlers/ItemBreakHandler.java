@@ -1,9 +1,7 @@
 package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.helpers.InventoryManager;
-import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.main.MaterialPriority;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -44,7 +42,7 @@ public class ItemBreakHandler implements Listener
             int a = im.getIndex(eventItem);
             int b = a;
 
-            if(replacementItems.length > 2)
+            if (replacementItems.length > 2)
             {
                 Arrays.sort(replacementItems, (a1, b1) -> {
                     Inventory inv = eventPlayer.getInventory();
@@ -59,12 +57,8 @@ public class ItemBreakHandler implements Listener
                 iterator++;
             }
             if (a == -1 || b == -1) return;
-            int finalB = b;
-            Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
-            {
-                im.swapItems(a, finalB);
-                eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
-            }, 1);
+            im.swapItems(a, b);
+            eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
         }
     }
 }

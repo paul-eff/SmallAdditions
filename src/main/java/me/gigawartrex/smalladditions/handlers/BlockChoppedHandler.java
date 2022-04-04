@@ -4,10 +4,7 @@ import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
@@ -145,7 +142,6 @@ public class BlockChoppedHandler implements Listener
                                     // Player still holding valid tool?
                                     if (allowedItems.contains(event.getPlayer().getInventory().getItemInMainHand().getType()))
                                     {
-
                                         block.breakNaturally(event.getPlayer().getInventory().getItemInMainHand());
                                         damageItem(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
                                     }
@@ -214,7 +210,7 @@ public class BlockChoppedHandler implements Listener
         // TODO: Does not support nether saplings
         //Get Material needed from eventBlock for sapling material
         Material saplingMaterial = Material.getMaterial(eventMaterial.toString().substring(0, eventMaterial.toString().length() - 4) + "_SAPLING");
-        if(saplingMaterial == null) return;
+        if (saplingMaterial == null) return;
         Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
         {
             if (bigTree)

@@ -267,13 +267,10 @@ public class Sa implements CommandExecutor
                     if (isOP)
                     {
                         // Code for testing here
-                        for (int i = 0; i <= player.getInventory().getSize(); i++)
-                        {
-                            if (player.getInventory().getItem(i) != null)
-                            {
-                                msghelp.sendPlayer(player, i + ": " + player.getInventory().getItem(i).getType());
-                            }
-                        }
+                        ItemStack item = player.getInventory().getItemInMainHand();
+                        int dmg = item.getDurability();
+                        int maxdmg = item.getType().getMaxDurability();
+                        msghelp.sendPlayer(player, item.getType() + " damage: " + (maxdmg - dmg));
                     } else
                     {
                         msghelp.sendPlayer(player, "This is an OP only command!", ChatColor.RED);
