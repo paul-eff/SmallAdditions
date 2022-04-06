@@ -1,8 +1,8 @@
-# SmallAdditions 1.2.6
+# SmallAdditions 1.2.7
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.2.6-blue">
-  <img src="https://img.shields.io/badge/bukkit-1.18.1-green">
-  <img src="https://img.shields.io/badge/paper-1.18.1-green">
+  <img src="https://img.shields.io/badge/version-1.2.7-blue">
+  <img src="https://img.shields.io/badge/bukkit-1.18.2-green">
+  <img src="https://img.shields.io/badge/paper-1.18.2-green">
 </p>
 
 SmallAdditions is a Bukkit/Paper server plugin which aims to improve vanilla gameplay just a smidge.
