@@ -28,10 +28,12 @@ New ideas and issues can be be directly submitted to this repository.
 - Broken Armor refill
 - Deathboxes
 - First time joined book
-- New crafting / smelting recipes:
-  - Raw ore block to smelted ore block - (Raw iron ore block + 8x Coal = Iron block)
-  - Colored wool + dye = recoloring - (Red wool + Blue dye = Blue wool)
-  - Budding amethyst - (Amethyst block + 16x Coal block = Budding amethyst)
+- Smelting recipes:
+  - Raw ore block smelting - e.g. raw iron ore block + 8x coal = iron block
+  - Budding amethyst - amethyst block + 16x coal block = budding amethyst
+- Crafting recipes:
+  - Wool recoloring - e.g. red wool + blue dye = blue wool
+  - Light block - torch/glowstone/redstone lamp surrounded by glass = light block (with light level 5/10/15)
 ### Admin features:
 - Inventory see of players
 - Enderchest inventory see of players
@@ -41,6 +43,7 @@ New ideas and issues can be be directly submitted to this repository.
 - BedHandler should also handle thunder effectively
 - More minor admin features
 - New and better logger + log levels
+- Rework config to support changes between versions dynamically (no resetall)
 
 Documentation: https://paul-eff.github.io/SmallAdditions/  
 Bukkit:&nbsp;https://www.spigotmc.org/wiki/buildtools/#compile-craftbukkit  
