@@ -57,6 +57,10 @@ public class Config extends FileHelper
             ymlFile.set(getFileName() + ".Settings.doEndermanGriefing", "true");
             ymlFile.set(getFileName() + ".Settings.doCreeperGriefing", "true");
             ymlFile.set(getFileName() + ".Settings.doGhastGriefing", "true");
+            ymlFile.set(getFileName() + ".Settings.Recipes.rawOreBlockSmelting", "true");
+            ymlFile.set(getFileName() + ".Settings.Recipes.buddingAmethystCraftable", "true");
+            ymlFile.set(getFileName() + ".Settings.Recipes.woolRecoloring", "true");
+            ymlFile.set(getFileName() + ".Settings.Recipes.lightBlockCraftable", "true");
             for (String mod : Constants.modsList)
             {
                 ymlFile.set(getFileName() + ".Settings.Mods." + mod, "true");
