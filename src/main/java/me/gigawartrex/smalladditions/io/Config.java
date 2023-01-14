@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 public class Config extends FileHelper
 {
     // Class variable
+    private static final Double configVersion = 1.0;
     private static final MessageHelper msghelp = new MessageHelper();
 
     /**
@@ -22,6 +23,20 @@ public class Config extends FileHelper
     public Config()
     {
         super("Config");
+    }
+
+    /**
+     * Method to do a version check on the configuration file.
+     */
+    public void doVersionCheck()
+    {
+        String actualConfigVersion = read("Version").equals("") ? "N/A" : read("Version");
+        if (actualConfigVersion.equals("N/A") || !actualConfigVersion.contains(configVersion.toString()))
+        {
+            msghelp.sendConsole(getFileName() + " mismatch! (Found version " + actualConfigVersion + " but needed " + configVersion + ")", ChatColor.RED);
+            msghelp.sendConsole("Please type \"/sa resetall\" to generate a compatible version.", ChatColor.RED);
+            msghelp.sendConsole("Not doing this may cause bugs or limit functionality!", ChatColor.RED);
+        }
     }
 
     /**
@@ -51,6 +66,7 @@ public class Config extends FileHelper
 
             //File defaults
             YamlConfiguration ymlFile = loadFile();
+            ymlFile.set("Version", configVersion);
             ymlFile.set(getFileName() + ".Settings.maxLumberjackSize", "250");
             ymlFile.set(getFileName() + ".Settings.maxMinerSize", "250");
             ymlFile.set(getFileName() + ".Settings.serverPercentageSleepingForSkip", "0.25");

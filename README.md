@@ -7,7 +7,7 @@
 
 SmallAdditions is a Bukkit/Paper server plugin which aims to improve vanilla gameplay just a smidge.
 The features are designed to be unintrusive and can be deactivated and configured in the given YAML file.  
-New ideas and issues can be be directly submitted to this repository.
+New ideas and issues can be directly submitted to this repository.
 
 
 ### Active features:
@@ -17,13 +17,13 @@ New ideas and issues can be be directly submitted to this repository.
     - Auto-replanting possible
   - Gravel vein digging
 - Item magnet
-- Right clicking wheat harvests it
+- Right-clicking wheat harvests it
   - Auto-replanting possible
 ### Passive features:
 - x% in world have to sleep for next day
 - Broken tool refill
   - Ignores Silk Touch and Fortune tools
-  - When veining (breaking all of same type): Will use all tools in inventory, applicable for the material, until job done
+  - When veining (breaking all of the same type): Will use all tools in inventory, applicable for the material, until job done
 - Empty ItemStack refill
 - Broken Armor refill
 - Deathboxes

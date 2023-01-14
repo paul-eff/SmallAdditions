@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.gigawartrex</groupId>
-    <artifactId>smalladditions</artifactId>
-    <version>1.2.9-SNAPSHOT</version>
+    <artifactId>SmallAdditions</artifactId>
+    <version>1.2.10</version>
     <packaging>jar</packaging>
 
     <name>SmallAdditions</name>
@@ -73,16 +73,9 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version>
+            <version>1.19.3-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/craftbukkit-1.16.4.jar</systemPath>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>

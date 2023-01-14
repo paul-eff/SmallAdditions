@@ -34,6 +34,7 @@ public final class SmallAdditions extends JavaPlugin
         //File registration
         Config config = new Config();
         config.defaultConfig(false);
+        config.doVersionCheck();
         new BookWriter().defaultBook("SmallAdditions Guide", false);
 
         //Event registration
@@ -57,7 +58,7 @@ public final class SmallAdditions extends JavaPlugin
         //New Recipes
         new Recipes(this);
 
-        msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
+        //msghelp.sendConsole("Successfully enabled " + Constants.name + " Version " + Constants.version, ChatColor.GREEN); // Enabled Message
     }
 
     /**
@@ -66,6 +67,6 @@ public final class SmallAdditions extends JavaPlugin
     @Override
     public void onDisable()
     {
-        msghelp.sendConsole("Successfully disabled " + Constants.name + " Version " + Constants.version, ChatColor.RED); // Disabled Message
+        //msghelp.sendConsole("Successfully disabled " + Constants.name + " Version " + Constants.version, ChatColor.RED); // Disabled Message
     }
 }
