@@ -5,9 +5,9 @@
   <img src="https://img.shields.io/badge/java-17-yellow">
 </p>
 
-SmallAdditions is a Bukkit/Paper server plugin which aims to improve vanilla gameplay just a smidge.
+SmallAdditions is a Bukkit/Paper/Spigot server plugin which aims to improve vanilla gameplay just a smidge.
 The features are designed to be unintrusive and can be deactivated and configured in the given YAML file.  
-New ideas and issues can be directly submitted to this repository.
+New ideas and issues can be directly submitted to this repository (e.g. via Issues).
 
 
 ### Active features:
