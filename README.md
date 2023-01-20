@@ -29,7 +29,7 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
 - Deathboxes
 - First time joined book
 - Smelting recipes:
-  - Raw ore block smelting - e.g. raw iron ore block + 8x coal = iron block
+  - Raw ore block smelting - e.g. raw iron ore block + 1x coal = iron block
   - Budding amethyst - amethyst block + 16x coal block = budding amethyst
 - Crafting recipes:
   - Wool recoloring - e.g. red wool + blue dye = blue wool
