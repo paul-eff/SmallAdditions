@@ -44,6 +44,8 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
 - More minor admin features
 - New and better logger + log levels
 - Rework config to support changes between versions dynamically (no resetall)
+- 2 slabs = block
+- Water bottle + dirt = mud
 
 Documentation: https://paul-eff.github.io/SmallAdditions/  
 Bukkit:&nbsp;https://www.spigotmc.org/wiki/buildtools/#compile-craftbukkit  

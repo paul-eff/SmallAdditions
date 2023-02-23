@@ -35,23 +35,30 @@ public class MainMenu extends MenuTemplate
                     }
                     break;
                 default:
-                    // Not using readModStatus as an empty String means there was an error!
-                    String readFromConfig = getConfig().read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods." + event.getName());
-                    if (!readFromConfig.equals(""))
+                    if (!Boolean.parseBoolean(getConfig().read("Config.Settings.Mods." + event.getName())))
                     {
-                        boolean isOn = Boolean.parseBoolean(readFromConfig);
-                        if (isOn)
-                        {
-                            getConfig().writeModStatus(event.getPlayer(), event.getName(), false);
-                            getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.RED + "OFF!");
-                        } else
-                        {
-                            getConfig().writeModStatus(event.getPlayer(), event.getName(), true);
-                            getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.GREEN + "ON!");
-                        }
+                        getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " was " + ChatColor.RED + " disabled " + ChatColor.WHITE + " by server admin!");
+                        getConfig().writeModStatus(event.getPlayer(), event.getName(), false);
                     } else
                     {
-                        getMessageHelper().sendPlayer(event.getPlayer(), "There was an error accessing your menu. Please report this to an admin!", ChatColor.RED);
+                        // Not using readModStatus as an empty String means there was an error!
+                        String readFromConfig = getConfig().read("Config.Players." + event.getPlayer().getUniqueId() + ".Mods." + event.getName());
+                        if (!readFromConfig.equals(""))
+                        {
+                            boolean isOn = Boolean.parseBoolean(readFromConfig);
+                            if (isOn)
+                            {
+                                getConfig().writeModStatus(event.getPlayer(), event.getName(), false);
+                                getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.RED + "OFF!");
+                            } else
+                            {
+                                getConfig().writeModStatus(event.getPlayer(), event.getName(), true);
+                                getMessageHelper().sendPlayer(event.getPlayer(), event.getName() + " turned " + ChatColor.GREEN + "ON!");
+                            }
+                        } else
+                        {
+                            getMessageHelper().sendPlayer(event.getPlayer(), "There was an error accessing your menu. Please report this to an admin!", ChatColor.RED);
+                        }
                     }
                     break;
             }
