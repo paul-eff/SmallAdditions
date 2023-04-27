@@ -9,8 +9,5 @@
         <module name="SmallAdditions" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SmallAdditions" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
