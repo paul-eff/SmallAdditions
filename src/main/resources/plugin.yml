@@ -1,7 +1,7 @@
 name: SmallAdditions
 version: ${project.version}
 main: me.gigawartrex.smalladditions.main.SmallAdditions
-api-version: 1.19
+api-version: 1.20
 #prefix: SmallAdditions
 author: Paul Ferlitz
 description: Small additions to Minecraft making it just slightly better.
