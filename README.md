@@ -1,7 +1,7 @@
-# SmallAdditions 1.2.12
+# SmallAdditions 1.2.13
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.2.12-blue">
-  <img src="https://img.shields.io/badge/minecraft-1.20.1-green">
+  <img src="https://img.shields.io/badge/version-1.2.13-blue">
+  <img src="https://img.shields.io/badge/minecraft-1.20.2-green">
   <img src="https://img.shields.io/badge/java-17-yellow">
 </p>
 

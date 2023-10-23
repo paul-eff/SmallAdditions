@@ -1,16 +1,20 @@
 package me.gigawartrex.smalladditions.handlers;
 
 import me.gigawartrex.smalladditions.helpers.InventoryManager;
+import me.gigawartrex.smalladditions.main.Constants;
 import me.gigawartrex.smalladditions.main.MaterialPriority;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Priority;
 import java.util.Arrays;
 
 /**
@@ -25,7 +29,7 @@ public class ItemBreakHandler implements Listener
      *
      * @param event the event triggered
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onItemBreak(PlayerItemBreakEvent event)
     {
         // Initialize common needed variables
@@ -57,8 +61,12 @@ public class ItemBreakHandler implements Listener
                 iterator++;
             }
             if (a == -1 || b == -1) return;
-            im.swapItems(a, b);
-            eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+            int finalB = b;
+            Bukkit.getScheduler().runTaskLater(Constants.plugin, () ->
+            {
+                im.swapItems(a, finalB);
+                eventPlayer.getWorld().playSound(eventPlayer.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+            }, 2);
         }
     }
 }
