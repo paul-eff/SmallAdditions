@@ -4,6 +4,7 @@ import me.gigawartrex.smalladditions.helpers.InventoryManager;
 import me.gigawartrex.smalladditions.main.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -20,6 +22,7 @@ import java.util.Arrays;
  */
 public class PlayerItemStackEmptyHandler implements Listener
 {
+    private final ArrayList<String> toolKeywords = (ArrayList)Arrays.asList("shovel", "axe", "hoe", "shears", "steel", "charge", "brush", "compass");
     /**
      * Main event handler.
      *
@@ -37,6 +40,8 @@ public class PlayerItemStackEmptyHandler implements Listener
         // If current stack size = 1 -> when block is placed the stack will be empty
         if (eventItem.getAmount() == 1)
         {
+            Material eventMat = eventItem.getType();
+            if (toolKeywords.stream().anyMatch(s -> eventMat.toString().toLowerCase().contains(s))) return;
             InventoryManager im = new InventoryManager(eventPlayer);
             Integer[] replacementItems = im.getAllIndices(eventItem.getType());
 
