@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class for handling player deaths.
@@ -22,7 +23,7 @@ import java.util.Arrays;
  */
 public class PlayerItemStackEmptyHandler implements Listener
 {
-    private final ArrayList<String> toolKeywords = (ArrayList)Arrays.asList("shovel", "axe", "hoe", "shears", "steel", "charge", "brush", "compass");
+    private final List<String> toolKeywords = Arrays.asList("shovel", "axe", "hoe", "shears", "steel", "charge", "brush", "compass");
     /**
      * Main event handler.
      *
