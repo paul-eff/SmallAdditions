@@ -1,8 +1,8 @@
-# SmallAdditions 1.2.13
+# SmallAdditions 1.3.0
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.2.13-blue">
-  <img src="https://img.shields.io/badge/minecraft-1.20.2-green">
-  <img src="https://img.shields.io/badge/java-17-yellow">
+  <img src="https://img.shields.io/badge/version-1.3.0-blue">
+  <img src="https://img.shields.io/badge/minecraft-1.21.3-green">
+  <img src="https://img.shields.io/badge/java-21-yellow">
 </p>
 
 SmallAdditions is a Bukkit/Paper/Spigot server plugin which aims to improve vanilla gameplay just a smidge.
@@ -21,11 +21,11 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
   - Auto-replanting possible
 ### Passive features:
 - x% in world have to sleep for next day
-- Broken tool refill
+- Broken tool refill (Bundle currently not supported)
   - Ignores Silk Touch and Fortune tools
   - When veining (breaking all of the same type): Will use all tools in inventory, applicable for the material, until job done
-- Empty ItemStack refill
-- Broken Armor refill
+- Empty ItemStack refill (Bundle currently not supported)
+- Broken Armor refill (Bundle currently not supported)
 - Deathboxes
 - First time joined book
 - Smelting recipes:
