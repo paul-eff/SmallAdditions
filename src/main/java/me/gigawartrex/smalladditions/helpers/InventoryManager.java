@@ -86,7 +86,7 @@ public class InventoryManager
             if (currItem != null)
             {
                 if (currItem.getType().toString().toLowerCase(Locale.ROOT).contains("pickaxe") && itemType.equals("axe")) continue;
-                if (!currItem.containsEnchantment(Enchantment.SILK_TOUCH) && !currItem.containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS))
+                if (!currItem.containsEnchantment(Enchantment.SILK_TOUCH) && !currItem.containsEnchantment(Enchantment.FORTUNE))
                 {
                     if (!itemType.equals(""))
                     {

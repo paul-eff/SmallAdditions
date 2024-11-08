@@ -83,9 +83,9 @@ public class PlayerRightclicksCropHandler implements Listener
     // TODO: Use Damageable to get rid of deprecated setDurability...
     private void damageItem(Player player, ItemStack item)
     {
-        if (item.getEnchantments().containsKey(Enchantment.DURABILITY))
+        if (item.getEnchantments().containsKey(Enchantment.UNBREAKING))
         {
-            int enchLevel = item.getEnchantments().get(Enchantment.DURABILITY);
+            int enchLevel = item.getEnchantments().get(Enchantment.UNBREAKING);
             double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
 
             if (Math.random() > chance)

@@ -39,16 +39,8 @@ public class PlayerJoinHandler implements Listener
         if (config.read("Config.Players." + eventPlayer.getUniqueId()).equals(""))
         {
             config.write(config.getFileName() + ".Players." + eventPlayer.getUniqueId() + ".Name", eventPlayer.getName());
-            boolean playerAlreadyKnown = false;
-            for(OfflinePlayer p : Bukkit.getOfflinePlayers())
-            {
-                if (p.getName().equals(eventPlayer.getName()))
-                {
-                    playerAlreadyKnown = true;
-                    break;
-                }
-            }
-            config.writePlayerAttributeStatus(eventPlayer, "Book received", playerAlreadyKnown);
+
+            config.writePlayerAttributeStatus(eventPlayer, "Book received", false);
             config.writePlayerAttributeStatus(eventPlayer, "Ninjajoin", false);
             config.writePlayerAttributeStatus(eventPlayer, "Hide", false);
 
