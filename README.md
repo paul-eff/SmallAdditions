@@ -1,7 +1,7 @@
-# SmallAdditions 1.3.0
+# SmallAdditions 1.3.1
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.3.0-blue">
-  <img src="https://img.shields.io/badge/minecraft-1.21.3-green">
+  <img src="https://img.shields.io/badge/version-1.3.1-blue">
+  <img src="https://img.shields.io/badge/minecraft-1.21.4-green">
   <img src="https://img.shields.io/badge/java-21-yellow">
 </p>
 
@@ -34,6 +34,9 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
 - Crafting recipes:
   - Wool recoloring - e.g. red wool + blue dye = blue wool
   - Light block - torch/glowstone/redstone lamp surrounded by glass = light block (with light level 5/10/15)
+- Stoncutter
+  - Convert between annoying stone types (andesite, diorite, ...)
+  - "Unpolish" most common stone types
 ### Admin features:
 - Inventory see of players
 - Enderchest inventory see of players
@@ -41,7 +44,6 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
 - Hide (player can't be seen anymore)
 ### Ideas and WIP:
 - BedHandler should also handle thunder effectively
-- More minor admin features
 - New and better logger + log levels
 - Rework config to support changes between versions dynamically (no resetall)
 - 2 slabs = block
