@@ -87,7 +87,7 @@ public class Sa implements CommandExecutor
                         Constants.mainMenu.open(player);
                     }
                     break;
-                // Command to reset all SimpleAdditions files/settings
+                // Command to reset all SmallAdditions files/settings
                 case "resetall":
                     // Doesn't accept any additional arguments
                     msghelp.sendPlayer(player, "This is a console only command. Contact your system admin for help.", ChatColor.RED);
@@ -291,7 +291,7 @@ public class Sa implements CommandExecutor
             }
             switch (args[0])
             {
-                // Command to reset all SimpleAdditions files/settings
+                // Command to reset all SmallAdditions files/settings
                 case "resetall":
                     // Doesn't accept any additional arguments
                     if (args.length != 1)
