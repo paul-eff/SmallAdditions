@@ -77,6 +77,8 @@ public class Config extends FileHelper
             ymlFile.set(getFileName() + ".Settings.Recipes.buddingAmethystCraftable", "true");
             ymlFile.set(getFileName() + ".Settings.Recipes.woolRecoloring", "true");
             ymlFile.set(getFileName() + ".Settings.Recipes.lightBlockCraftable", "true");
+            ymlFile.set(getFileName() + ".Settings.Recipes.stonecutterStoneConversion", "true");
+            ymlFile.set(getFileName() + ".Settings.Recipes.stonecutterUnsmoothRecipe", "true");
             for (String mod : Constants.modsList)
             {
                 ymlFile.set(getFileName() + ".Settings.Mods." + mod, "true");

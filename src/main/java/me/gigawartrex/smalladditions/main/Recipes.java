@@ -88,6 +88,44 @@ public class Recipes
             }
         }
 
+        if (Boolean.parseBoolean(config.read("Config.Settings.Recipes.stonecutterStoneConversion")))
+        {
+            // Add recipes to the stonecutter to convert between stone types (andesite, cobble, diorite, ...)
+            // Cobble to any of the other stone types is not possible, because it would make it to easy
+            Material[] interconvertibleStoneMaterials = new Material[]{Material.COBBLESTONE, Material.DIORITE, Material.ANDESITE, Material.GRANITE, Material.TUFF, Material.CALCITE};
+            for (Material current : interconvertibleStoneMaterials)
+            {
+                for (Material newTarget : interconvertibleStoneMaterials)
+                {
+                    if (current == newTarget || current == Material.COBBLESTONE)
+                    {
+                        continue;
+                    }
+                    NamespacedKey nsKey = new NamespacedKey(plugin, current.toString().toLowerCase() + "_to_" + newTarget.toString().toLowerCase());
+                    StonecuttingRecipe newRecipe = new StonecuttingRecipe(nsKey, new ItemStack(newTarget), current);
+                    plugin.getServer().addRecipe(newRecipe);
+                }
+            }
+            // More custom recipes
+            // Smooth stone to stone
+            NamespacedKey nsKey = new NamespacedKey(plugin, "smoothstone_to_stone");
+            plugin.getServer().addRecipe(new StonecuttingRecipe(nsKey, new ItemStack(Material.STONE), Material.SMOOTH_STONE));
+        }
+
+        if (Boolean.parseBoolean(config.read("Config.Settings.Recipes.stonecutterUnsmoothRecipe")))
+        {
+            // Add recipes to the stonecutter to convert polished stone types back to their raw form (polished andesite to andesite, etc.)
+            Material[] interconvertibleStoneMaterials = new Material[]{Material.POLISHED_ANDESITE, Material.POLISHED_DIORITE, Material.POLISHED_GRANITE, Material.POLISHED_TUFF, Material.POLISHED_DEEPSLATE, Material.POLISHED_BLACKSTONE, Material.POLISHED_BASALT};
+            for (Material current : interconvertibleStoneMaterials)
+            {
+                String noPolishName = current.toString().toLowerCase().replace("polished_", "");
+                NamespacedKey nsKey = new NamespacedKey(plugin, "unpolish_" + noPolishName);
+                ItemStack targetItemStack = new ItemStack(Material.getMaterial(noPolishName.toUpperCase()));
+                StonecuttingRecipe newRecipe = new StonecuttingRecipe(nsKey, targetItemStack, current);
+                plugin.getServer().addRecipe(newRecipe);
+            }
+        }
+
         /*NamespacedKey nsKey = new NamespacedKey(plugin, "test_recipe");
         ShapedRecipe newRecipe = new ShapedRecipe(nsKey, new ItemStack(Material.EXPERIENCE_BOTTLE));
         newRecipe.shape("   ", " ss", " ss");
