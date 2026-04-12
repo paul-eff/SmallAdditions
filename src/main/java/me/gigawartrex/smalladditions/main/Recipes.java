@@ -92,16 +92,16 @@ public class Recipes
         {
             // Add recipes to the stonecutter to convert between stone types (andesite, cobble, diorite, ...)
             // Cobble to any of the other stone types is not possible, because it would make it to easy
-            // Exception: Cobble to cobbled deepslate
-            Material[] interconvertibleStoneMaterials = new Material[]{Material.COBBLESTONE, Material.DIORITE, Material.ANDESITE, Material.GRANITE, Material.TUFF, Material.COBBLED_DEEPSLATE, Material.GRAVEL};
+            Material[] interconvertibleStoneMaterials = new Material[]{Material.COBBLESTONE, Material.DIORITE, Material.ANDESITE, Material.GRANITE, Material.GRAVEL, Material.TUFF};
             for (Material current : interconvertibleStoneMaterials)
             {
                 for (Material newTarget : interconvertibleStoneMaterials)
                 {
-                    if ((current == newTarget || current == Material.COBBLESTONE) && current != Material.COBBLED_DEEPSLATE)
-                    {
-                        if (newTarget != Material.COBBLED_DEEPSLATE) continue;
-                    }
+                    // Can't convert A to A
+                    if (current == newTarget) continue;
+                    // Can't convert from but only to Cobble
+                    if (current == Material.COBBLESTONE) continue;
+
                     NamespacedKey nsKey = new NamespacedKey(plugin, current.toString().toLowerCase() + "_to_" + newTarget.toString().toLowerCase());
                     StonecuttingRecipe newRecipe = new StonecuttingRecipe(nsKey, new ItemStack(newTarget), current);
                     plugin.getServer().addRecipe(newRecipe);
@@ -111,6 +111,11 @@ public class Recipes
             // Smooth stone to stone
             NamespacedKey nsKey = new NamespacedKey(plugin, "smoothstone_to_stone");
             plugin.getServer().addRecipe(new StonecuttingRecipe(nsKey, new ItemStack(Material.STONE), Material.SMOOTH_STONE));
+            // Cobble and cobbled deepslate conversion
+            nsKey = new NamespacedKey(plugin, "cobble_to_cobbled_deepslate");
+            plugin.getServer().addRecipe(new StonecuttingRecipe(nsKey, new ItemStack(Material.COBBLESTONE), Material.COBBLED_DEEPSLATE));
+            nsKey = new NamespacedKey(plugin, "cobbled_deepslate_to_cobble");
+            plugin.getServer().addRecipe(new StonecuttingRecipe(nsKey, new ItemStack(Material.COBBLED_DEEPSLATE), Material.COBBLESTONE));
         }
 
         if (Boolean.parseBoolean(config.read("Config.Settings.Recipes.stonecutterUnsmoothRecipe")))
