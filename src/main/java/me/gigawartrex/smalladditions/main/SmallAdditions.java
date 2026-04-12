@@ -6,7 +6,6 @@ import me.gigawartrex.smalladditions.handlers.*;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.BookWriter;
 import me.gigawartrex.smalladditions.io.Config;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

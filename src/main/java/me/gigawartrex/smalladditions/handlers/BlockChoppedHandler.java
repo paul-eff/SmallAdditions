@@ -4,7 +4,10 @@ import me.gigawartrex.smalladditions.helpers.Helper;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
@@ -17,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class for handling when a player chops wood.
@@ -72,7 +76,8 @@ public class BlockChoppedHandler implements Listener
                         //Check if chopped block is grounded to later evaluate replant conditions
                         Block blockUnderOrig = Helper.getLocation(event.getBlock().getLocation(), 0, -1, 0).getBlock();
 
-                        if (!blockUnderOrig.isLiquid() && !blockUnderOrig.isPassable() && !blockUnderOrig.isEmpty()) firstBlockIsGrounded = true;
+                        if (!blockUnderOrig.isLiquid() && !blockUnderOrig.isPassable() && !blockUnderOrig.isEmpty())
+                            firstBlockIsGrounded = true;
                         //Structural detection of tree
                         current_search.add(eventBlock);
                         boolean sizeReached = false;
@@ -111,7 +116,7 @@ public class BlockChoppedHandler implements Listener
                             if (sizeReached) break;
                         }
                         // Sapling position detection
-                        ArrayList<Block> saplingNeighbours = new ArrayList<>(Arrays.asList(event.getBlock()));
+                        ArrayList<Block> saplingNeighbours = new ArrayList<>(List.of(event.getBlock()));
                         saplingNeighbours.clear();
 
                         if (eventBlock.getRelative(BlockFace.NORTH).getType() == eventMaterial)
@@ -181,7 +186,7 @@ public class BlockChoppedHandler implements Listener
         if (item.getEnchantments().containsKey(Enchantment.UNBREAKING))
         {
             int enchLevel = item.getEnchantments().get(Enchantment.UNBREAKING);
-            double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
+            double chance = (100.0 / (enchLevel + 1)) / 100.0;
 
             if (Math.random() > chance)
             {

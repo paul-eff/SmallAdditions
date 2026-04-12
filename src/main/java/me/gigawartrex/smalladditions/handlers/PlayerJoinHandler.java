@@ -3,9 +3,7 @@ package me.gigawartrex.smalladditions.handlers;
 import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -46,13 +44,7 @@ public class PlayerJoinHandler implements Listener
 
             for (String mod : Constants.modsList)
             {
-                if (mod.equals("Veining") || mod.equals("Replant"))
-                {
-                    config.writeModStatus(eventPlayer, mod, true);
-                } else
-                {
-                    config.writeModStatus(eventPlayer, mod, false);
-                }
+                config.writeModStatus(eventPlayer, mod, mod.equals("Veining") || mod.equals("Replant"));
             }
         }
 

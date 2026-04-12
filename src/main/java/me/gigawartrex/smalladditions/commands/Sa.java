@@ -4,8 +4,9 @@ import me.gigawartrex.smalladditions.helpers.Book;
 import me.gigawartrex.smalladditions.helpers.MessageHelper;
 import me.gigawartrex.smalladditions.io.Config;
 import me.gigawartrex.smalladditions.main.Constants;
-import org.bukkit.*;
-import org.bukkit.block.Block;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +25,7 @@ public class Sa implements CommandExecutor
     // Class variables
     private final MessageHelper msghelp = new MessageHelper();
     private final Config config = new Config();
-    private ArrayList<Player> hiddenPlayers = new ArrayList<>();
+    private final ArrayList<Player> hiddenPlayers = new ArrayList<>();
 
     /**
      * Main method handling incoming commands.

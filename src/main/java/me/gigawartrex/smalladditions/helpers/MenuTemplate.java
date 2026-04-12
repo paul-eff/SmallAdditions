@@ -10,8 +10,8 @@ import me.gigawartrex.smalladditions.io.Config;
 public abstract class MenuTemplate
 {
     // Class variables
-    private MessageHelper msghelp;
-    private Config config;
+    private final MessageHelper msghelp;
+    private final Config config;
 
     /**
      * Class constructor.

@@ -86,7 +86,7 @@ public class PlayerRightclicksCropHandler implements Listener
         if (item.getEnchantments().containsKey(Enchantment.UNBREAKING))
         {
             int enchLevel = item.getEnchantments().get(Enchantment.UNBREAKING);
-            double chance = (100.0 / (enchLevel + 1) * 1.0) / 100.0;
+            double chance = (100.0 / (enchLevel + 1)) / 100.0;
 
             if (Math.random() > chance)
             {

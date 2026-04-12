@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +23,7 @@ import java.util.List;
 public class PlayerItemStackEmptyHandler implements Listener
 {
     private final List<String> toolKeywords = Arrays.asList("shovel", "axe", "hoe", "shears", "steel", "charge", "brush", "compass");
+
     /**
      * Main event handler.
      *

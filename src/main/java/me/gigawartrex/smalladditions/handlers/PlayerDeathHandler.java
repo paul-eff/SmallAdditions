@@ -56,8 +56,10 @@ public class PlayerDeathHandler implements Listener
             if (origBlock.getY() > maxHeight)
             {
                 origBlock = eventPlayer.getLocation().getBlock();
-                if (origBlock.getY() <= minHeight) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), minHeight + 5, origBlock.getZ());
-                if (origBlock.getY() >= maxHeight) origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), maxHeight - 5, origBlock.getZ());
+                if (origBlock.getY() <= minHeight)
+                    origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), minHeight + 5, origBlock.getZ());
+                if (origBlock.getY() >= maxHeight)
+                    origBlock = eventPlayer.getWorld().getBlockAt(origBlock.getX(), maxHeight - 5, origBlock.getZ());
                 break;
             }
             origBlock = origBlock.getRelative(BlockFace.UP);

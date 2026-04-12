@@ -30,7 +30,7 @@ public enum MaterialPriority
         String itemMat = item.getType().toString().toLowerCase(Locale.ROOT);
         for (MaterialPriority matPrio : values())
         {
-            if(itemMat.contains(matPrio.type))
+            if (itemMat.contains(matPrio.type))
             {
                 return matPrio.priority;
             }

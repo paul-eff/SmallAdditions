@@ -24,7 +24,8 @@ public class PlayerQuitHandler implements Listener
      * @param event the event triggered
      */
     @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerQuit(PlayerQuitEvent event)    {
+    public void onPlayerQuit(PlayerQuitEvent event)
+    {
         Player eventPlayer = event.getPlayer();
         eventPlayer.setSleepingIgnored(false);
 

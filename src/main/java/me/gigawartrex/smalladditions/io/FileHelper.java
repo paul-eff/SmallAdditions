@@ -15,9 +15,9 @@ import java.io.IOException;
  */
 public abstract class FileHelper
 {
-    // Class variables
-    private String fileName; // Layout: "fileName"
     private final String basePath = "plugins/" + Constants.name + "/";
+    // Class variables
+    private final String fileName; // Layout: "fileName"
     private String path = ""; // Layout: "folder1/folder2/"
 
     /**

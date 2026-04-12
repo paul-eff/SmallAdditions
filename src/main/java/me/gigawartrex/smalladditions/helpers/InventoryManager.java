@@ -14,8 +14,8 @@ import java.util.Locale;
 
 public class InventoryManager
 {
-    private Player player;
-    private Inventory inventory;
+    private final Player player;
+    private final Inventory inventory;
 
     public InventoryManager(Player player)
     {
@@ -91,7 +91,8 @@ public class InventoryManager
                     if (!itemType.equals(""))
                     {
                         if (!currItem.getType().toString().toLowerCase(Locale.ROOT).contains(itemType)) continue;
-                    }else{
+                    } else
+                    {
                         if (currItem.getType() != targetItemType) continue;
                     }
                     itemIndices.add(i);

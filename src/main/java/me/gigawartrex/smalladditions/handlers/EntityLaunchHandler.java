@@ -29,7 +29,7 @@ public class EntityLaunchHandler implements Listener
             {
                 if (shooter instanceof Ghast && event.getEntity().getType() == EntityType.FIREBALL)
                 {
-                    ((Fireball)event.getEntity()).setYield(0);
+                    ((Fireball) event.getEntity()).setYield(0);
                     Block eventBlock = event.getHitBlock();
                     // TODO: Message when debug levels are implemented
                     //msghelp.sendConsole("Stopped a Ghast from doing explosion damage at X:" + eventBlock.getX() + " Y:" + eventBlock.getY() + " Z:" + eventBlock.getZ(), ChatColor.WHITE);
