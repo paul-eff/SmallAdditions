@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import javax.annotation.Priority;
 import java.util.Arrays;
 
 /**
@@ -50,7 +49,9 @@ public class ItemBreakHandler implements Listener
             {
                 Arrays.sort(replacementItems, (a1, b1) -> {
                     Inventory inv = eventPlayer.getInventory();
-                    return MaterialPriority.getPriority(inv.getItem(a1)) > MaterialPriority.getPriority(inv.getItem(b1)) ? 1 : -1;
+                    int pa = MaterialPriority.getPriority(inv.getItem(a1));
+                    int pb = MaterialPriority.getPriority(inv.getItem(b1));
+                    return Integer.compare(pa, pb);
                 });
             }
 

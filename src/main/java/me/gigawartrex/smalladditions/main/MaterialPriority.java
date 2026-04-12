@@ -34,6 +34,7 @@ public enum MaterialPriority
             {
                 return matPrio.priority;
             }
+
         }
         return -1;
     }
