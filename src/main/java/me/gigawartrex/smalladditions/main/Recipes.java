@@ -92,14 +92,15 @@ public class Recipes
         {
             // Add recipes to the stonecutter to convert between stone types (andesite, cobble, diorite, ...)
             // Cobble to any of the other stone types is not possible, because it would make it to easy
-            Material[] interconvertibleStoneMaterials = new Material[]{Material.COBBLESTONE, Material.DIORITE, Material.ANDESITE, Material.GRANITE, Material.TUFF, Material.CALCITE};
+            // Exception: Cobble to cobbled deepslate
+            Material[] interconvertibleStoneMaterials = new Material[]{Material.COBBLESTONE, Material.DIORITE, Material.ANDESITE, Material.GRANITE, Material.TUFF, Material.COBBLED_DEEPSLATE, Material.GRAVEL};
             for (Material current : interconvertibleStoneMaterials)
             {
                 for (Material newTarget : interconvertibleStoneMaterials)
                 {
-                    if (current == newTarget || current == Material.COBBLESTONE)
+                    if ((current == newTarget || current == Material.COBBLESTONE) && current != Material.COBBLED_DEEPSLATE)
                     {
-                        continue;
+                        if (newTarget != Material.COBBLED_DEEPSLATE) continue;
                     }
                     NamespacedKey nsKey = new NamespacedKey(plugin, current.toString().toLowerCase() + "_to_" + newTarget.toString().toLowerCase());
                     StonecuttingRecipe newRecipe = new StonecuttingRecipe(nsKey, new ItemStack(newTarget), current);
@@ -125,11 +126,5 @@ public class Recipes
                 plugin.getServer().addRecipe(newRecipe);
             }
         }
-
-        /*NamespacedKey nsKey = new NamespacedKey(plugin, "test_recipe");
-        ShapedRecipe newRecipe = new ShapedRecipe(nsKey, new ItemStack(Material.EXPERIENCE_BOTTLE));
-        newRecipe.shape("   ", " ss", " ss");
-        newRecipe.setIngredient('s', Material.SPONGE);
-        plugin.getServer().addRecipe(newRecipe);*/
     }
 }
