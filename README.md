@@ -1,7 +1,7 @@
-# SmallAdditions 1.3.1
+# SmallAdditions 1.3.2
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.3.1-blue">
-  <img src="https://img.shields.io/badge/minecraft-1.21.4-green">
+  <img src="https://img.shields.io/badge/version-1.3.2-blue">
+  <img src="https://img.shields.io/badge/minecraft-26.1.2-green">
   <img src="https://img.shields.io/badge/java-21-yellow">
 </p>
 
@@ -15,7 +15,7 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
   - Ore vein mining
   - Whole tree felling
     - Auto-replanting possible
-  - Gravel vein digging
+  - Gravel/Tuff vein digging
 - Item magnet
 - Right-clicking wheat harvests it
   - Auto-replanting possible
@@ -46,8 +46,6 @@ New ideas and issues can be directly submitted to this repository (e.g. via Issu
 - BedHandler should also handle thunder effectively
 - New and better logger + log levels
 - Rework config to support changes between versions dynamically (no resetall)
-- 2 slabs = block
-- Water bottle + dirt = mud
 
 Documentation: https://paul-eff.github.io/SmallAdditions/  
 Bukkit:&nbsp;https://www.spigotmc.org/wiki/buildtools/#compile-craftbukkit  
